@@ -1,6 +1,11 @@
 <link rel="stylesheet" href="<?=base_url()?>_template/back/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css">
 <script src="<?=base_url()?>_template/back/vendors/datatables.net/jquery.dataTables.js"></script>
 <script src="<?=base_url()?>_template/back/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
+
+
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb bg-light">
@@ -25,7 +30,7 @@
 
         <hr>
 
-          <div class="col-sm-12 table-responsive">
+
             <table id="table" class="table table-bordered">
               <thead>
                 <tr class="bg-primary text-white">
@@ -39,7 +44,7 @@
               </thead>
 
             </table>
-          </div>
+
 
       </div>
     </div>
@@ -48,18 +53,6 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
-    {
-        return {
-            "iStart": oSettings._iDisplayStart,
-            "iEnd": oSettings.fnDisplayEnd(),
-            "iLength": oSettings._iDisplayLength,
-            "iTotal": oSettings.fnRecordsTotal(),
-            "iFilteredTotal": oSettings.fnRecordsDisplay(),
-            "iPage": Math.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength),
-            "iTotalPages": Math.ceil(oSettings.fnRecordsDisplay() / oSettings._iDisplayLength)
-        };
-    };
 
       var t = $("#table").dataTable({
           initComplete: function() {
@@ -83,11 +76,13 @@ $(document).ready(function() {
           },
           processing: true,
           serverSide: true,
+          responsive: true,
           ajax: {"url": "<?=base_url()?>adm-backend/member/json/<?=$is_active?>", "type": "POST"},
           columns: [
               {
                 "data": "id_member",
-                "orderable": false
+                "orderable": false,
+                "visible":false
               },
               {"data":"nama"},
               {"data":"telepon"},
@@ -111,14 +106,7 @@ $(document).ready(function() {
                   "className" : "text-center"
               }
           ],
-          order: [[0, 'desc']],
-          rowCallback: function(row, data, iDisplayIndex) {
-              var info = this.fnPagingInfo();
-              var page = info.iPage;
-              var length = info.iLength;
-              var index = page * length + (iDisplayIndex + 1);
-              $('td:eq(0)', row).html(index);
-          }
+          order: [[0, 'desc']]
       });
 });
 
