@@ -36,6 +36,7 @@
   <!-- End plugin js for this page -->
   <!-- inject:js -->
   <script src="<?=base_url()?>_template/back/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+  <script src="<?=base_url()?>_template/back/vendors/clipboard/clipboard.min.js"></script>
   <script src="<?=base_url()?>_template/back/js/off-canvas.js"></script>
   <script src="<?=base_url()?>_template/back/js/hoverable-collapse.js"></script>
   <script src="<?=base_url()?>_template/back/js/template.js"></script>
@@ -56,6 +57,33 @@
 					$('#modalTitle, #modalContent').html('');
 				}, 500);
 	   });
+
+
+     function addLoaders(elemet) {
+       $(elemet).append(`<div id="loaders-gue">
+                           <div class="jumping-dots-loader" id="spinners-gue">
+                               <span></span>
+                               <span></span>
+                               <span></span>
+                           </div>
+                         </div>`);
+     }
+
+     function removeLoaders(elemet){
+       $(elemet).find("#loaders-gue").remove();
+     }
+
+
+     //copy
+    var clipboard = new ClipboardJS('.btn-clipboard');
+    clipboard.on('success', function(e) {
+     console.log(e);
+    });
+   clipboard.on('error', function(e) {
+     console.log(e);
+   });
+
+
 
   </script>
 </body>

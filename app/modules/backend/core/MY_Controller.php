@@ -6,7 +6,7 @@ class MY_Controller extends CI_Controller{
   public function __construct()
   {
     parent::__construct();
-    if ($this->session->userdata('login')!=true) {
+    if ($this->session->userdata('member_login')!=true) {
         $this->session->sess_destroy();
         redirect(site_url("member-panel"));
     }

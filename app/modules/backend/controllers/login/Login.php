@@ -8,6 +8,9 @@ class Login extends CI_Controller{
   public function __construct()
   {
     parent::__construct();
+    if ($this->session->userdata('member_login')==true) {
+        redirect(site_url("backend/home"));
+    }
     $this->load->helper(array("backend/telegram"));
   }
 
@@ -60,11 +63,11 @@ class Login extends CI_Controller{
                   $session = array(
                                     'id_member'     => $qry->row()->id_personal,
                                     'kode_referral' => $qry->row()->kode_referral,
-                                    'login'         => true
+                                    'member_login'  => true
                                   );
                   $this->session->set_userdata($session);
                   $json['valid'] = true;
-                  $json['url'] = site_url("backend/index");
+                  $json['url'] = site_url("backend/home");
                 }else {
                   $json["alert"] = "Username Atau Password Salah.";
                 }

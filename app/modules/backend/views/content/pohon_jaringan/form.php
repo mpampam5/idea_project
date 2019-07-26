@@ -2,7 +2,7 @@
   <ol class="breadcrumb bg-light">
     <li class="breadcrumb-item"><a href="<?=site_url("backend/index")?>">Dashboard</a></li>
     <li class="breadcrumb-item"><a href="<?=site_url("backend/pohon_jaringan")?>"><?=$title?></a></li>
-    <li class="breadcrumb-item active" aria-current="page">Tambah Member</li>
+    <li class="breadcrumb-item active" aria-current="page">Add Member</li>
   </ol>
 </nav>
 

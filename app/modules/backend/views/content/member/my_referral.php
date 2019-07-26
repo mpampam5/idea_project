@@ -1,6 +1,9 @@
 <link rel="stylesheet" href="<?=base_url()?>_template/back/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css">
 <script src="<?=base_url()?>_template/back/vendors/datatables.net/jquery.dataTables.js"></script>
 <script src="<?=base_url()?>_template/back/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb bg-light">
@@ -20,19 +23,19 @@
 
         <hr>
 
-          <div class="col-sm-12 table-responsive">
             <table id="table" class="table">
               <thead>
                 <tr class="bg-warning text-white">
-                    <th width="10px">No</th>
-                    <th>Waktu Registrasi</th>
+                    <th width="10px">#</th>
+                    <th>Mulai Bergabung</th>
                     <th>Nama</th>
-                    <th>Actions</th>
+                    <th>Email</th>
+                    <th>Telepon</th>
+                    <th>Link Referral</th>
                 </tr>
               </thead>
 
             </table>
-          </div>
 
       </div>
     </div>
@@ -41,19 +44,6 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
-    {
-        return {
-            "iStart": oSettings._iDisplayStart,
-            "iEnd": oSettings.fnDisplayEnd(),
-            "iLength": oSettings._iDisplayLength,
-            "iTotal": oSettings.fnRecordsTotal(),
-            "iFilteredTotal": oSettings.fnRecordsDisplay(),
-            "iPage": Math.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength),
-            "iTotalPages": Math.ceil(oSettings.fnRecordsDisplay() / oSettings._iDisplayLength)
-        };
-    };
-
       var t = $("#table").dataTable({
           initComplete: function() {
 
@@ -76,28 +66,29 @@ $(document).ready(function() {
           },
           processing: true,
           serverSide: true,
-          ajax: {"url": "<?=base_url()?>backend/member/json_menunggu_verif", "type": "POST"},
+          responsive:true,
+          ajax: {"url": "<?=base_url()?>backend/member/json_my_referral", "type": "POST"},
           columns: [
               {
                 "data": "id_member",
-                "orderable": false
+                "orderable": false,
+                render:function(data, type, meta, row)
+                {
+                  return "";
+                }
               },
               {"data":"created"},
               {"data":"nama"},
-              {
-                  "data" : "action",
-                  "orderable": false,
-                  "className" : "text-center"
+              {"data":"email"},
+              {"data":"telepon"},
+              {"data":"kode_referral",
+                render:function(data,type,row,meta)
+                  {
+                      return '<a href="#"><?=base_url()?>referral/'+data+'.html</a>';
+                  }
               }
           ],
-          order: [[0, 'desc']],
-          rowCallback: function(row, data, iDisplayIndex) {
-              var info = this.fnPagingInfo();
-              var page = info.iPage;
-              var length = info.iLength;
-              var index = page * length + (iDisplayIndex + 1);
-              $('td:eq(0)', row).html(index);
-          }
+          order: [[1, 'desc']]
       });
 });
 

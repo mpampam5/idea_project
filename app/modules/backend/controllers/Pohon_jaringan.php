@@ -14,7 +14,7 @@ class Pohon_jaringan extends MY_Controller{
 
   function index(){
     $this->load->helper(['cek_pohon']);
-    $this->template->set_title("Pohon Jaringan");
+    $this->template->set_title("Binary");
     $data["root"] = $this->model->get_where("tb_member",["id_member"=>$this->session->userdata("id_member")]);
     $this->template->view("content/pohon_jaringan/index",$data);
   }
@@ -23,7 +23,7 @@ class Pohon_jaringan extends MY_Controller{
   function show($id)
   {
     $this->load->helper(['cek_pohon']);
-    $this->template->set_title("Pohon Jaringan");
+    $this->template->set_title("Binary");
     $data["root"] = $this->model->get_where("tb_member",["id_member"=>$id]);
     $this->template->view("content/pohon_jaringan/index",$data);
   }
@@ -34,7 +34,7 @@ class Pohon_jaringan extends MY_Controller{
       if ($id_parent=="" OR $posisi=="") {
         $this->_error404();
         }else {
-        $this->template->set_title("Pohon Jaringan");
+        $this->template->set_title("Binary");
         $data["provinsi"] = $this->db->get("wil_provinsi")->result();
         $data["bank"]   = $this->db->get("ref_bank")->result();
         $data['id_parent'] = $id_parent;

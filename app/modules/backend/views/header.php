@@ -31,8 +31,8 @@
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <a class="navbar-brand brand-logo mr-5" href="<?=site_url('backend/index')?>"><img src="http://www.urbanui.com/justdo/template/images/logo.svg" class="mr-2" alt="logo"/></a>
-        <a class="navbar-brand brand-logo-mini" href="<?=site_url('backend/index')?>"><img src="http://www.urbanui.com/justdo/template/images/logo-mini.svg" alt="logo"/></a>
+        <a class="navbar-brand brand-logo mr-5" href="<?=site_url('backend/home')?>"><img src="http://www.urbanui.com/justdo/template/images/logo.svg" class="mr-2" alt="logo"/></a>
+        <a class="navbar-brand brand-logo-mini" href="<?=site_url('backend/home')?>"><img src="http://www.urbanui.com/justdo/template/images/logo-mini.svg" alt="logo"/></a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
         <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -148,9 +148,9 @@
               <img src="<?=base_url()?>_template/back/images/faces/face28.jpg" alt="profile"/>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-              <a class="dropdown-item">
-                <i class="ti-settings text-primary"></i>
-                Settings
+              <a class="dropdown-item" href="<?=site_url("backend/profile")?>">
+                <i class="fa fa-user text-primary"></i>
+                profile
               </a>
               <a class="dropdown-item" href="<?=site_url("backend/logout")?>">
                 <i class="ti-power-off text-primary"></i>
@@ -176,7 +176,7 @@
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
           <li class="nav-item">
-            <a class="nav-link" href="<?=site_url('backend/index')?>">
+            <a class="nav-link" href="<?=site_url('backend/home')?>">
               <i class="ti-home menu-icon"></i>
               <span class="menu-title">Dashboard</span>
             </a>
@@ -190,16 +190,74 @@
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
               <i class="fa fa-users menu-icon"></i>
-              <span class="menu-title">Info Member</span>
+              <span class="menu-title">Network</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="ui-basic">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="<?=site_url("backend/member/menunggu_verifikasi")?>">Menunggu Verifikasi</a></li>
-                <li class="nav-item"> <a class="nav-link" href="<?=site_url("backend/pohon_jaringan")?>">Pohon Jaringan</a></li>
+                <li class="nav-item"> <a class="nav-link" href="<?=site_url("backend/member/menunggu_verifikasi")?>">Waiting</a></li>
+                <li class="nav-item"> <a class="nav-link" href="<?=site_url("backend/pohon_jaringan")?>">Binary</a></li>
+                <li class="nav-item"> <a class="nav-link" href="<?=site_url("backend/member/my_referral")?>">Referral</a></li>
               </ul>
             </div>
           </li>
+
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#financial" aria-expanded="false" aria-controls="financial">
+              <i class="fa fa-server menu-icon"></i>
+              <span class="menu-title">Financial</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="financial">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="<?=site_url("#")?>">B. Sponsor</a></li>
+                <li class="nav-item"> <a class="nav-link" href="<?=site_url("#")?>">B.Pairing</a></li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#deposit-menu" aria-expanded="false" aria-controls="deposit-menu">
+              <i class="fa fa-credit-card-alt menu-icon"></i>
+              <span class="menu-title">Deposit</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="deposit-menu">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="<?=site_url("#")?>">Add Deposit</a></li>
+                <li class="nav-item"> <a class="nav-link" href="<?=site_url("#")?>">All Deposit</a></li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#withdraw-menu" aria-expanded="false" aria-controls="withdraw-menu">
+              <i class="fa fa-credit-card menu-icon"></i>
+              <span class="menu-title">Withdraw</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="withdraw-menu">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="<?=site_url("#")?>">Add Withdraw</a></li>
+                <li class="nav-item"> <a class="nav-link" href="<?=site_url("#")?>">All Withdraw</a></li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#setting-menu" aria-expanded="false" aria-controls="setting-menu">
+              <i class="fa fa-cogs menu-icon"></i>
+              <span class="menu-title">Setting</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="setting-menu">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="<?=site_url('backend/profile')?>">Profile</a></li>
+              </ul>
+            </div>
+          </li>
+
+
 
         </ul>
       </nav>

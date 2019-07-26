@@ -27,7 +27,7 @@
           <div class="col-sm-12 table-responsive">
             <table id="table" class="table table-bordered">
               <tr>
-                <td colspan="2" class="bg-primary text-white"><h5>Data Personal</h5></td>
+                <td colspan="2" class="bg-warning text-white"><h5>Data Personal</h5></td>
               </tr>
 
               <tr>
@@ -93,7 +93,7 @@
               </tr>
 
               <tr>
-                <td colspan="2" class="bg-primary text-white"><h5>Data Rekening</h5></td>
+                <td colspan="2" class="bg-warning text-white"><h5>Data Rekening</h5></td>
               </tr>
 
               <tr>
