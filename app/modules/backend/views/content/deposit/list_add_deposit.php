@@ -21,7 +21,7 @@
           <h4 class="card-title">List <?=$title?></h4>
           <div class="btn-group-header">
             <a href="#" class="btn btn-primary btn-sm btn-icon-text" id="table-reload"> <i class="fa fa-refresh btn-icon-prepend"></i></a>
-            <a href="<?=site_url("backend/deposit/add_new_deposit")?>" id="deposit_baru" class="btn btn-success btn-sm btn-icon-text"><i class="fa fa-plus btn-icon-prepend"></i> Add New Deposit</a>
+            <a href="<?=site_url("backend/deposit/add_new_deposit/add")?>" id="deposit_baru" class="btn btn-success btn-sm btn-icon-text"><i class="fa fa-plus btn-icon-prepend"></i> Add New Deposit</a>
           </div>
 
         <hr>

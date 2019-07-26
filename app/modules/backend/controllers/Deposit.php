@@ -26,9 +26,10 @@ class Deposit extends MY_Controller{
   }
 
 
-  function add_new_deposit()
+  function add_new_deposit($button)
   {
-    $this->template->view("content/deposit/form_add_deposit",[],false);
+    $data['button'] = $button;
+    $this->template->view("content/deposit/form_add_deposit",$data,false);
   }
 
   function action_add_deposit()

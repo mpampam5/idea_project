@@ -24,53 +24,58 @@
 
         <div class="col-sm-12">
           <button type='button' class='btn btn-secondary btn-md text-white' data-dismiss='modal'>Batal</button>
-          <button type="submit" id="submit" name="submit" class="btn btn-primary btn-md"> DEPOSIT</button>
+          <?php if ($button=="add"): ?>
+            <button type="submit" id="submit" name="submit" class="btn btn-primary btn-md"> DEPOSIT</button>
+          <?php endif; ?>
         </div>
 
     </div>
   </form>
 
+<?php if ($button=="add"): ?>
 
-<script type="text/javascript">
-$("#form").submit(function(e){
-  e.preventDefault();
-  var me = $(this);
-  $("#submit").prop('disabled',true).html('<div class="spinner-border spinner-border-sm text-white"></div> Memproses...');
-  $.ajax({
-        url             : me.attr('action'),
-        type            : 'post',
-        data            :  new FormData(this),
-        contentType     : false,
-        cache           : false,
-        dataType        : 'JSON',
-        processData     :false,
-        success:function(json){
-          if (json.success==true) {
-              $('#table').DataTable().ajax.reload();
-              $("#modalGue").modal('hide');
-              $('.form-group').removeClass('.has-error')
-                              .removeClass('.has');
-              $.toast({
-                text: json.alert,
-                showHideTransition: 'slide',
-                icon: 'success',
-                loaderBg: '#f96868',
-                position: 'bottom-right',
+  <script type="text/javascript">
+  $("#form").submit(function(e){
+    e.preventDefault();
+    var me = $(this);
+    $("#submit").prop('disabled',true).html('<div class="spinner-border spinner-border-sm text-white"></div> Memproses...');
+    $.ajax({
+          url             : me.attr('action'),
+          type            : 'post',
+          data            :  new FormData(this),
+          contentType     : false,
+          cache           : false,
+          dataType        : 'JSON',
+          processData     :false,
+          success:function(json){
+            if (json.success==true) {
+                $('#table').DataTable().ajax.reload();
+                $("#modalGue").modal('hide');
+                $('.form-group').removeClass('.has-error')
+                                .removeClass('.has');
+                $.toast({
+                  text: json.alert,
+                  showHideTransition: 'slide',
+                  icon: 'success',
+                  loaderBg: '#f96868',
+                  position: 'bottom-right',
+                });
+
+
+            }else {
+              $("#submit").prop('disabled',false)
+                          .html('DEPOSIT');
+              $.each(json.alert, function(key, value) {
+                var element = $('#' + key);
+                $(element)
+                .closest('.form-group')
+                .find('.text-danger').remove();
+                $(element).after(value);
               });
-
-
-          }else {
-            $("#submit").prop('disabled',false)
-                        .html('DEPOSIT');
-            $.each(json.alert, function(key, value) {
-              var element = $('#' + key);
-              $(element)
-              .closest('.form-group')
-              .find('.text-danger').remove();
-              $(element).after(value);
-            });
+            }
           }
-        }
+    });
   });
-});
-</script>
+  </script>
+
+<?php endif; ?>

@@ -18,7 +18,7 @@ class Deposit_model extends MY_Model{
     $this->datatables->join("tb_member","trans_member_deposit.id_member = tb_member.id_member");
     $this->datatables->where("trans_member_deposit.id_member",sess('id_member'));
     $this->datatables->where("trans_member_deposit.status","pending");
-    $this->datatables->add_column("action","<a class='text-danger'><i class='fa fa-remove'></i> Cancel</a>","id_deposit");
+    $this->datatables->add_column("action","<a href='".site_url("backend/deposit/add_new_deposit/cancel")."' class='text-danger'><i class='fa fa-remove'></i> Cancel</a>","id_deposit");
     return $this->datatables->generate();
   }
 
