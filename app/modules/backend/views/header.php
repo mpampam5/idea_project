@@ -225,7 +225,7 @@
             <div class="collapse" id="deposit-menu">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="<?=site_url("backend/deposit/add_deposit")?>">Add Deposit</a></li>
-                <li class="nav-item"> <a class="nav-link" href="<?=site_url("#")?>">All Deposit</a></li>
+                <li class="nav-item"> <a class="nav-link" href="<?=site_url("backend/deposit/all_deposit")?>">All Deposit</a></li>
               </ul>
             </div>
           </li>

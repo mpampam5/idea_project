@@ -21,7 +21,6 @@
           <h4 class="card-title">List <?=$title?></h4>
           <div class="btn-group-header">
             <a href="#" class="btn btn-primary btn-sm btn-icon-text" id="table-reload"> <i class="fa fa-refresh btn-icon-prepend"></i></a>
-            <a href="<?=site_url("backend/deposit/add_new_deposit")?>" id="deposit_baru" class="btn btn-success btn-sm btn-icon-text"><i class="fa fa-plus btn-icon-prepend"></i> Add New Deposit</a>
           </div>
 
         <hr>
@@ -29,11 +28,10 @@
             <table id="table" class="table table-bordered">
               <thead>
                 <tr class="bg-warning text-white">
-                    <th width="10px">No</th>
+                    <th width="10px">#</th>
                     <th>Waktu Deposit</th>
                     <th>Ammount</th>
                     <th>Status</th>
-                    <th>#</th>
                 </tr>
               </thead>
 
@@ -69,7 +67,7 @@ $(document).ready(function() {
           processing: true,
           serverSide: true,
           responsive:true,
-          ajax: {"url": "<?=base_url()?>backend/deposit/json_add_deposit", "type": "POST"},
+          ajax: {"url": "<?=base_url()?>backend/deposit/json_all_deposit", "type": "POST"},
           columns: [
               {
                 "data": "id_deposit",
@@ -87,13 +85,8 @@ $(document).ready(function() {
               {"data":"status",
               "className" : "text-center",
                 render:function(data,type,row,meta){
-                    return '<span class="badge badge-warning badge-pill text-white"> Pending</span>';
+                    return '<span class="badge badge-info badge-pill text-white"> Tervefikasi</span>';
                 }
-              },
-              {
-                "data":"action",
-                "orderable": false,
-                "className" : "text-center text-white"
               },
           ],
           order: [[0, 'desc']],

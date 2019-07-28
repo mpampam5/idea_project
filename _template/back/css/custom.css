@@ -1439,6 +1439,8 @@
     right: 0;
   }
 
+}
 
-
+table.dataTable>tbody>tr.child ul.dtr-details{
+  width: 100%;
 }
