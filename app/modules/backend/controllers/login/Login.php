@@ -8,15 +8,17 @@ class Login extends CI_Controller{
   public function __construct()
   {
     parent::__construct();
-    if ($this->session->userdata('member_login')==true) {
-        redirect(site_url("backend/home"));
-    }
+
     $this->load->helper(array("backend/telegram"));
   }
 
   function index(){
     // $this->load->set_title("Login");
-    $this->load->view("login/index");
+    if ($this->session->userdata('member_login')==true) {
+        redirect(site_url("backend/home"),"refresh");
+    }else {
+      $this->load->view("login/index");
+    }
   }
 
 
