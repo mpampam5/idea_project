@@ -45,6 +45,7 @@ class Withdraw extends MY_Controller{
   function add_new_withdraw()
   {
     $data['button']  = 'add';
+    $data['balance'] = $this->balance->total_balance(sess('id_member'));
     $data['action']  = site_url("backend/withdraw/action_add_withdraw");
     $data['nominal'] = set_value("nominal");
     $this->template->view("content/withdraw/form_add_withdraw",$data,false);
@@ -54,7 +55,7 @@ class Withdraw extends MY_Controller{
   {
     if ($this->input->is_ajax_request()) {
         $json = array('success'=>false, 'alert'=>array());
-        $this->form_validation->set_rules('nominal', 'Ammount', 'xss_clean|required|numeric');
+        $this->form_validation->set_rules('nominal', 'Ammount', 'xss_clean|required|numeric|callback__cek_balance');
         // $this->form_validation->set_rules('keterangan', 'Keterangan', 'xss_clean');
         $this->form_validation->set_rules('password', 'Password', 'required|callback__cek_password',[
           "required" => "Silahkan masukkan password anda untuk memastikan bahwa anda benar pemilik akun <b>".profile("nama")."</b>",
@@ -121,6 +122,17 @@ class Withdraw extends MY_Controller{
           }
 
           echo json_encode($json);
+      }
+    }
+
+
+    function _cek_balance($str)
+    {
+      if ($str <= $this->balance->total_balance(sess('id_member'))) {
+          return true;
+      }else {
+          $this->form_validation->set_message('_cek_balance', 'Total BALANCE anda tidak mencukupi');
+          return false;
       }
     }
 

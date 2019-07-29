@@ -1,5 +1,6 @@
   <form action="<?=$action?>" id="form" autocomplete="off">
     <?php if ($button=="add"): ?>
+      <h4 class="text-primary">BALANCE : Rp. <?=format_rupiah($balance)?></h4>
       <p class="alert alert-warning">Harap Hubungi admin jika ada perubahan mengenai data Rekening Bank anda.</p>
       <p>Silahkan Masukkan Nominal yang akan anda Withdraw.</p>
       <?php else: ?>
