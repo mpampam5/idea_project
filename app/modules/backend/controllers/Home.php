@@ -14,7 +14,9 @@ class Home extends MY_Controller{
   function index()
   {
     $this->template->set_title('Home');
-    $data['deposit'] = $this->blance->deposit(sess('id_member'));
+    $data['balance'] = $this->balance->total_balance(sess('id_member'));
+    $data['deposit'] = $this->balance->deposit(sess('id_member'));
+    $data['withdraw'] = $this->balance->withdraw(sess('id_member'));
     $this->template->view('index',$data);
   }
 

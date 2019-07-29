@@ -44,7 +44,7 @@
       <div class="card-body">
         <p class="card-title text-md-center text-xl-left text-white">Withdraw</p>
         <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-          <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0">Rp.0</h3>
+          <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0">Rp. <?=format_rupiah($withdraw)?></h3>
         </div>
       </div>
     </div>
@@ -55,7 +55,7 @@
       <div class="card-body">
         <p class="card-title text-md-center text-xl-left text-white">Balance</p>
         <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-          <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0">Rp.150.000.000</h3>
+          <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0">Rp. <?=format_rupiah($balance)?></h3>
         </div>
       </div>
     </div>

@@ -11,7 +11,7 @@ class MY_Controller extends CI_Controller{
         redirect(site_url("adm-panel"));
     }
     // $this->load->config('my_config');
-    $this->load->library(array('adm-backend/template','form_validation','encrypt','blance'));
+    $this->load->library(array('adm-backend/template','form_validation','encrypt','balance'));
     $this->load->helper(array("adm_backend"));
   }
 

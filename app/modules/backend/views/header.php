@@ -238,8 +238,8 @@
             </a>
             <div class="collapse" id="withdraw-menu">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="<?=site_url("#")?>">Add Withdraw</a></li>
-                <li class="nav-item"> <a class="nav-link" href="<?=site_url("#")?>">All Withdraw</a></li>
+                <li class="nav-item"> <a class="nav-link" href="<?=site_url("backend/withdraw/add_withdraw")?>">Add Withdraw</a></li>
+                <li class="nav-item"> <a class="nav-link" href="<?=site_url("backend/withdraw/all_withdraw")?>">All Withdraw</a></li>
               </ul>
             </div>
           </li>
