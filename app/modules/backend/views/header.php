@@ -8,7 +8,7 @@
   <title><?=$title?></title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="<?=base_url()?>_template/back/vendors/ti-icons/css/themify-icons.css">
-  <link rel="stylesheet" href="<?=base_url()?>_template/back//vendors/font-awesome/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="<?=base_url()?>_template/back/vendors/font-awesome/css/font-awesome.min.css" />
   <link rel="stylesheet" href="<?=base_url()?>_template/back/vendors/css/vendor.bundle.base.css">
   <!-- endinject -->
   <!-- Plugin css for this page -->
@@ -187,6 +187,21 @@
               <span class="menu-title">crud</span>
             </a>
           </li> -->
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#pin-menu" aria-expanded="false" aria-controls="pin-menu">
+              <i class="fa fa-product-hunt menu-icon"></i>
+              <span class="menu-title">Transaksi PIN</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="pin-menu">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="<?=site_url("backend/pin/order_pin")?>">Beli PIN</a></li>
+                <li class="nav-item"> <a class="nav-link" href="<?=site_url("backend/pin/")?>">Daftar Order PIN</a></li>
+                <li class="nav-item"> <a class="nav-link" href="<?=site_url("backend/pin/")?>">Daftar PIN</a></li>
+              </ul>
+            </div>
+          </li>
+
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
               <i class="fa fa-users menu-icon"></i>
