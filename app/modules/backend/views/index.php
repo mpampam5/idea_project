@@ -29,7 +29,7 @@
 <div class="row">
 
   <div class="offset-md-2 col-md-4 grid-margin stretch-card">
-    <div class="card bg-success text-white">
+    <div class="card bg-primary text-white">
       <div class="card-body">
         <p class="card-title text-md-center text-xl-left text-white">Deposit</p>
         <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
@@ -50,7 +50,7 @@
     </div>
   </div>
 
-  <div class="offset-md-2 col-md-4 grid-margin stretch-card">
+  <div class="col-md-4 grid-margin stretch-card">
     <div class="card bg-success text-white">
       <div class="card-body">
         <p class="card-title text-md-center text-xl-left text-white">Balance</p>
@@ -62,7 +62,7 @@
   </div>
 
   <div class="col-md-4 grid-margin stretch-card">
-    <div class="card bg-primary text-white">
+    <div class="card bg-success text-white">
       <div class="card-body">
         <p class="card-title text-md-center text-xl-left text-white">Comission</p>
         <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
@@ -72,7 +72,30 @@
     </div>
   </div>
 
-  <div class="offset-md-2 col-md-4 grid-margin stretch-card">
+  <div class="col-md-4 grid-margin stretch-card">
+    <div class="card bg-success text-white">
+      <div class="card-body">
+        <p class="card-title text-md-center text-xl-left text-white">Status Stockis</p>
+        <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+          <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0">Gold</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-md-4 grid-margin stretch-card">
+    <div class="card bg-danger text-white">
+      <div class="card-body">
+        <p class="card-title text-md-center text-xl-left text-white">Referral lansung</p>
+        <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+          <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0">0 Orang</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4 grid-margin stretch-card">
     <div class="card bg-danger text-white">
       <div class="card-body">
         <p class="card-title text-md-center text-xl-left text-white">Group Left</p>
@@ -84,11 +107,45 @@
   </div>
 
   <div class="col-md-4 grid-margin stretch-card">
-    <div class="card bg-warning text-white">
+    <div class="card bg-danger text-white">
       <div class="card-body">
         <p class="card-title text-md-center text-xl-left text-white">Group Right</p>
         <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
           <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0">0 Orang</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-md-4 grid-margin stretch-card">
+    <div class="card bg-info text-white">
+      <div class="card-body">
+        <p class="card-title text-md-center text-xl-left text-white">Stock PIN</p>
+        <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+          <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0">0</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4 grid-margin stretch-card">
+    <div class="card bg-info text-white">
+      <div class="card-body">
+        <p class="card-title text-md-center text-xl-left text-white">PIN Terpakai</p>
+        <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+          <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0">0</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4 grid-margin stretch-card">
+    <div class="card bg-info text-white">
+      <div class="card-body">
+        <p class="card-title text-md-center text-xl-left text-white">PIN Order</p>
+        <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+          <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0">0</h3>
         </div>
       </div>
     </div>
