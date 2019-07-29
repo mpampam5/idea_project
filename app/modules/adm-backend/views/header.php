@@ -31,8 +31,8 @@
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <a class="navbar-brand brand-logo mr-5" href="<?=site_url('backend/index')?>"><img src="http://www.urbanui.com/justdo/template/images/logo.svg" class="mr-2" alt="logo"/></a>
-        <a class="navbar-brand brand-logo-mini" href="<?=site_url('backend/index')?>"><img src="http://www.urbanui.com/justdo/template/images/logo-mini.svg" alt="logo"/></a>
+        <a class="navbar-brand brand-logo mr-5" href="<?=site_url('adm-backend/home')?>"><img src="http://www.urbanui.com/justdo/template/images/logo.svg" class="mr-2" alt="logo"/></a>
+        <a class="navbar-brand brand-logo-mini" href="<?=site_url('adm-backend/home')?>"><img src="http://www.urbanui.com/justdo/template/images/logo-mini.svg" alt="logo"/></a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
         <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -90,7 +90,7 @@
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
           <li class="nav-item">
-            <a class="nav-link" href="<?=site_url('adm-backend/index')?>">
+            <a class="nav-link" href="<?=site_url('adm-backend/home')?>">
               <i class="ti-home menu-icon"></i>
               <span class="menu-title">Dashboard</span>
             </a>
@@ -107,6 +107,34 @@
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="<?=site_url("adm-backend/member/index/1")?>">Member ON</a></li>
                 <li class="nav-item"> <a class="nav-link" href="<?=site_url("adm-backend/member/index/0")?>">Member OFF</a></li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#deposit-menu" aria-expanded="false" aria-controls="deposit-menu">
+              <i class="fa fa-credit-card-alt menu-icon"></i>
+              <span class="menu-title">Deposit</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="deposit-menu">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="<?=site_url("adm-backend/deposit/deposit_pending")?>">Deposit Pending</a></li>
+                <li class="nav-item"> <a class="nav-link" href="<?=site_url("adm-backend/deposit/deposit_verifikasi")?>">Deposit Terverifikasi</a></li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#withdraw-menu" aria-expanded="false" aria-controls="withdraw-menu">
+              <i class="fa fa-credit-card menu-icon"></i>
+              <span class="menu-title">Withdraw</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="withdraw-menu">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="<?=site_url("#")?>">Add Withdraw</a></li>
+                <li class="nav-item"> <a class="nav-link" href="<?=site_url("#")?>">All Withdraw</a></li>
               </ul>
             </div>
           </li>

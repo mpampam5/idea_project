@@ -14,7 +14,8 @@ class Home extends MY_Controller{
   function index()
   {
     $this->template->set_title('Home');
-    $this->template->view('index');
+    $data['deposit'] = $this->blance->deposit(sess('id_member'));
+    $this->template->view('index',$data);
   }
 
 

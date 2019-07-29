@@ -1,5 +1,11 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
+function sess($str)
+{
+  $ci = get_instance();
+  return $ci->session->userdata($str);
+}
+
 
 function hitung_jumlah_referal($kode_referral)
 {
