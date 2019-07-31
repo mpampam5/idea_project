@@ -20,6 +20,7 @@ function cek_parent($id,$posisi){
                             ");
     if ($query->num_rows() > 0) {
         $str = '<h4>'.$query->row()->nama.'</h4>';
+        $str .= '<p class="text-white">Left '.$ci->btree->leftcount($query->row()->id_member).' | '.$ci->btree->rightcount($query->row()->id_member).' Right</p><p class="text-white">'.$ci->btree->allcount($query->row()->id_member).'</p>';
     }else {
         $str = '<a href="'.site_url("backend/pohon_jaringan/tambah/$id/$posisi").'" id="tambah" class="btn btn-info btn-sm"><i class="fa fa-plus text-white"></i></a>';
     }
@@ -104,6 +105,8 @@ function ambil_data_parent($id)
   $ci = get_instance();
   $query = $ci->db->get_where("trans_member",["id_member"=>$id]);
   if ($query->num_rows() > 0) {
-    return '<a href="'.site_url("backend/pohon_jaringan/show/".$query->row()->id_parent).'" id="show-parent" class="btn btn-sm btn-success"><i class="fa fa-arrow-up"></i> Show Parent</a>';
+    $str = '<p class="text-white">Left '.$ci->btree->leftcount($id).' | '.$ci->btree->rightcount($id).' Right</p><p class="text-white">'.$ci->btree->allcount($id).'</p>';
+    $str .='<a href="'.site_url("backend/pohon_jaringan/show/".$query->row()->id_parent).'" id="show-parent" class="btn btn-sm btn-success"><i class="fa fa-arrow-up"></i> Show Parent</a>';
+    return $str;
   }
 }

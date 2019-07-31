@@ -10,6 +10,7 @@ class Pohon_jaringan extends MY_Controller{
     parent::__construct();
     //Codeigniter : Write Less Do More
     $this->load->model('Pohon_model','model');
+    $this->load->library(array("btree"));
   }
 
   function index(){
@@ -165,6 +166,14 @@ class Pohon_jaringan extends MY_Controller{
                           ];
 
           $this->model->get_insert("trans_member",$trans_member);
+
+          if ($posisi=="kiri") {
+            $leave = array('l_mem' => $last_id_member);
+          }else {
+            $leave = array('r_mem' => $last_id_member);
+          }
+
+          $this->db->update("trans_member",$leave,["id_member" => $id_parent]);
 
           $json['alert'] = "Berhasil melakukan menambahkan member";
           $json['success'] = true;
