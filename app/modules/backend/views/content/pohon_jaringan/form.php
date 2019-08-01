@@ -227,7 +227,7 @@
       <!-- end data akun -->
 
       <div class="col-sm-12">
-        <a href="#" class="btn btn-primary btn-sm btn-secondary text-white"> Kembali</a>
+        <a href="<?=site_url("backend/pohon_jaringan")?>" class="btn btn-primary btn-sm btn-secondary text-white"> Kembali</a>
         <button type="submit" class="btn btn-primary btn-sm" name="submit" id="submit">Registrasi</button>
       </div>
 

@@ -65,7 +65,7 @@ class Pohon_jaringan extends MY_Controller{
     $this->form_validation->set_rules("kecamatan","Kecamatan","trim|xss_clean|required");
     $this->form_validation->set_rules("kelurahan","Kelurahan/Desa","trim|xss_clean|required");
     $this->form_validation->set_rules("alamat","Alamat Lengkap","trim|xss_clean|required");
-    $this->form_validation->set_rules("paket","Jenis Paket","trim|xss_clean|required");
+    $this->form_validation->set_rules("paket","Jenis Paket","trim|xss_clean|required|callback__cek_pin");
     $this->form_validation->set_rules("bank","Jenis Bank","trim|xss_clean|required");
     $this->form_validation->set_rules("no_rek","NO.rekening","trim|xss_clean|required|numeric");
     $this->form_validation->set_rules("nama_rekening","Nama Rekening","trim|xss_clean|required");
@@ -175,6 +175,35 @@ class Pohon_jaringan extends MY_Controller{
 
           $this->db->update("trans_member",$leave,["id_member" => $id_parent]);
 
+
+          if ($paket=="silver") {
+            $pins = 1;
+          }elseif ($paket=="gold") {
+            $pins = 3;
+          }elseif ($paket=="platinum") {
+            $pins = 7;
+          }else {
+            $pins = 0;
+          }
+
+
+          $query_pin = $this->model->query_cek_pin($pins);
+
+          foreach ($query_pin as $pin) {
+            $insert_trans_pin_pakai = array('serial_pin' => "SN".date('dmyhis'),
+                                            'id_pin_trans'  => $pin->id_pin_trans,
+                                            'id_member_pakai'  =>$last_id_member,
+                                            'tgl_aktivasi' => date('Y-m-d h:i:s'),
+                                            'status'  => "registrasi");
+            $this->model->get_insert("trans_pin_pakai",$insert_trans_pin_pakai);
+
+
+            $update_trans_pin = array('key_order_pin' => "KOP".date('dmyhis'),
+                                      'status'  => 'terpakai'
+                                      );
+            $this->db->update("trans_pin",$update_trans_pin,["id_pin_trans" => $pin->id_pin_trans]);
+          }
+
           $json['alert'] = "Berhasil menambahkan member";
           $json['success'] = true;
           $json['url'] = site_url("backend/pohon_jaringan");
@@ -199,7 +228,26 @@ class Pohon_jaringan extends MY_Controller{
         $this->form_validation->set_message('_cek_kode_ref', 'Kode referal yang anda masukkan tidak terdaftar');
         return false;
       }
+  }
 
+  function _cek_pin($str)
+  {
+    if ($str=="silver") {
+      $pin = 1;
+    }elseif ($str=="gold") {
+      $pin = 3;
+    }elseif ($str=="platinum") {
+      $pin = 7;
+    }else {
+      $pin = 0;
+    }
+
+    if ($this->balance->stok_pin(sess('id_member')) >= $pin) {
+      return true;
+    }else {
+      $this->form_validation->set_message('_cek_pin', 'Stok PIN tidak mencukupi, paket '.strtoupper($str).' memerlukan '.$pin.' PIN. Stok PIN anda <b class="text-primary">'.$this->balance->stok_pin(sess('id_member')).'</b>.');
+      return false;
+    }
   }
 
 
