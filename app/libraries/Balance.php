@@ -81,9 +81,61 @@ function total_transaksi_pin($id_member)
   return $query->total;
 }
 
+// CEK STOK PIN
+function stok_pin($id_member)
+{
+  $total = $this->cek_total_pin($id_member) - $this->cek_pin_terpakai($id_member);
+  return $total;
+}
+
+//CEK PIN TERPAKAI
+function cek_pin_terpakai($id_member)
+{
+  $ci =& get_instance();
+  $query = $ci->db->query("SELECT
+                            trans_order_pin.id_order_pin,
+                            trans_order_pin.id_member,
+                            trans_order_pin.kode_transaksi,
+                            trans_order_pin.status,
+                            trans_pin.id_pin_trans,
+                            trans_pin_pakai.id_trans_pin_terpakai,
+                            trans_pin_pakai.serial_pin
+                          FROM
+                            trans_order_pin
+                          INNER JOIN trans_pin ON
+                            trans_pin.id_order_pin = trans_order_pin.id_order_pin
+                          INNER JOIN trans_pin_pakai ON
+                            trans_pin_pakai.id_pin_trans = trans_pin.id_pin_trans
+                          WHERE
+                            trans_order_pin.status = 'approved'
+                          AND
+                            trans_order_pin.id_member = $id_member")
+                    ->num_rows();
+  return $query ;
+}
 
 
-
+// CEK semua PIN
+function cek_total_pin($id_member)
+{
+  $ci =& get_instance();
+  $query = $ci->db->query("SELECT
+                              trans_order_pin.id_order_pin,
+                              trans_order_pin.id_member,
+                              trans_order_pin.kode_transaksi,
+                              trans_order_pin.status,
+                              trans_pin.id_pin_trans
+                            FROM
+                              trans_order_pin
+                            INNER JOIN
+                              trans_pin ON trans_pin.id_order_pin = trans_order_pin.id_order_pin
+                            WHERE
+                              trans_order_pin.status = 'approved'
+                            AND
+                              trans_order_pin.id_member = $id_member")
+                    ->num_rows();
+  return $query ;
+}
 
 
 

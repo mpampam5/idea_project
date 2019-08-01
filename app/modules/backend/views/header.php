@@ -197,7 +197,7 @@
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="<?=site_url("backend/pin/order_pin")?>">Beli PIN</a></li>
                 <li class="nav-item"> <a class="nav-link" href="<?=site_url("backend/pin/list_order_pin")?>">Daftar Order PIN</a></li>
-                <li class="nav-item"> <a class="nav-link" href="<?=site_url("backend/pin/")?>">Daftar PIN</a></li>
+                <li class="nav-item"> <a class="nav-link" href="<?=site_url("backend/pin/list_pin")?>">Daftar PIN</a></li>
               </ul>
             </div>
           </li>

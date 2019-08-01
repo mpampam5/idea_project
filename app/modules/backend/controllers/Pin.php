@@ -81,15 +81,16 @@ class Pin extends MY_Controller{
           $last_id_order_pin = $this->db->insert_id();
           if ($sumber_dana=="balance") {
             for ($i=0; $i < $jumlah_pin  ; $i++) {
-            
-            $trans_pin = array('id_order_pin' => $last_id_order_pin,
-                                'status'      => "belum"
+
+            $trans_pin = array('id_order_pin'     => $last_id_order_pin,
+                               'kode_pin_trans'   => 'KPN-'.date('dmYhis'),
+                               'key_order_pin'    => 'KPN-'.date('dmYhis')."-$i",
                               );
             $this->model->get_insert("trans_pin",$trans_pin);
               }
           }
 
-          $json['alert'] = "Pembelian PIN Berhasil.";
+          $json['alert'] = "Transaksi Order PIN Berhasil.";
           $json['success'] =  true;
         }else {
           foreach ($_POST as $key => $value)
@@ -140,6 +141,21 @@ function json_list_order_pin()
   $this->load->library('Datatables');
   header('Content-Type: application/json');
   echo $this->model->json_order_pin();
+}
+
+
+function list_pin()
+{
+  $this->template->set_title("Daftar PIN");
+  $this->template->view("content/pin/list_pin");
+}
+
+
+function json_list_pin()
+{
+  $this->load->library('Datatables');
+  header('Content-Type: application/json');
+  echo $this->model->json_pin();
 }
 
 

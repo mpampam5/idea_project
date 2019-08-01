@@ -123,7 +123,7 @@
       <div class="card-body">
         <p class="card-title text-md-center text-xl-left text-white">Stock PIN</p>
         <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-          <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0">0</h3>
+          <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0"><?=$this->balance->stok_pin(sess('id_member'))?></h3>
         </div>
       </div>
     </div>
@@ -134,7 +134,7 @@
       <div class="card-body">
         <p class="card-title text-md-center text-xl-left text-white">PIN Terpakai</p>
         <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-          <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0">0</h3>
+          <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0"><?=$this->balance->cek_pin_terpakai(sess('id_member'))?></h3>
         </div>
       </div>
     </div>
