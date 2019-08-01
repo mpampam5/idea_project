@@ -26,7 +26,7 @@
 
         <hr>
 
-            <table id="table" class="table table-bordered">
+            <table id="table" class="table table-bordered" style="width:100%">
               <thead>
                 <tr class="bg-warning text-white">
                     <th width="10px">#</th>
@@ -80,7 +80,9 @@ $(document).ready(function() {
                 "visible":false
               },
               {"data":"tgl_order"},
-              {"data":"jumlah_pin"},
+              {"data":"jumlah_pin",
+                "class":"text-center"
+              },
               {"data":"jumlah_bayar",
                 render: function(data, type, row, meta){
                   return 'Rp. '+data;
@@ -91,10 +93,10 @@ $(document).ready(function() {
                   if (data=="balance") {
                     var str = `Pembelian Lansung Menggunakan Balance`;
                   }else {
-                    var str = `Tansfer Melalui BANK `+row.bank+` | AN:`+row.nama_rekening;
+                    var str = `Tansfer Melalui <b>`+row.bank+`</b> | AN : <b>`+row.nama_rekening+`</b>`;
                   }
 
-                  return str;
+                  return '<p>'+str+'</p>';
                 }
 
               },

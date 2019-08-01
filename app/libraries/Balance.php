@@ -5,9 +5,23 @@
  */
 class Balance {
 
+function total_balance($id_member)
+  {
+    $ci =& get_instance();
 
+    $deposit       = $this->deposit($id_member);
+    $withdraw      = $this->withdraw($id_member);
+    $transaksi_pin = $this->total_transaksi_pin($id_member);
+
+    //hitung
+    $balance = $deposit - $withdraw - $transaksi_pin;
+    return $balance;
+  }
+
+
+
+// menghitung jumlah deposit yang terverifikasi
 function deposit($id_member){
-
   $ci =& get_instance();
   $query = $ci->db->select(" trans_member_deposit.id_deposit,
                               trans_member_deposit.id_member,
@@ -26,7 +40,7 @@ function deposit($id_member){
 }
 
 
-
+//Menghitung total withdraw yang terverifikasi
 function withdraw($id_member){
 
   $ci =& get_instance();
@@ -47,15 +61,24 @@ function withdraw($id_member){
 }
 
 
-function total_balance($id_member)
+// menghitung jumlah transaksi pin berdasarkan jumlah bayar menggunakan balance
+function total_transaksi_pin($id_member)
 {
   $ci =& get_instance();
-
-  $deposit  = $this->deposit($id_member);
-  $withdraw = $this->withdraw($id_member);
-
-  $balance = $deposit - $withdraw;
-  return $balance;
+  $query = $ci->db->select("trans_order_pin.id_order_pin,
+                            trans_order_pin.id_member,
+                            trans_order_pin.kode_transaksi,
+                            SUM(trans_order_pin.jumlah_bayar) AS total,
+                            trans_order_pin.sumber_dana,
+                            trans_order_pin.id_config_bank,
+                            trans_order_pin.tgl_order,
+                            trans_order_pin.status")
+                   ->from('trans_order_pin')
+                   ->where("trans_order_pin.id_member",$id_member)
+                   ->where("trans_order_pin.sumber_dana","balance")
+                   ->get()
+                   ->row();
+  return $query->total;
 }
 
 

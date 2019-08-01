@@ -77,6 +77,18 @@ class Pin extends MY_Controller{
 
           $this->model->get_insert("trans_order_pin",$data);
 
+
+          $last_id_order_pin = $this->db->insert_id();
+          if ($sumber_dana=="balance") {
+            for ($i=0; $i < $jumlah_pin  ; $i++) {
+            
+            $trans_pin = array('id_order_pin' => $last_id_order_pin,
+                                'status'      => "belum"
+                              );
+            $this->model->get_insert("trans_pin",$trans_pin);
+              }
+          }
+
           $json['alert'] = "Pembelian PIN Berhasil.";
           $json['success'] =  true;
         }else {
