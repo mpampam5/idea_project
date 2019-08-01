@@ -175,7 +175,7 @@ class Pohon_jaringan extends MY_Controller{
 
           $this->db->update("trans_member",$leave,["id_member" => $id_parent]);
 
-          $json['alert'] = "Berhasil melakukan menambahkan member";
+          $json['alert'] = "Berhasil menambahkan member";
           $json['success'] = true;
           $json['url'] = site_url("backend/pohon_jaringan");
         }else {
@@ -296,6 +296,16 @@ function kabupaten(){
                                 "id_member"=>$id_member_verif
                             ];
       $this->model->get_insert("trans_member",$insert_trans_parent);
+
+
+      if ($posisi=="kiri") {
+        $leave = array('l_mem' => $id_member_verif);
+      }else {
+        $leave = array('r_mem' => $id_member_verif);
+      }
+
+      $this->db->update("trans_member",$leave,["id_member" => $id_parent]);
+
       $json['alert'] = "Member berhasil di verifikasi";
       $json['url']  = site_url("backend/pohon_jaringan/show/$id_parent");
 

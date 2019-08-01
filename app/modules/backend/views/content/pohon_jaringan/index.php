@@ -12,11 +12,15 @@
 
 <div class="row">
 
-        <hr>
+  <?php if ($root->id_member!=$this->session->userdata('id_member')): ?>
+  <div class="col-md-12 mb-4">
+    <a href="<?=site_url("backend/pohon_jaringan")?>" class="btn btn-info btn-sm text-white">Back To Top Parent</a>
+  </div>
+  <?php endif; ?>
 
 
 
-          <div class="col-sm-12 content-root">
+          <div class="col-sm-12 content-root mt-5">
             <table id="table-content-pohon">
               <!-- level1 -->
               <tr>
@@ -26,6 +30,8 @@
 
                     <?php if ($root->id_member!=$this->session->userdata('id_member')): ?>
                       <?=ambil_data_parent($root->id_member)?>
+                      <?php else: ?>
+                      <?= '<p class="text-white">Left '.$this->btree->leftcount($root->id_member).' | '.$this->btree->rightcount($root->id_member).' Right</p><p class="text-white">'.$this->btree->allcount($root->id_member).'</p>';?>
                     <?php endif; ?>
 
                   </div>
