@@ -295,11 +295,7 @@
           <div class="form-group row">
             <label class="col-sm-3 col-form-label">Paket</label>
             <div class="col-sm-9">
-              <select class="form-control" name="paket" id="paket" style="color:#495057">
-                <option <?=($row->paket=="silver")?"selected":""?> value="silver">SILVER</option>
-                <option <?=($row->paket=="gold")?"selected":""?> value="gold">GOLD</option>
-                <option <?=($row->paket=="platinum")?"selected":""?> value="platinum">PLATINUM</option>
-              </select>
+              <input type="text" name="paket" id="paket" class="form-control" value="<?=paket($row->paket,'paket')?>" readonly>
             </div>
           </div>
 

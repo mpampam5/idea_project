@@ -53,6 +53,18 @@ class Member extends MY_Controller{
   }
 
 
+  function delete($id)
+  {
+    if ($this->input->is_ajax_request()) {
+        $this->model->is_delete("tb_member",["id_member"=>$id]);
+        $this->model->is_delete("tb_auth",["id_personal"=>$id,"level"=>"member"]);
+        $json['alert'] = "BErhasil Menghapus";
+        $json['success'] =true;
+        echo json_encode($json);
+    }
+  }
+
+
 
 
 

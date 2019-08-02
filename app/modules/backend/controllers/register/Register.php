@@ -45,7 +45,7 @@ class Register extends CI_Controller{
     $this->form_validation->set_rules("kecamatan","Kecamatan","trim|xss_clean|required");
     $this->form_validation->set_rules("kelurahan","Kelurahan/Desa","trim|xss_clean|required");
     $this->form_validation->set_rules("alamat","Alamat Lengkap","trim|xss_clean|required");
-    $this->form_validation->set_rules("paket","Jenis Paket","trim|xss_clean|required");
+    $this->form_validation->set_rules("paket","Jenis Paket","trim|xss_clean|required|numeric");
     $this->form_validation->set_rules("bank","Jenis Bank","trim|xss_clean|required");
     $this->form_validation->set_rules("no_rek","NO.rekening","trim|xss_clean|required|numeric");
     $this->form_validation->set_rules("nama_rekening","Nama Rekening","trim|xss_clean|required");
@@ -96,6 +96,7 @@ class Register extends CI_Controller{
 
             $insert_member = [  "kode_referral" => "ref_$username",
                                 "referral_from" => $kode_referral ,
+                                "kode_register" => "MEM".date('dmYhis'),
                                 "nik"           => $nik,
                                 "nama"          => $nama,
                                 "telepon"       => $telepon,
@@ -168,19 +169,20 @@ class Register extends CI_Controller{
   function _cek_nik($str,$tgl_lahir)
   {
     if ($tgl_lahir!="") {
-      $tgl_array = explode("/",$tgl_lahir);
-      $tgl = $tgl_array[0];
-      $bulan = $tgl_array[1];
-      $tahun = substr($tgl_array[2],-2);
-
-      $gabung = $tgl."".$bulan."".$tahun;
-      $nik = substr($str,-10,-4);
-      if ($gabung==$nik) {
-          return true;
-      }else {
-          $this->form_validation->set_message('_cek_nik', 'Nik/No.KTP tidak valid.');
-          return false;
-      }
+      // $tgl_array = explode("/",$tgl_lahir);
+      // $tgl = $tgl_array[0];
+      // $bulan = $tgl_array[1];
+      // $tahun = substr($tgl_array[2],-2);
+      //
+      // $gabung = $tgl."".$bulan."".$tahun;
+      // $nik = substr($str,-10,-4);
+      // if ($gabung==$nik) {
+      //     return true;
+      // }else {
+      //     $this->form_validation->set_message('_cek_nik', 'Nik/No.KTP tidak valid.');
+      //     return false;
+      // }
+      return true;
     }else {
       return true;
     }

@@ -30,7 +30,7 @@ class Pin extends MY_Controller{
         $sumber_dana  = $this->input->post("sumber_dana",true);
         $stocklist    = $this->input->post("stocklist",true);
 
-        $jumlah_bayar = ($jumlah_pin*150000);
+        $jumlah_bayar = ($jumlah_pin*config_all('harga_pin'));
 
         if ($sumber_dana=="balance") {
           $id_config_bank = null;

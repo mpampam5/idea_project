@@ -38,4 +38,11 @@ class MY_Model extends CI_Model{
 
     }
 
+
+    function is_delete($table,$where)
+    {
+      return $this->db->where($where)
+                      ->delete($table);
+    }
+
 } //end class model

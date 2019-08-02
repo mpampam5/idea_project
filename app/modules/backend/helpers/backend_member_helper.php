@@ -8,6 +8,15 @@ function sess($str)
 }
 
 
+function config_all($field)
+{
+  $ci = get_instance();
+  $query = $ci->db->get_where('config_all',['id_config'=>1])
+                  ->row();
+  return $query->$field;
+}
+
+
 function profile($field)
 {
   $ci = get_instance();
@@ -50,6 +59,15 @@ function profile($field)
 }
 
 
+function paket($id,$field)
+{
+  $ci = get_instance();
+  $query = $ci->db->get_where('config_paket',['id_paket'=>$id])
+                  ->row();
+  return $query->$field;
+}
+
+
 function wilayah_indonesia($table,$where){
 
   $ci = get_instance();
@@ -70,7 +88,7 @@ function profile_member($id_member,$field)
   if ($query->num_rows() > 0) {
       return $query->row()->$field;
   }else {
-    return "data member tidak di temukan";
+    return false;
   }
 }
 

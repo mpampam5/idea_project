@@ -60,11 +60,13 @@ function json_pin()
                             trans_pin_pakai.id_member_pakai,
                             trans_pin_pakai.status,
                             tb_member.nama,
-                            tb_member.paket");
+                            tb_member.paket AS pakets,
+                            config_paket.paket");
   $this->datatables->from("trans_order_pin");
   $this->datatables->join("trans_pin","trans_pin.id_order_pin = trans_order_pin.id_order_pin");
   $this->datatables->join("trans_pin_pakai","trans_pin_pakai.id_pin_trans = trans_pin.id_pin_trans","left");
   $this->datatables->join("tb_member","tb_member.id_member = trans_pin_pakai.id_member_pakai","left");
+  $this->datatables->join("config_paket","config_paket.id_paket = tb_member.paket","left");
   $this->datatables->where("trans_order_pin.id_member",sess('id_member'));
   $this->datatables->group_by(array('trans_pin.key_order_pin','trans_pin_pakai.serial_pin'));
   return $this->datatables->generate();

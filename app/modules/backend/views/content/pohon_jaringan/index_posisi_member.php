@@ -1,3 +1,14 @@
+<?php
+  if (profile_member($id_member_verif,"paket")!=false) {
+    $paket = profile_member($id_member_verif,"paket");
+    $pin = paket($paket,'pin');
+  }else {
+    redirect(site_url("backend/member/menunggu_verifikasi"),'refresh');
+  }
+
+ ?>
+<?php if ($this->balance->stok_pin(sess('id_member')) >=$pin): ?>
+
 <link rel="stylesheet" href="<?=base_url()?>_template/back/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
 <script src="<?=base_url()?>_template/back/vendors/datatables.net/jquery.dataTables.js"></script>
 <script src="<?=base_url()?>_template/back/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
@@ -204,3 +215,11 @@
 
 
       </script>
+
+
+
+<?php else: ?>
+
+<h3>Mohon Maaf PIN Anda Tidak Menuckupi, Jangan Memaksa. silahkan deposit</h3>
+
+<?php endif; ?>

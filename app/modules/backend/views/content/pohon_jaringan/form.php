@@ -132,9 +132,10 @@
                 <label for="">Pilihan Paket</label>
                 <select class="form-control-sm form-control" name="paket" id="paket">
                   <option value="">-- Pilih --</option>
-                  <option value="silver">Silver</option>
-                  <option value="gold">Gold</option>
-                  <option value="platinum">Platinum</option>
+                  <?php $paket = $this->db->get('config_paket') ?>
+                  <?php foreach ($paket->result() as $paket): ?>
+                    <option value="<?=$paket->id_paket?>"><?=$paket->paket?></option>
+                  <?php endforeach; ?>
                 </select>
               </div>
             </div>

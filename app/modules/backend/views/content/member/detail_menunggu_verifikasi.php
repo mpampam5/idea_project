@@ -32,7 +32,7 @@
 
               <tr>
                 <td>Waktu Registrasi</td>
-                <td><?=date("d/m/Y",strtotime($row->created))?></td>
+                <td><?=date("d/m/Y h:s",strtotime($row->created))?></td>
               </tr>
 
               <tr>
@@ -117,7 +117,7 @@
               </tr>
 
               <tr>
-                <td colspan="2" class="bg-primary text-white"><h5>Data Akun</h5></td>
+                <td colspan="2" class="bg-warning text-white"><h5>Data Akun</h5></td>
               </tr>
 
               <tr>
@@ -140,8 +140,8 @@
               <tr>
                 <td colspan="2">
                   <a href="<?=site_url("backend/member/menunggu_verifikasi")?>" class="btn btn-secondary text-white btn-sm"> Kembali</a>
-                  <a href="<?=site_url("backend/pohon_jaringan/cek_verifikasi/$row->id_member/$row->paket")?>" id="verifikasi" class="btn btn-success btn-sm"> Verifikasi</a>
-                  <a href="#" id="hapus" class="btn btn-danger btn-sm"> Hapus</a>
+                  <a href="<?=site_url("backend/pohon_jaringan/cek_verifikasi/$row->id_member/$row->pakets")?>" id="verifikasi" class="btn btn-success btn-sm"> Verifikasi</a>
+                  <a href="<?=site_url("backend/member/delete/$row->id_member")?>" id="delete" class="btn btn-danger btn-sm"> Hapus</a>
                 </td>
               </tr>
 
@@ -181,13 +181,13 @@ $(document).on('click','#ya-hapus',function(e){
           success:function(json){
             $('#modalGue').modal('hide');
             $.toast({
-              text: json.alert,
+              text: "success",
               showHideTransition: 'slide',
               icon: json.success,
               loaderBg: '#f96868',
               position: 'bottom-right',
               afterHidden: function () {
-                  $('#table').DataTable().ajax.reload();
+                  window.location.href = "<?=site_url('backend/member/menunggu_verifikasi')?>"
               }
             });
 

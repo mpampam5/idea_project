@@ -75,7 +75,7 @@ class Profile extends MY_Controller{
         $kecamatan          = $this->input->post("kecamatan",true);
         $kelurahan          = $this->input->post("kelurahan",true);
         $alamat             = $this->input->post("alamat",true);
-        $paket              = $this->input->post("paket",true);
+        // $paket              = $this->input->post("paket",true);
         $bank               = $this->input->post("bank",true);
         $no_rek             = $this->input->post("no_rek",true);
         $nama_rekening      = $this->input->post("nama_rekening",true);
@@ -98,7 +98,7 @@ class Profile extends MY_Controller{
         $this->form_validation->set_rules("kecamatan","Kecamatan","trim|xss_clean|required");
         $this->form_validation->set_rules("kelurahan","Kelurahan/Desa","trim|xss_clean|required");
         $this->form_validation->set_rules("alamat","Alamat Lengkap","trim|xss_clean|required");
-        $this->form_validation->set_rules("paket","Jenis Paket","trim|xss_clean|required");
+        // $this->form_validation->set_rules("paket","Jenis Paket","trim|xss_clean|required");
         $this->form_validation->set_rules("bank","Jenis Bank","trim|xss_clean|required");
         $this->form_validation->set_rules("no_rek","NO.rekening","trim|xss_clean|required|numeric");
         $this->form_validation->set_rules("nama_rekening","Nama Rekening","trim|xss_clean|required");
@@ -120,8 +120,8 @@ class Profile extends MY_Controller{
                     "kecamatan"     => $kecamatan,
                     "kelurahan"     => $kelurahan,
                     "alamat"        => $alamat,
-                    "paket"         => $paket,
-                    "created"       => date("Y-m-d h:i:s")
+                    // "paket"         => $paket,
+                    "modified"       => date("Y-m-d h:i:s")
                     ];
           $this->model->get_update("tb_member",$data,["id_member"=>$id_member]);
 

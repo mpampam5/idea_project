@@ -57,7 +57,7 @@ class Member_model extends MY_Model{
                               tb_member.kode_referral,
                               tb_member.posisi,
                               tb_member.referral_from,
-                              tb_member.paket,
+                              tb_member.paket AS pakets,
                               tb_member.is_verifikasi,
                               tb_member.created,
                               tb_member.is_active,
@@ -67,11 +67,13 @@ class Member_model extends MY_Model{
                               trans_member_rek.kota_pembukaan_rekening,
                               tb_auth.username,
                               tb_auth.`level`,
-                              ref_bank.bank")
+                              ref_bank.bank,
+                              config_paket.paket")
                       ->from("tb_member")
                       ->join("trans_member_rek","trans_member_rek.id_member = tb_member.id_member")
                       ->join("tb_auth","tb_auth.id_personal = tb_member.id_member")
                       ->join("ref_bank","ref_bank.id = trans_member_rek.id_bank")
+                      ->join("config_paket","config_paket.id_paket = tb_member.paket")
                       ->where($where)
                       ->get()
                       ->row();

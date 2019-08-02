@@ -118,6 +118,7 @@ class Pohon_jaringan extends MY_Controller{
 
             $insert_member = [  "kode_referral" => "ref_$username",
                                 "referral_from" => $kode_referral ,
+                                "kode_register" => "MEM".date('dmYhis'),
                                 "nik"           => $nik,
                                 "nama"          => $nama,
                                 "telepon"       => $telepon,
@@ -176,15 +177,7 @@ class Pohon_jaringan extends MY_Controller{
           $this->db->update("trans_member",$leave,["id_member" => $id_parent]);
 
 
-          if ($paket=="silver") {
-            $pins = 1;
-          }elseif ($paket=="gold") {
-            $pins = 3;
-          }elseif ($paket=="platinum") {
-            $pins = 7;
-          }else {
-            $pins = 0;
-          }
+          $pins = paket($paket,'pin');
 
 
           $query_pin = $this->model->query_cek_pin($pins);
@@ -232,20 +225,12 @@ class Pohon_jaringan extends MY_Controller{
 
   function _cek_pin($str)
   {
-    if ($str=="silver") {
-      $pin = 1;
-    }elseif ($str=="gold") {
-      $pin = 3;
-    }elseif ($str=="platinum") {
-      $pin = 7;
-    }else {
-      $pin = 0;
-    }
+    $pin = paket($str,'pin');
 
     if ($this->balance->stok_pin(sess('id_member')) >= $pin) {
       return true;
     }else {
-      $this->form_validation->set_message('_cek_pin', 'Stok PIN tidak mencukupi, paket '.strtoupper($str).' memerlukan '.$pin.' PIN. Stok PIN anda <b class="text-primary">'.$this->balance->stok_pin(sess('id_member')).'</b>.');
+      $this->form_validation->set_message('_cek_pin', 'Stok PIN tidak mencukupi, paket '.paket($str,'paket').' memerlukan '.$pin.' PIN. STOK PIN anda <b class="text-primary">'.$this->balance->stok_pin(sess('id_member')).'</b>');
       return false;
     }
   }
@@ -314,23 +299,18 @@ function kabupaten(){
   ///member
   function cek_verifikasi($id_member="",$paket="")
   {
-    if ($paket=="silver") {
-      $pin = 1;
-    }elseif ($paket=="gold") {
-      $pin = 3;
-    }elseif ($paket=="platinum") {
-      $pin = 7;
-    }else {
-      $pin = 0;
-    }
+
+    $pin = paket($paket,'pin');
 
     if ($this->balance->stok_pin(sess('id_member')) >= $pin) {
       echo "<p class='text-center'> APA ANDA YAKIN INGIN MEMVERIFIKASI?</p>";
+      echo "<p></p>";
       echo "<hr>";
       echo "<a  class='btn btn-success btn-md'  href=".site_url("backend/pohon_jaringan/verifikasi_member/$id_member").">Ya, saya yakin</a>
             <button type='button' class='btn btn-light btn-md' data-dismiss='modal'>Batal</button>";
     }else {
-      echo "<p class='text-center'>PIN Anda Tidak Mencukupi. untuk paket <b>".strtoupper($paket)."</b> memerlukan $pin PIN. Total PIN anda ".$this->balance->stok_pin(sess('id_member'))."</p>";
+      echo "<p class='text-center'>PIN Anda Tidak Mencukupi. untuk paket <b>".strtoupper(paket($paket,'paket'))."</b> memerlukan $pin PIN. Total PIN anda ".$this->balance->stok_pin(sess('id_member'))."</p>";
+      echo "<p class='text-center'>Silahkan Order PIN terlebih dahulu.</p>";
       echo "<hr>";
       echo "<button type='button' class='btn btn-secondary text-white btn-md btn-block' data-dismiss='modal'>Tutup</button>";
     }
@@ -359,29 +339,54 @@ function kabupaten(){
 
   function verifikasi_member_action($id_parent,$posisi,$id_member_verif){
     if ($this->input->is_ajax_request()) {
+      $paket = profile_member($id_member_verif,"paket");
+      $pins = paket($paket,'pin');
 
-      $update_member = [ "is_verifikasi" =>"1",
-                         "posisi" => $posisi,
-                         "created" => date("Y-m-d h:i:s")
-                        ];
-      $this->model->get_update("tb_member",$update_member,["id_member"=>$id_member_verif]);
+      if ($this->balance->stok_pin(sess('id_member')) >= $pins) {
+        $update_member = [ "is_verifikasi" =>"1",
+                           "posisi" => $posisi,
+                           "created" => date("Y-m-d h:i:s")
+                          ];
+        $this->model->get_update("tb_member",$update_member,["id_member"=>$id_member_verif]);
 
-      $insert_trans_parent = [ "id_parent"=>$id_parent,
-                                "id_member"=>$id_member_verif
-                            ];
-      $this->model->get_insert("trans_member",$insert_trans_parent);
+        $insert_trans_parent = [ "id_parent"=>$id_parent,
+                                  "id_member"=>$id_member_verif
+                              ];
+        $this->model->get_insert("trans_member",$insert_trans_parent);
 
 
-      if ($posisi=="kiri") {
-        $leave = array('l_mem' => $id_member_verif);
+        if ($posisi=="kiri") {
+          $leave = array('l_mem' => $id_member_verif);
+        }else {
+          $leave = array('r_mem' => $id_member_verif);
+        }
+
+        $this->db->update("trans_member",$leave,["id_member" => $id_parent]);
+
+        $query_pin = $this->model->query_cek_pin($pins);
+
+        foreach ($query_pin as $pin) {
+          $insert_trans_pin_pakai = array('serial_pin' => "SN".date('dmyhis'),
+                                          'id_pin_trans'  => $pin->id_pin_trans,
+                                          'id_member_pakai'  =>$id_member_verif,
+                                          'tgl_aktivasi' => date('Y-m-d h:i:s'),
+                                          'status'  => "registrasi");
+          $this->model->get_insert("trans_pin_pakai",$insert_trans_pin_pakai);
+
+
+          $update_trans_pin = array('key_order_pin' => "KOP".date('dmyhis'),
+                                    'status'  => 'terpakai'
+                                    );
+          $this->db->update("trans_pin",$update_trans_pin,["id_pin_trans" => $pin->id_pin_trans]);
+        }
+
+
+        $json['alert'] = "Member berhasil di verifikasi";
+        $json['url']  = site_url("backend/pohon_jaringan/show/$id_parent");
       }else {
-        $leave = array('r_mem' => $id_member_verif);
+        $json['alert'] = "Gagal Memverifikasi member, PIN ANDA TIDAK MENCUKUPI";
+        $json['url']  = site_url("backend/member/menunggu_verifikasi");
       }
-
-      $this->db->update("trans_member",$leave,["id_member" => $id_parent]);
-
-      $json['alert'] = "Member berhasil di verifikasi";
-      $json['url']  = site_url("backend/pohon_jaringan/show/$id_parent");
 
       echo json_encode($json);
     }

@@ -75,6 +75,7 @@
                           echo '<p class="text-white">Left '.$this->btree->leftcount($cucu['id']).' | '.$this->btree->rightcount($cucu['id']).' Right</p><p class="text-white">'.$this->btree->allcount($cucu['id']).'</p>';
                         echo '<a href="'.base_url("backend/pohon_jaringan/show").'/'.$cucu['id'].'" id="show-child" class="btn btn-sm btn-success"> <i class="fa fa-arrow-circle-o-down"></i> Show Child</a>';
                       }else {
+                        echo '<p class="text-white">Left '.$this->btree->leftcount($cucu['id']).' | '.$this->btree->rightcount($cucu['id']).' Right</p><p class="text-white">'.$this->btree->allcount($cucu['id']).'</p>';
                         echo '<a href="'.base_url("backend/pohon_jaringan/show").'/'.$cucu['id'].'" id="show-child" class="btn btn-sm btn-success"> <i class="fa fa-arrow-circle-o-down"></i> Add Child</a>';
                       }
                       }else {
@@ -96,6 +97,7 @@
                             echo '<p class="text-white">Left '.$this->btree->leftcount($cucu['id']).' | '.$this->btree->rightcount($cucu['id']).' Right</p><p class="text-white">'.$this->btree->allcount($cucu['id']).'</p>';
                           echo '<a href="'.base_url("backend/pohon_jaringan/show").'/'.$cucu['id'].'" id="show-child" class="btn btn-sm btn-success"> <i class="fa fa-arrow-circle-o-down"></i> Show Child</a>';
                         }else {
+                          echo '<p class="text-white">Left '.$this->btree->leftcount($cucu['id']).' | '.$this->btree->rightcount($cucu['id']).' Right</p><p class="text-white">'.$this->btree->allcount($cucu['id']).'</p>';
                           echo '<a href="'.base_url("backend/pohon_jaringan/show").'/'.$cucu['id'].'" id="show-child" class="btn btn-sm btn-success"> <i class="fa fa-arrow-circle-o-down"></i> Add Child</a>';
                         }
                         }else {
@@ -120,6 +122,7 @@
                               echo '<p class="text-white">Left '.$this->btree->leftcount($cucu['id']).' | '.$this->btree->rightcount($cucu['id']).' Right</p><p class="text-white">'.$this->btree->allcount($cucu['id']).'</p>';
                               echo '<a href="'.base_url("backend/pohon_jaringan/show").'/'.$cucu['id'].'" id="show-child" class="btn btn-sm btn-success"> <i class="fa fa-arrow-circle-o-down"></i> Show Child</a>';
                             }else {
+                              echo '<p class="text-white">Left '.$this->btree->leftcount($cucu['id']).' | '.$this->btree->rightcount($cucu['id']).' Right</p><p class="text-white">'.$this->btree->allcount($cucu['id']).'</p>';
                               echo '<a href="'.base_url("backend/pohon_jaringan/show").'/'.$cucu['id'].'" id="show-child" class="btn btn-sm btn-success"> <i class="fa fa-arrow-circle-o-down"></i> Add Child</a>';
                             }
                           }else {
@@ -143,6 +146,7 @@
                               echo '<p class="text-white">Left '.$this->btree->leftcount($cucu['id']).' | '.$this->btree->rightcount($cucu['id']).' Right</p><p class="text-white">'.$this->btree->allcount($cucu['id']).'</p>';
                               echo '<a href="'.base_url("backend/pohon_jaringan/show").'/'.$cucu['id'].'" id="show-child" class="btn btn-sm btn-success"> <i class="fa fa-arrow-circle-o-down"></i> Show Child</a>';
                             }else {
+                              echo '<p class="text-white">Left '.$this->btree->leftcount($cucu['id']).' | '.$this->btree->rightcount($cucu['id']).' Right</p><p class="text-white">'.$this->btree->allcount($cucu['id']).'</p>';
                               echo '<a href="'.base_url("backend/pohon_jaringan/show").'/'.$cucu['id'].'" id="show-child" class="btn btn-sm btn-success"> <i class="fa fa-arrow-circle-o-down"></i> Add Child</a>';
                             }
                           }else {

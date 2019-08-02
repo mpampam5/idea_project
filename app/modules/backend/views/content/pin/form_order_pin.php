@@ -22,7 +22,7 @@
                 <div class="input-group">
                   <input type="text" class="form-control" placeholder="Jumlah Pin" id="jml_pin" name="jumlah_pin">
                   <div class="input-group-append">
-                    <span class="input-group-text text-primary">Harga Satuan PIN Rp. 150,000</span>
+                    <span class="input-group-text text-primary">Harga Satuan PIN <?=format_rupiah(config_all('harga_pin'))?></span>
                   </div>
                 </div>
                 <div id="jumlah_pin"></div>
@@ -179,9 +179,9 @@ $(document).ready(function(){
       $("#total_bayar").val("");
       $("#pembayaran").val("");
     }else {
-      var total = (me*150000);
+      var total = (me*<?=config_all('harga_pin')?>);
       $("#pembayaran").val(total);
-      $("#total_bayar").val("Rp. "+parseInt(total).toLocaleString());
+      $("#total_bayar").val("Rp. "+parseInt(total).toLocaleString()+".00");
       $("#jumlah_pin").closest('.form-group').find('.text-danger').remove();
     }
   });
