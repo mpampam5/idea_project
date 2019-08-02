@@ -84,7 +84,7 @@ $(document).ready(function() {
                  if (data==null) {
                      var str = '<p class="text-center"> - </p>';
                  }else {
-                     var str = '<b>'+data+'</b>&nbsp;|&nbsp;<b>'+row.paket.toUpperCase()+'</b>';
+                     var str = '<b>'+data+'</b>&nbsp;|&nbsp;<b class="text-danger">'+row.paket.toUpperCase()+'</b>';
                  }
 
                  return str;
@@ -121,7 +121,7 @@ $(document).ready(function() {
 
 
           ],
-          order: [[0, 'desc']],
+          order: [[3, 'asc'],[0,'desc']],
       });
 });
 
