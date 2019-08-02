@@ -312,6 +312,32 @@ function kabupaten(){
 
 
   ///member
+  function cek_verifikasi($id_member="",$paket="")
+  {
+    if ($paket=="silver") {
+      $pin = 1;
+    }elseif ($paket=="gold") {
+      $pin = 3;
+    }elseif ($paket=="platinum") {
+      $pin = 7;
+    }else {
+      $pin = 0;
+    }
+
+    if ($this->balance->stok_pin(sess('id_member')) >= $pin) {
+      echo "<p class='text-center'> APA ANDA YAKIN INGIN MEMVERIFIKASI?</p>";
+      echo "<hr>";
+      echo "<a  class='btn btn-success btn-md'  href=".site_url("backend/pohon_jaringan/verifikasi_member/$id_member").">Ya, saya yakin</a>
+            <button type='button' class='btn btn-light btn-md' data-dismiss='modal'>Batal</button>";
+    }else {
+      echo "<p class='text-center'>PIN Anda Tidak Mencukupi. untuk paket <b>".strtoupper($paket)."</b> memerlukan $pin PIN. Total PIN anda ".$this->balance->stok_pin(sess('id_member'))."</p>";
+      echo "<hr>";
+      echo "<button type='button' class='btn btn-secondary text-white btn-md btn-block' data-dismiss='modal'>Tutup</button>";
+    }
+
+  }
+
+
   function verifikasi_member($id_member=""){
     if ($id_member!="") {
       // cek apakah id member sudah terverifikasi

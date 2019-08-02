@@ -140,7 +140,7 @@
               <tr>
                 <td colspan="2">
                   <a href="<?=site_url("backend/member/menunggu_verifikasi")?>" class="btn btn-secondary text-white btn-sm"> Kembali</a>
-                  <a href="<?=site_url("backend/pohon_jaringan/verifikasi_member/$row->id_member")?>" id="verifikasi" class="btn btn-success btn-sm"> Verifikasi</a>
+                  <a href="<?=site_url("backend/pohon_jaringan/cek_verifikasi/$row->id_member/$row->paket")?>" id="verifikasi" class="btn btn-success btn-sm"> Verifikasi</a>
                   <a href="#" id="hapus" class="btn btn-danger btn-sm"> Hapus</a>
                 </td>
               </tr>
@@ -203,10 +203,7 @@ $(document).on("click","#verifikasi",function(e){
                     .removeClass('modal-md')
                     .addClass('modal-sm');
   $("#modalTitle").text('Konfirmasi Verifikasi Member');
-  $('#modalContent').html(`<p>Apakah anda yakin ingin Verifikasi?</p>`);
-  $('#modalFooter').addClass('modal-footer').html(`<a  class='btn btn-success btn-sm'  href=`+$(this).attr('href')+`>Ya, saya yakin</a>
-                                                    <button type='button' class='btn btn-light btn-sm' data-dismiss='modal'>Batal</button>
-                                                    `);
+  $('#modalContent').load($(this).attr('href'));
   $("#modalGue").modal('show');
 });
 </script>
