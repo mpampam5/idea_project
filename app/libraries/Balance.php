@@ -84,8 +84,27 @@ function total_transaksi_pin($id_member)
 // CEK STOK PIN
 function stok_pin($id_member)
 {
-  $total = $this->cek_total_pin($id_member) - $this->cek_pin_terpakai($id_member);
-  return $total;
+  $ci =& get_instance();
+  $query = $ci->db->query("SELECT
+                            trans_order_pin.id_order_pin,
+                            trans_order_pin.id_member,
+                            trans_order_pin.kode_transaksi,
+                            trans_order_pin.status,
+                            trans_pin.id_pin_trans,
+                            trans_pin.kode_pin_trans,
+                            trans_pin.status
+                          FROM
+                            trans_order_pin
+                          INNER JOIN
+                            trans_pin ON trans_pin.id_order_pin = trans_order_pin.id_order_pin
+                          WHERE
+                            trans_order_pin.status = 'approved'
+                          AND
+                            trans_pin.status = 'belum'
+                          AND
+                            trans_order_pin.id_member = $id_member")
+                    ->num_rows();
+  return $query ;
 }
 
 //CEK PIN TERPAKAI
@@ -98,16 +117,16 @@ function cek_pin_terpakai($id_member)
                             trans_order_pin.kode_transaksi,
                             trans_order_pin.status,
                             trans_pin.id_pin_trans,
-                            trans_pin_pakai.id_trans_pin_terpakai,
-                            trans_pin_pakai.serial_pin
+                            trans_pin.kode_pin_trans,
+                            trans_pin.status
                           FROM
                             trans_order_pin
-                          INNER JOIN trans_pin ON
-                            trans_pin.id_order_pin = trans_order_pin.id_order_pin
-                          INNER JOIN trans_pin_pakai ON
-                            trans_pin_pakai.id_pin_trans = trans_pin.id_pin_trans
+                          INNER JOIN
+                            trans_pin ON trans_pin.id_order_pin = trans_order_pin.id_order_pin
                           WHERE
                             trans_order_pin.status = 'approved'
+                          AND
+                            trans_pin.status = 'terpakai'
                           AND
                             trans_order_pin.id_member = $id_member")
                     ->num_rows();
