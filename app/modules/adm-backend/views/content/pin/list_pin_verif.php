@@ -35,7 +35,7 @@
                     <th>Member Order</th>
                     <th>Jml PIN</th>
                     <th>Jml Bayar</th>
-                    <th>Jenis Pembayaran</th>
+                    <th>#</th>
                     <!-- <th>Aksi</th> -->
                 </tr>
               </thead>
@@ -94,22 +94,8 @@ $(document).ready(function() {
                 return 'Rp. '+data;
               }
               },
-              {"data":"sumber_dana",
-              render(data,type,row,meta)
-              {
-                if (data=="balance") {
-                  var str = 'Pembelian Langsung Menggunakan Balance';
-                }else {
-                  var str = `Tansfer Melalui <b>`+row.bank+`</b> | AN : <b>`+row.nama_rekening+`</b>`;
-                }
-                return '<p>'+str+'</p>';
-              }
-              },
-              // {"data":"action"},
-              {"data":"nama_rekening","visible":false},
-              {"data":"bank","visible":false},
+              {"data":"action","class":"text-center","orderable":false},
               {"data":"id_member","visible":false},
-              {"data":"kode_referral","visible":false},
 
           ],
           order: [[0, 'desc']],

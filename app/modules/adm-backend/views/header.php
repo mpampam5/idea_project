@@ -119,8 +119,8 @@
             </a>
             <div class="collapse" id="trans-pin">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="<?=site_url("adm-backend/deposit/deposit_pending")?>">PIN Order Pending</a></li>
-                <li class="nav-item"> <a class="nav-link" href="<?=site_url("adm-backend/pin/pin_order_terverifikasi")?>">PIN Order Terverifikasi</a></li>
+                <li class="nav-item"> <a class="nav-link" href="<?=site_url("adm-backend/pin/pin_order_pending")?>">PIN Order Pending</a></li>
+                <li class="nav-item"> <a class="nav-link" href="<?=site_url("adm-backend/pin/pin_order_terverifikasi")?>">PIN Order Approved</a></li>
               </ul>
             </div>
           </li>
