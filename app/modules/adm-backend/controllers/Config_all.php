@@ -15,8 +15,8 @@ class Config_all extends MY_Controller{
   function _rules()
   {
     $this->form_validation->set_rules("harga_pin","Harga Satuan PIN","trim|xss_clean|required|numeric");
-    $this->form_validation->set_rules("komisi_pairing","Komisi Pairing","trim|xss_clean|required|decimal");
-    $this->form_validation->set_rules("komisi_sponsor","Komisi Sponsor","trim|xss_clean|required|decimal");
+    $this->form_validation->set_rules("komisi_pairing","Komisi Pairing","trim|xss_clean|required");
+    $this->form_validation->set_rules("komisi_sponsor","Komisi Sponsor","trim|xss_clean|required");
     $this->form_validation->set_rules("min_withdraw","Min Withdraw","trim|xss_clean|required|numeric");
     $this->form_validation->set_rules("max_withdraw","Maksimal Withdraw","trim|xss_clean|required|numeric");
     $this->form_validation->set_error_delimiters('<label class="error mt-2 text-danger">','</label>');
