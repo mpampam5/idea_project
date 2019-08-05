@@ -30,12 +30,12 @@
 
           <tr>
             <th>Komisi Pairing %</th>
-            <td><?=$row->komisi_pairing?></td>
+            <td><?=$row->komisi_pairing?> %</td>
           </tr>
 
           <tr>
             <th>Komisi Sponsor %</th>
-            <td><?=$row->komisi_sponsor?></td>
+            <td><?=$row->komisi_sponsor?> %</td>
           </tr>
 
           <tr>
@@ -46,6 +46,12 @@
           <tr>
             <th>Max Withdraw</th>
             <td>Rp. <?=format_rupiah($row->max_withdraw)?></td>
+          </tr>
+
+          <tr>
+            <td colspan="2">
+              <a href="<?=site_url("adm-backend/config_all/update")?>" class="btn btn-warning btn-sm text-white"> <i class="fa fa-pencil"></i> Edit</a>
+            </td>
           </tr>
         </table>
 
