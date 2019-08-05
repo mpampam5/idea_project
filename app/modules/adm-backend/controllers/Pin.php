@@ -45,9 +45,49 @@ class Pin extends MY_Controller{
     if ($row = $this->model->detail_pin_order($id)) {
       $this->template->set_title("Detail");
       $data['row'] = $row;
+      $data['kode_pin_trans'] = 'KPN-'.date('dmYhis');
       $this->template->view("content/pin/detail",$data);
     }else {
       $this->_error404();
+    }
+  }
+
+  function approved($id,$kd_pin_trans)
+  {
+    if ($this->input->is_ajax_request()) {
+        if ($row = $this->model->get_where("trans_order_pin",['id_order_pin'=>$id])) {
+
+          $this->model->get_update("trans_order_pin",['status'=>"approved"],['id_order_pin'=>$row->id_order_pin]);
+
+
+          $jumlah_pin = $row->jumlah_pin;
+          for ($i=0; $i < $jumlah_pin  ; $i++) {
+              $trans_pin = array('id_order_pin'     => $row->id_order_pin,
+                                 'kode_pin_trans'   => $kd_pin_trans,
+                                 'key_order_pin'    => $kd_pin_trans."-$i",
+                                 'status'           => 'belum'
+                                );
+              $this->model->get_insert("trans_pin",$trans_pin);
+            }
+
+          $json['notif']   = 'success';
+          $json['alert']   = 'Berhasil mengapproved.';
+        }else {
+          $json['notif']   = 'danger';
+          $json['alert']   = 'Gagal Mengapproved menghapus.';
+        }
+      echo json_encode($json);
+    }
+  }
+
+
+  function delete($id)
+  {
+    if ($this->input->is_ajax_request()) {
+          $this->db->where('id_order_pin', $id)
+                   ->delete('trans_order_pin');
+          $json['alert']   = 'Berhasil menghapus.';
+      echo json_encode($json);
     }
   }
 

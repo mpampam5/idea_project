@@ -7,7 +7,7 @@
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb bg-light">
-    <li class="breadcrumb-item"><a href="<?=site_url("backend/index")?>">Dashboard</a></li>
+    <li class="breadcrumb-item"><a href="<?=site_url("adm-backend/home")?>">Dashboard</a></li>
     <li class="breadcrumb-item active" aria-current="page">Transaksi PIN</li>
     <li class="breadcrumb-item active" aria-current="page"><?=$title?></li>
   </ol>
@@ -19,23 +19,24 @@
 
     <div class="card">
       <div class="card-body">
-          <h4 class="card-title"> <?=$title?></h4>
+          <h4 class="card-title">List <?=$title?></h4>
           <div class="btn-group-header">
             <a href="#" class="btn btn-primary btn-sm btn-icon-text" id="table-reload"> <i class="fa fa-refresh btn-icon-prepend"></i></a>
           </div>
 
         <hr>
 
-            <table id="table" class="table table-bordered" style="width:100%">
+            <table id="table" class="table table-bordered">
               <thead>
                 <tr class="bg-warning text-white">
-                    <th width="10px">#</th>
-                    <th>Waktu Order</th>
+                    <th width="10px">No</th>
+                    <th>Tgl Order</th>
                     <th>Kode Transaksi</th>
-                    <th>Jumlah PIN</th>
-                    <th>Jumlah Bayar</th>
-                    <th>Status</th>
+                    <th>Member Order</th>
+                    <th>Jml PIN</th>
+                    <th>Jml Bayar</th>
                     <th>#</th>
+                    <!-- <th>Aksi</th> -->
                 </tr>
               </thead>
 
@@ -45,6 +46,7 @@
     </div>
   </div>
 </div>
+
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -71,7 +73,7 @@ $(document).ready(function() {
           processing: true,
           serverSide: true,
           responsive:true,
-          ajax: {"url": "<?=base_url()?>backend/pin/json_list_order_pin", "type": "POST"},
+          ajax: {"url": "<?=base_url()?>adm-backend/pin/json_pin_order_pending", "type": "POST"},
           columns: [
               {
                 "data": "id_order_pin",
@@ -80,38 +82,23 @@ $(document).ready(function() {
               },
               {"data":"tgl_order"},
               {"data":"kode_transaksi"},
-              {"data":"jumlah_pin",
-              "class":"text-center"
-              },
-              {"data":"jumlah_bayar",
-                render: function(data, type, row, meta){
-                  return 'Rp. '+data;
-                }
-              },
-              {"data":"status",
-                render:function(data,type,row,meta)
+              {"data":"nama",
+                render(data,type,row,meta)
                 {
-                  if (data=="approved") {
-                      return '<span class="badge badge-pill badge-success"> Approved</span>';
-                  }else {
-                      return '<span class="badge badge-pill badge-danger"> Pending</span>';
-                  }
+                  return '<a href="<?=base_url()."adm-backend/member/detail/"?>'+row.id_member+'.html" target="_blank">'+data+'</a>'
                 }
               },
-              {
-                "data": "action",
-                "orderable": false,
-                "class":"text-center"
+              {"data":"jumlah_pin","class":"text-center"},
+              {"data":"jumlah_bayar",
+              render: function(data, type, row, meta){
+                return 'Rp. '+data;
+              }
               },
+              {"data":"action","class":"text-center","orderable":false},
+              {"data":"id_member","visible":false},
 
           ],
           order: [[0, 'desc']],
       });
 });
-
-
-
-
-
-
 </script>

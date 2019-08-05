@@ -6,7 +6,7 @@
   </ol>
 </nav>
 
-<form action="<?=site_url("backend/pohon_jaringan/tambah_action")?>" id="form">
+<form action="<?=site_url("backend/pohon_jaringan/tambah_action/$serial_pin")?>" id="form">
   <div class="row">
 
     <div class="col-12 grid-margin stretch-card">

@@ -16,13 +16,14 @@ class Pin extends MY_Controller{
   function order_pin()
   {
     $this->template->set_title("Beli PIN");
-    $data['action'] = site_url("backend/pin/order_pin_action");
+    $kode_pin_trans = 'KPN-'.date('dmYhis');
+    $data['action'] = site_url("backend/pin/order_pin_action/$kode_pin_trans");
     $data['bank'] = $this->model->get_data_rekening();
     $this->template->view("content/pin/form_order_pin",$data);
   }
 
 
-  function order_pin_action()
+  function order_pin_action($kode_pin_trans)
   {
     if ($this->input->is_ajax_request()) {
         $json = array('success'=>false, 'alert'=>array());
@@ -83,8 +84,8 @@ class Pin extends MY_Controller{
             for ($i=0; $i < $jumlah_pin  ; $i++) {
 
             $trans_pin = array('id_order_pin'     => $last_id_order_pin,
-                               'kode_pin_trans'   => 'KPN-'.date('dmYhis'),
-                               'key_order_pin'    => 'KPN-'.date('dmYhis')."-$i",
+                               'kode_pin_trans'   => $kode_pin_trans,
+                               'key_order_pin'    => $kode_pin_trans."-$i",
                               );
             $this->model->get_insert("trans_pin",$trans_pin);
               }
@@ -159,17 +160,28 @@ function json_list_pin()
 }
 
 
+function Detail($id)
+{
+  if ($row=$this->model->detail_order_pin($id)) {
+      $this->template->set_title("Detail");
+      $data['row'] = $row;
+      $this->template->view("content/pin/detail",$data);
+  }else {
+      $this->_error404();
+  }
+
+}
 
 
-
-
-
-
-
-
-
-
-
+function delete($id)
+{
+  if ($this->input->is_ajax_request()) {
+        $this->db->where('id_order_pin', $id)
+                 ->delete('trans_order_pin');
+        $json['alert']   = 'Berhasil menghapus.';
+    echo json_encode($json);
+  }
+}
 
 
 

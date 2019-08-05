@@ -40,6 +40,7 @@ class Pohon_jaringan extends MY_Controller{
         $data["bank"]   = $this->db->get("ref_bank")->result();
         $data['id_parent'] = $id_parent;
         $data['posisi'] = $posisi;
+        $data['serial_pin'] = "SN".date('dmyhis');
         $this->template->view("content/pohon_jaringan/form",$data);
       }
   }
@@ -78,7 +79,7 @@ class Pohon_jaringan extends MY_Controller{
     $this->form_validation->set_error_delimiters('<label class="error mt-2 text-danger">','</label>');
   }
 
-  function tambah_action(){
+  function tambah_action($serial_pin){
     if ($this->input->is_ajax_request()) {
         $json = array('success'=>false, 'alert'=>array());
         $this->load->library(array("form_validation"));
@@ -183,15 +184,16 @@ class Pohon_jaringan extends MY_Controller{
           $query_pin = $this->model->query_cek_pin($pins);
 
           foreach ($query_pin as $pin) {
-            $insert_trans_pin_pakai = array('serial_pin' => "SN".date('dmyhis'),
+            $insert_trans_pin_pakai = array('serial_pin' => $serial_pin,
                                             'id_pin_trans'  => $pin->id_pin_trans,
                                             'id_member_pakai'  =>$last_id_member,
                                             'tgl_aktivasi' => date('Y-m-d h:i:s'),
                                             'status'  => "registrasi");
             $this->model->get_insert("trans_pin_pakai",$insert_trans_pin_pakai);
 
+            $key_order_pin = str_replace('SN','KOP',$serial_pin);
 
-            $update_trans_pin = array('key_order_pin' => "KOP".date('dmyhis'),
+            $update_trans_pin = array('key_order_pin' => $key_order_pin,
                                       'status'  => 'terpakai'
                                       );
             $this->db->update("trans_pin",$update_trans_pin,["id_pin_trans" => $pin->id_pin_trans]);
@@ -365,8 +367,10 @@ function kabupaten(){
 
         $query_pin = $this->model->query_cek_pin($pins);
 
+        $serial_pin = "SN".date('dmyhis');
+        
         foreach ($query_pin as $pin) {
-          $insert_trans_pin_pakai = array('serial_pin' => "SN".date('dmyhis'),
+          $insert_trans_pin_pakai = array('serial_pin' => $serial_pin,
                                           'id_pin_trans'  => $pin->id_pin_trans,
                                           'id_member_pakai'  =>$id_member_verif,
                                           'tgl_aktivasi' => date('Y-m-d h:i:s'),
