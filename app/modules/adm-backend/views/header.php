@@ -161,6 +161,7 @@
             </a>
             <div class="collapse" id="pengaturan">
               <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="<?=site_url("adm-backend/config_all")?>">Umum</a></li>
                 <li class="nav-item"> <a class="nav-link" href="<?=site_url("adm-backend/config_paket")?>">Paket</a></li>
                 <li class="nav-item"> <a class="nav-link" href="<?=site_url("adm-backend/administrator")?>">Administrator</a></li>
               </ul>

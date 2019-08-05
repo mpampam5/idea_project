@@ -39,3 +39,9 @@ function tampilkan_wilayah($table,$where,$selected)
 return $str;
 
 }
+
+
+function format_rupiah($int)
+{
+  return number_format($int, 2, ',', '.');
+}
