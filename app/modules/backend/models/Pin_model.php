@@ -12,10 +12,12 @@ function get_data_rekening(){
                             config_bank.id_bank,
                             config_bank.nama_rekening,
                             config_bank.no_rekening,
-                            ref_bank.bank
+                            ref_bank.bank,
+                            config_bank.is_delete
                             FROM
                             config_bank
                             INNER JOIN ref_bank ON config_bank.id_bank = ref_bank.id
+                            WHERE config_bank.is_delete='0'
                             ")
                     ->result();
 }
