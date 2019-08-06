@@ -105,7 +105,8 @@ function stok_pin($id_member)
                             trans_order_pin.status,
                             trans_pin.id_pin_trans,
                             trans_pin.kode_pin_trans,
-                            trans_pin.status
+                            trans_pin.status,
+                            trans_pin.id_member_punya
                           FROM
                             trans_order_pin
                           INNER JOIN
@@ -115,7 +116,7 @@ function stok_pin($id_member)
                           AND
                             trans_pin.status = 'belum'
                           AND
-                            trans_order_pin.id_member = $id_member")
+                            trans_pin.id_member_punya = $id_member")
                     ->num_rows();
   return $query ;
 }
@@ -131,7 +132,8 @@ function cek_pin_terpakai($id_member)
                             trans_order_pin.status,
                             trans_pin.id_pin_trans,
                             trans_pin.kode_pin_trans,
-                            trans_pin.status
+                            trans_pin.status,
+                            trans_pin.id_member_punya
                           FROM
                             trans_order_pin
                           INNER JOIN
@@ -141,7 +143,7 @@ function cek_pin_terpakai($id_member)
                           AND
                             trans_pin.status = 'terpakai'
                           AND
-                            trans_order_pin.id_member = $id_member")
+                            trans_pin.id_member_punya = $id_member")
                     ->num_rows();
   return $query ;
 }
@@ -156,7 +158,8 @@ function cek_total_pin($id_member)
                               trans_order_pin.id_member,
                               trans_order_pin.kode_transaksi,
                               trans_order_pin.status,
-                              trans_pin.id_pin_trans
+                              trans_pin.id_pin_trans,
+                              trans_pin.id_member_punya
                             FROM
                               trans_order_pin
                             INNER JOIN
@@ -164,7 +167,7 @@ function cek_total_pin($id_member)
                             WHERE
                               trans_order_pin.status = 'approved'
                             AND
-                              trans_order_pin.id_member = $id_member")
+                              trans_pin.id_member_punya = $id_member")
                     ->num_rows();
   return $query ;
 }

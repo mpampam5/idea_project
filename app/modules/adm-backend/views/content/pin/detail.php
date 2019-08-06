@@ -91,7 +91,7 @@
                 <?php else: ?>
                 <a href="<?=site_url("adm-backend/pin/pin_order_pending")?>" class="btn btn-sm btn-secondary text-white"> Kembali</a>
                 <a href="<?=site_url("adm-backend/pin/delete/$row->id_order_pin")?>" id="hapus" class="btn btn-danger btn-sm" alt="<?=$row->kode_transaksi?>"> Hapus</a>
-                <a href="<?=site_url("adm-backend/pin/approved/$row->id_order_pin/$kode_pin_trans")?>" id="approved" class="btn btn-sm btn-success" alt="<?=$row->kode_transaksi?>"> Approved</a>
+                <a href="<?=site_url("adm-backend/pin/approved/$row->id_order_pin/$kode_pin_trans/$row->id_member")?>" id="approved" class="btn btn-sm btn-success" alt="<?=$row->kode_transaksi?>"> Approved</a>
               <?php endif; ?>
             </td>
           </tr>

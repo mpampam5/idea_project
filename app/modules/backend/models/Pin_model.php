@@ -55,6 +55,7 @@ function json_pin()
                             trans_order_pin.kode_transaksi,
                             DATE_FORMAT(trans_order_pin.tgl_order,'%d/%m/%Y %h:%i') AS tgl_order,
                             trans_pin.id_pin_trans,
+                            trans_pin.id_member_punya,
                             trans_pin.kode_pin_trans,
                             trans_pin.key_order_pin,
                             trans_pin_pakai.id_trans_pin_terpakai,
@@ -70,7 +71,7 @@ function json_pin()
   $this->datatables->join("trans_pin_pakai","trans_pin_pakai.id_pin_trans = trans_pin.id_pin_trans","left");
   $this->datatables->join("tb_member","tb_member.id_member = trans_pin_pakai.id_member_pakai","left");
   $this->datatables->join("config_paket","config_paket.id_paket = tb_member.paket","left");
-  $this->datatables->where("trans_order_pin.id_member",sess('id_member'));
+  $this->datatables->where("trans_pin.id_member_punya",sess('id_member'));
   $this->datatables->group_by(array('trans_pin.key_order_pin','trans_pin_pakai.serial_pin'));
   return $this->datatables->generate();
 }

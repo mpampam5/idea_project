@@ -86,6 +86,7 @@ class Pin extends MY_Controller{
             $trans_pin = array('id_order_pin'     => $last_id_order_pin,
                                'kode_pin_trans'   => $kode_pin_trans,
                                'key_order_pin'    => $kode_pin_trans."-$i",
+                               'id_member_punya'  => sess('id_member'),
                               );
             $this->model->get_insert("trans_pin",$trans_pin);
               }

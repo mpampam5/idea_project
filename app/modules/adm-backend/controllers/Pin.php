@@ -52,29 +52,35 @@ class Pin extends MY_Controller{
     }
   }
 
-  function approved($id,$kd_pin_trans)
+  function approved($id,$kd_pin_trans="",$id_member_punya="")
   {
     if ($this->input->is_ajax_request()) {
-        if ($row = $this->model->get_where("trans_order_pin",['id_order_pin'=>$id])) {
-
-          $this->model->get_update("trans_order_pin",['status'=>"approved"],['id_order_pin'=>$row->id_order_pin]);
-
-
-          $jumlah_pin = $row->jumlah_pin;
-          for ($i=0; $i < $jumlah_pin  ; $i++) {
-              $trans_pin = array('id_order_pin'     => $row->id_order_pin,
-                                 'kode_pin_trans'   => $kd_pin_trans,
-                                 'key_order_pin'    => $kd_pin_trans."-$i",
-                                 'status'           => 'belum'
-                                );
-              $this->model->get_insert("trans_pin",$trans_pin);
-            }
-
-          $json['notif']   = 'success';
-          $json['alert']   = 'Berhasil mengapproved.';
-        }else {
+        if ($kd_pin_trans=="" OR $id_member_punya=="") {
           $json['notif']   = 'danger';
-          $json['alert']   = 'Gagal Mengapproved menghapus.';
+          $json['alert']   = 'Gagal Mengapproved.';
+        }else {
+          if ($row = $this->model->get_where("trans_order_pin",['id_order_pin'=>$id])) {
+
+            $this->model->get_update("trans_order_pin",['status'=>"approved"],['id_order_pin'=>$row->id_order_pin]);
+
+
+            $jumlah_pin = $row->jumlah_pin;
+            for ($i=0; $i < $jumlah_pin  ; $i++) {
+                $trans_pin = array('id_order_pin'     => $row->id_order_pin,
+                                   'kode_pin_trans'   => $kd_pin_trans,
+                                   'key_order_pin'    => $kd_pin_trans."-$i",
+                                   'status'           => 'belum',
+                                   'id_member_punya'  => $id_member_punya,
+                                  );
+                $this->model->get_insert("trans_pin",$trans_pin);
+              }
+
+            $json['notif']   = 'success';
+            $json['alert']   = 'Berhasil mengapproved.';
+          }else {
+            $json['notif']   = 'danger';
+            $json['alert']   = 'Gagal Mengapproved.';
+          }
         }
       echo json_encode($json);
     }
