@@ -12,13 +12,26 @@ function total_balance($id_member)
     $deposit       = $this->deposit($id_member);
     $withdraw      = $this->withdraw($id_member);
     $transaksi_pin = $this->total_transaksi_pin($id_member);
+    $bonus_sponsor = $this->sponsor($id_member);
 
     //hitung
-    $balance = $deposit - $withdraw - $transaksi_pin;
+    $balance = $deposit + $bonus_sponsor - $withdraw - $transaksi_pin;
     return $balance;
   }
 
-
+//menghitung total jumlah sponsor
+function sponsor($id_member)
+{
+  $ci =& get_instance();
+  $query =  $ci->db->select("bonus_sponsor.id_bonus_sponsor,
+                                      bonus_sponsor.id_parent,
+                                      bonus_sponsor.id_member,
+                                      SUM(bonus_sponsor.total_bonus) AS total_bonus")
+                  ->from('bonus_sponsor')
+                  ->where('bonus_sponsor.id_parent',sess('id_member'))
+                  ->get();
+  return $query->row()->total_bonus;
+}
 
 // menghitung jumlah deposit yang terverifikasi
 function deposit($id_member){
