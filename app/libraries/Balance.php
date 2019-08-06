@@ -157,7 +157,16 @@ function cek_total_pin($id_member)
 }
 
 
+//HITUNG BONUS SPONSOR
+function get_bonus_sponsor($jenis_paket){
+  $jumlah_pin = paket($jenis_paket,'pin');
 
+  $total_harga_pin = (config_all('harga_pin')*$jumlah_pin );
+
+  $total_bonus_persen = (config_all('komisi_sponsor')/100)*$total_harga_pin;
+
+  return $total_bonus_persen;
+}
 
 
 } //END DEPOSIT

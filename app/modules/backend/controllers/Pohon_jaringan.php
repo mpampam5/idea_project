@@ -199,6 +199,15 @@ class Pohon_jaringan extends MY_Controller{
             $this->db->update("trans_pin",$update_trans_pin,["id_pin_trans" => $pin->id_pin_trans]);
           }
 
+          //insert bonus SPONSOR
+          $inser_b_sponsor = array('id_parent' => sess('id_member') ,
+                                    'id_member' => $last_id_member,
+                                    'created'   => date('Y-m-d h:i:s'),
+                                    'total_bonus'=> $this->balance->get_bonus_sponsor($paket)
+                                  );
+
+          $this->model->get_insert("bonus_sponsor",$inser_b_sponsor);
+
           $json['alert'] = "Berhasil menambahkan member";
           $json['success'] = true;
           $json['url'] = site_url("backend/pohon_jaringan");
@@ -368,7 +377,7 @@ function kabupaten(){
         $query_pin = $this->model->query_cek_pin($pins);
 
         $serial_pin = "SN".date('dmyhis');
-        
+
         foreach ($query_pin as $pin) {
           $insert_trans_pin_pakai = array('serial_pin' => $serial_pin,
                                           'id_pin_trans'  => $pin->id_pin_trans,
