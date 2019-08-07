@@ -16,7 +16,7 @@
 
           <form class="" action="index.html" id="form" autocomplete="off">
             <div class="form-group">
-              <label for="">Usename Pengguna</label>
+              <label for="">Username Pengguna</label>
               <div class="input-group">
                 <input type="text" class="form-control" placeholder="Masukkan Usename Penerima" id="val_username" name="username">
                 <div class="input-group-append">
@@ -33,7 +33,7 @@
 
             <div class="form-group">
               <label for="">No. Telepon</label>
-              <input type="text" class="form-control" id="no_telepon" readonly>
+              <input type="text" class="form-control" id="telepon" readonly>
             </div>
 
             <div class="form-group">
@@ -63,6 +63,8 @@ $(document).on("click","#cek_username",function(e){
   $("#cek_username").prop('disabled',true).html('<div class="spinner-border spinner-border-sm text-white"></div> Memproses...');
   var username = $("#val_username").val();
    if (username==="") {
+     $("#nama").val('');
+     $("#telepon").val('');
      $("#cek_username").prop('disabled',false).html('Cek Username');
      $("#username").html('<label class="error mt-2 text-danger">Username tidak boleh kosong.</label>');
    }else {
@@ -76,9 +78,12 @@ $(document).on("click","#cek_username",function(e){
             dataType:'json',
             success:function(json){
               if (json.success==true) {
-                $("#username").html('<label class="error mt-2 text-success"><i class="fa fa-check"></i> Username '+json.alert+' valid</label>');
+                $("#nama").val(json.nama);
+                $("#telepon").val(json.telepon);
               }else {
-                $("#username").html('<label class="error mt-2 text-danger"><i class="fa fa-close"></i> Username tidak valid</label>');
+                $("#nama").val('');
+                $("#telepon").val('');
+                $("#username").html('<label class="error mt-2 text-danger"><i class="fa fa-close"></i>'+json.alert+'</label>');
               }
 
 

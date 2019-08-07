@@ -198,15 +198,30 @@ function transfer_pin()
 function transfer_pin_cek_usename()
 {
   if ($this->input->is_ajax_request()) {
-      $json = array('success'=>false, 'alert'=>array());
-      if (profile('status_stockis')=="member") {
-        $json['success']=false;
-        $json['alert'] = "tidak valid";
+      $json = array('success'=>false, 'alert'=>array(),'nama'=>"","telepon"=>"");
+      $username = $this->input->post('username',true);
+      $query = $this->db->query("SELECT
+                                    tb_auth.username,
+                                    tb_auth.level,
+                                    tb_member.id_member,
+                                    tb_member.nik,
+                                    tb_member.nama,
+                                    tb_member.telepon
+                                  FROM
+                                    tb_auth
+                                  INNER JOIN
+                                    tb_member ON tb_member.id_member = tb_auth.id_personal
+                                  WHERE
+                                    tb_auth.level = 'member'
+                                  AND
+                                    tb_auth.username = '$username'");
+      if ($query->num_rows() > 0) {
+        $json['nama']   = $query->row()->nama;
+        $json['telepon']   = $query->row()->telepon;
+        $json['success'] = true;
       }else {
-        $json['success']=true;
-        $json['alert'] = $this->input->post("username");
+        $json['alert'] = "Username tidak Valid";
       }
-
       echo json_encode($json);
   }
 }
