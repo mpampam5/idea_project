@@ -41,6 +41,7 @@ function profile($field)
                             tb_member.is_verifikasi,
                             tb_member.created,
                             tb_member.is_active,
+                            tb_member.status_stockis,
                             trans_member_rek.id_bank,
                             trans_member_rek.no_rekening,
                             trans_member_rek.nama_rekening,

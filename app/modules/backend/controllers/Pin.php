@@ -9,6 +9,7 @@ class Pin extends MY_Controller{
   {
     parent::__construct();
     $this->load->model('Pin_model','model');
+    $this->load->library(array("btree"));
   }
 
 
@@ -182,6 +183,42 @@ function delete($id)
         $json['alert']   = 'Berhasil menghapus.';
     echo json_encode($json);
   }
+}
+
+//TRANSFER PIN
+
+function transfer_pin()
+{
+  $this->template->set_title("Transfer PIN");
+  $this->template->view("content/pin/form_transfer_pin");
+}
+
+
+
+function transfer_pin_cek_usename()
+{
+  if ($this->input->is_ajax_request()) {
+      $json = array('success'=>false, 'alert'=>array());
+      if (profile('status_stockis')=="member") {
+        $json['success']=false;
+        $json['alert'] = "tidak valid";
+      }else {
+        $json['success']=true;
+        $json['alert'] = $this->input->post("username");
+      }
+
+      echo json_encode($json);
+  }
+}
+
+
+function contoh()
+{
+  $btree = $this->btree->get_all_id_children(sess('id_member'));
+  // print_r($btree);
+  echo json_encode($btree);
+  // $data = array_merge_recursive($btree);
+  // var_dump($btree);
 }
 
 

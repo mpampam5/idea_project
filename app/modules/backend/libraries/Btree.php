@@ -9,6 +9,7 @@
 
 private $ci;
 
+public $data = array();
 
   // function index()
   // {
@@ -63,6 +64,33 @@ private $ci;
           }
           return $count;
         }
+
+
+
+
+
+
+
+
+          function get_all_id_children($id) { //Function get id all children
+
+            // $data = array();
+              $array = $this->ci->db->get_where("trans_member",['id_member'=>$id])->row();
+
+              if(!empty($array->r_mem)) {
+                  array_push($this->data, $array->r_mem);
+                  // $data[]=$array->r_mem;
+                  $data[]= $this->get_all_id_children($array->r_mem);
+              }
+
+              if(!empty($array->l_mem)) {
+                  array_push($this->data, $array->l_mem);
+                  // $data[] = $array->l_mem;
+                  $data[]= $this->get_all_id_children($array->l_mem);
+              }
+
+              return array_filter($this->data);
+          }
 
 
 
