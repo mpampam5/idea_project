@@ -17,10 +17,10 @@
             <p class="text-muted">Balance</p>
             <h4 class="mb-0 font-weight-bold">Rp. <?=format_rupiah($balance)?></h4>
           </div>
-          <div class="border-right pr-4 mb-3 mb-xl-0">
+          <!-- <div class="border-right pr-4 mb-3 mb-xl-0">
             <p class="text-muted">Comission</p>
             <h4 class="mb-0 font-weight-bold">Rp. <?=format_rupiah($comission)?></h4>
-          </div>
+          </div> -->
           <div class="border-right pr-4 mb-3 mb-xl-0">
             <p class="text-muted">Username</p>
             <h4 class="mb-0 font-weight-bold"><?=profile('username')?></h4>
