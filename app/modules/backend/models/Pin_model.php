@@ -102,23 +102,21 @@ function detail_order_pin($id)
 
 function query_cek_pin($limit)
 {
+  $id_member = sess('id_member');
   return $this->db->query("SELECT
-                            trans_order_pin.id_order_pin,
-                            trans_order_pin.id_member,
-                            trans_order_pin.kode_transaksi,
                             trans_pin.id_pin_trans,
                             trans_pin.kode_pin_trans,
                             trans_pin.key_order_pin,
-                            trans_pin.status
+                            trans_pin.status,
+                            trans_pin.id_member_punya
                           FROM
-                            trans_order_pin
-                          INNER JOIN
-                            trans_pin ON trans_pin.id_order_pin = trans_order_pin.id_order_pin
+                            trans_pin
                           WHERE
-                            trans_order_pin.id_member=".sess('id_member')." AND
+                            trans_pin.id_member_punya = $id_member
+                          AND
                             trans_pin.status = 'belum'
                           ORDER BY
-                            trans_order_pin.id_order_pin DESC
+                            trans_pin.id_pin_trans DESC
                           LIMIT $limit
                             ")
                   ->result();

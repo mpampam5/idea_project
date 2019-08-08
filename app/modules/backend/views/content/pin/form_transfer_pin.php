@@ -116,7 +116,10 @@ $("#form").submit(function(e){
                 showHideTransition: 'slide',
                 icon: 'success',
                 loaderBg: '#f96868',
-                position: 'bottom-right'
+                position: 'bottom-right',
+              afterHidden: function (){
+                window.location.href = "http://localhost/idea_project/backend/pin/transfer_pin.html";
+              }
               });
 
 

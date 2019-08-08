@@ -238,7 +238,7 @@ function trans_pin_action()
       $username   = $this->input->post("username",true);
       $jumlah_pin  = $this->input->post("jumlah_pin",true);
       $password    = $this->input->post("password",true);
-      $id_member_penerima = profile_member_where(['username'=>$username],"id_member");
+
 
       $this->form_validation->set_rules('password', 'Password', 'required|callback__cek_password',[
         "required" => "Silahkan masukkan password anda untuk memastikan bahwa anda benar pemilik akun <b>".profile("nama")."</b>",
@@ -249,6 +249,7 @@ function trans_pin_action()
       $this->form_validation->set_error_delimiters('<label class="error mt-2 text-danger">','</label>');
 
       if ($this->form_validation->run()) {
+        $id_member_penerima = profile_member_where(['username'=>$username],"id_member");
 
         $query_pin = $this->model->query_cek_pin($jumlah_pin);
 
@@ -256,7 +257,7 @@ function trans_pin_action()
           foreach ($query_pin as $querys) {
             $update = array('id_member_punya' => $id_member_penerima);
 
-            $this->model->get_update("trans_pin",$update,array('id_member_punya' => $querys->id_member));
+            $this->model->get_update("trans_pin",$update,array("id_pin_trans" => $querys->id_pin_trans));
           }
 
 
@@ -266,13 +267,13 @@ function trans_pin_action()
         $history_penerima = array('id_member' => $id_member_penerima,
                                   'tgl_transfer' => date('Y-m-d h:i:s'),
                                   'status' => 'menerima',
-                                  'keterangan' => "telah menerima PIN sebanyak <b>$jumlah_pin</b> dari <b>$username| ".profile('nama')."| ".profile('telepon')."</b>"
+                                  'keterangan' => "telah menerima PIN sebanyak <b>$jumlah_pin</b> dari <b>".profile('username')."| ".profile('nama')."| ".profile('telepon')."</b>"
                                   );
         $this->model->get_insert("history_transfer_pin",$history_penerima);
         // insert history pengirim
         $history_pengirim = array('id_member' => sess('id_member'),
                                   'tgl_transfer' => date('Y-m-d h:i:s'),
-                                  'status' => 'menerima',
+                                  'status' => 'mengirim',
                                   'keterangan' => "telah mengirim PIN sebanyak <b>$jumlah_pin</b> Ke <b>$username| ".profile_member($id_member_penerima,'nama')."| ".profile_member($id_member_penerima,'telepon')."</b>"
                                   );
         $this->model->get_insert("history_transfer_pin",$history_pengirim);
@@ -312,12 +313,12 @@ function _cek_username_transfer($str)
                               AND
                                 tb_member.is_active = '1'
                               AND
-                                tb_auth.username = '$str'")->row();
+                                tb_auth.username = '$str'");
 
-  if ($query) {
+  if ($query->num_rows()>0) {
     if (profile('status_stockis')=="member") {
       $cek_anak = $this->btree->get_all_id_children(sess('id_member'));
-      if (in_array($query->id_member,$cek_anak)) {
+      if (in_array($query->row()->id_member,$cek_anak)) {
         return true;
       }else {
         $this->form_validation->set_message('_cek_username_transfer', '<i class="fa fa-close"></i> Anda tidak dapat mentransfer PIN ke username <b>'.$str.'</b>. Silahkan upgrade status stockis terlebih dahulu.');
