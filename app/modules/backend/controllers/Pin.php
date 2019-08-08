@@ -267,14 +267,14 @@ function trans_pin_action()
         $history_penerima = array('id_member' => $id_member_penerima,
                                   'tgl_transfer' => date('Y-m-d h:i:s'),
                                   'status' => 'menerima',
-                                  'keterangan' => "telah menerima PIN sebanyak <b>$jumlah_pin</b> dari <b>".profile('username')."| ".profile('nama')."| ".profile('telepon')."</b>"
+                                  'keterangan' => "Telah menerima sebanyak <b class='text-danger'>$jumlah_pin</b> PIN dari <b class='text-danger'>".profile('username')."</b> | <b class='text-danger'>".profile('nama')." | <b class='text-danger'>".profile('telepon')."</b>"
                                   );
         $this->model->get_insert("history_transfer_pin",$history_penerima);
         // insert history pengirim
         $history_pengirim = array('id_member' => sess('id_member'),
                                   'tgl_transfer' => date('Y-m-d h:i:s'),
                                   'status' => 'mengirim',
-                                  'keterangan' => "telah mengirim PIN sebanyak <b>$jumlah_pin</b> Ke <b>$username| ".profile_member($id_member_penerima,'nama')."| ".profile_member($id_member_penerima,'telepon')."</b>"
+                                  'keterangan' => "Telah mengirim sebanyak <b class='text-danger'>$jumlah_pin</b> PIN Ke <b class='text-danger'>$username</b> | <b class='text-danger'>".profile_member($id_member_penerima,'nama')."</b> | <b class='text-danger'> ".profile_member($id_member_penerima,'telepon')."</b>"
                                   );
         $this->model->get_insert("history_transfer_pin",$history_pengirim);
 
@@ -346,16 +346,30 @@ function _cek_pin($str)
   }
 }
 
-function contoh()
+// function contoh()
+// {
+//   $btree = $this->btree->get_all_id_children(sess('id_member'));
+//   // print_r($btree);
+//   echo json_encode($btree);
+//   // $data = array_merge_recursive($btree);
+//   // var_dump($btree);
+// }
+
+
+
+/// HISTORY Transfer
+function history_transfer_pin()
 {
-  $btree = $this->btree->get_all_id_children(sess('id_member'));
-  // print_r($btree);
-  echo json_encode($btree);
-  // $data = array_merge_recursive($btree);
-  // var_dump($btree);
+  $this->template->set_title("History Transfer PIN");
+  $this->template->view("content/pin/history_transfer_pin");
 }
 
-
+function json_history_transfer_pin()
+{
+  $this->load->library('Datatables');
+  header('Content-Type: application/json');
+  echo $this->model->json_history_transfer_pin();
+}
 
 
 } //end class

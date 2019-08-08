@@ -199,6 +199,7 @@
                 <li class="nav-item"> <a class="nav-link" href="<?=site_url("backend/pin/list_order_pin")?>">Daftar Order PIN</a></li>
                 <li class="nav-item"> <a class="nav-link" href="<?=site_url("backend/pin/list_pin")?>">Daftar PIN</a></li>
                 <li class="nav-item"> <a class="nav-link" href="<?=site_url("backend/pin/transfer_pin")?>">Transfer PIN</a></li>
+                <li class="nav-item"> <a class="nav-link" href="<?=site_url("backend/pin/history_transfer_pin")?>">History Transfer PIN</a></li>
               </ul>
             </div>
           </li>

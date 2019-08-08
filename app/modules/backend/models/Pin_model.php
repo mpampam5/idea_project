@@ -100,6 +100,17 @@ function detail_order_pin($id)
                     ->row();
 }
 
+function json_history_transfer_pin(){
+  $this->datatables->select("history_transfer_pin.id_transfer_pin,
+                             history_transfer_pin.id_member,
+                             DATE_FORMAT(history_transfer_pin.tgl_transfer,'%d/%m/%Y %h:%i') AS tgl_transfer,
+                             history_transfer_pin.`status`,
+                             history_transfer_pin.keterangan");
+  $this->datatables->from("history_transfer_pin");
+  $this->datatables->where("history_transfer_pin.id_member",sess('id_member'));
+  return $this->datatables->generate();
+}
+
 function query_cek_pin($limit)
 {
   $id_member = sess('id_member');
