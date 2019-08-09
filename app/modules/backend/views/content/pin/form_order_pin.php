@@ -22,7 +22,7 @@
                 <div class="input-group">
                   <input type="text" class="form-control" placeholder="Jumlah Pin" id="jml_pin" name="jumlah_pin">
                   <div class="input-group-append">
-                    <span class="input-group-text text-primary">Harga Satuan PIN Rp. <?=format_rupiah(config_all('harga_pin'))?></span>
+                    <span class="input-group-text text-primary">Rp.<?=format_rupiah(config_all('harga_pin'))?>/PIN</span>
                   </div>
                 </div>
                 <div id="jumlah_pin"></div>
