@@ -14,15 +14,10 @@
         <hr>
 
 
-          <form class="" action="index.html" id="form" autocomplete="off">
+          <form class="" action="<?=site_url("backend/pin/trans_pin_action")?>" id="form" autocomplete="off">
             <div class="form-group">
               <label for="">Username Pengguna</label>
-              <div class="input-group">
                 <input type="text" class="form-control" placeholder="Masukkan Usename Penerima" id="val_username" name="username">
-                <div class="input-group-append">
-                  <button class="btn btn-sm btn-primary" type="button" id="cek_username">Cek Username</button>
-                </div>
-              </div>
               <div id="username"></div>
             </div>
 
@@ -43,7 +38,7 @@
 
             <div class="form-group">
               <label for="">Password Verifikasi</label>
-              <input type="text" class="form-control" id="password" name="password" placeholder="Password Verifikasi">
+              <input type="password" class="form-control" id="password" name="password" placeholder="Password Verifikasi">
             </div>
 
             <button type="submit" name="submit" id="submit" class="btn btn-primary btn-sm"> Transfer PIN</button>
@@ -58,18 +53,21 @@
 <script type="text/javascript">
 
 
-$(document).on("click","#cek_username",function(e){
+$(document).on("keyup","#val_username",function(e){
   e.preventDefault();
-  $("#cek_username").prop('disabled',true).html('<div class="spinner-border spinner-border-sm text-white"></div> Memproses...');
+  // $("#cek_username").prop('disabled',true).html('<div class="spinner-border spinner-border-sm text-white"></div> Memproses...');
   var username = $("#val_username").val();
-   if (username==="") {
+   if (username=="") {
      $("#nama").val('');
      $("#telepon").val('');
-     $("#cek_username").prop('disabled',false).html('Cek Username');
-     $("#username").html('<label class="error mt-2 text-danger">Username tidak boleh kosong.</label>');
+     $("#username")
+     .closest('.form-group')
+     .find('.text-danger').remove();
    }else {
-     $("#cek_username").prop('disabled',false).html('Cek Username');
-    $("#username").html('');
+     // $("#cek_username").prop('disabled',false).html('Cek Username');
+     $("#username")
+     .closest('.form-group')
+     .find('.text-danger').remove();
     $.ajax({
             url:"<?=site_url("backend/pin/transfer_pin_cek_usename")?>",
             type:'post',
@@ -78,14 +76,19 @@ $(document).on("click","#cek_username",function(e){
             dataType:'json',
             success:function(json){
               if (json.success==true) {
+                $("#username")
+                .closest('.form-group')
+                .find('.text-danger').remove();
                 $("#nama").val(json.nama);
                 $("#telepon").val(json.telepon);
               }else {
+                $("#username")
+                .closest('.form-group')
+                .find('.text-danger').remove();
                 $("#nama").val('');
                 $("#telepon").val('');
-                $("#username").html('<label class="error mt-2 text-danger"><i class="fa fa-close"></i>'+json.alert+'</label>');
+                $("#username").after('<label class="error mt-2 text-danger"><i class="fa fa-close"></i> '+json.alert+'</label>');
               }
-
 
             }
           });

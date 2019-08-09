@@ -206,13 +206,16 @@ function transfer_pin_cek_usename()
                                     tb_member.id_member,
                                     tb_member.nik,
                                     tb_member.nama,
-                                    tb_member.telepon
+                                    tb_member.telepon,
+                                    tb_member.is_active
                                   FROM
                                     tb_auth
                                   INNER JOIN
                                     tb_member ON tb_member.id_member = tb_auth.id_personal
                                   WHERE
                                     tb_auth.level = 'member'
+                                  AND
+                                    tb_member.is_active = '1'
                                   AND
                                     tb_auth.username = '$username'");
       if ($query->num_rows() > 0) {
@@ -226,6 +229,121 @@ function transfer_pin_cek_usename()
   }
 }
 
+
+function trans_pin_action()
+{
+  if ($this->input->is_ajax_request()) {
+      $json = array('success'=>false, 'alert'=>array());
+
+      $username   = $this->input->post("username",true);
+      $jumlah_pin  = $this->input->post("jumlah_pin",true);
+      $password    = $this->input->post("password",true);
+      $id_member_penerima = profile_member_where(['username'=>$username],"id_member");
+
+      $this->form_validation->set_rules('password', 'Password', 'required|callback__cek_password',[
+        "required" => "Silahkan masukkan password anda untuk memastikan bahwa anda benar pemilik akun <b>".profile("nama")."</b>",
+      ]);
+
+      $this->form_validation->set_rules('jumlah_pin', 'Jumlah PIN', 'trim|xss_clean|required|numeric|callback__cek_pin');
+      $this->form_validation->set_rules('username', 'Username', 'trim|xss_clean|required|callback__cek_username_transfer');
+      $this->form_validation->set_error_delimiters('<label class="error mt-2 text-danger">','</label>');
+
+      if ($this->form_validation->run()) {
+
+        $query_pin = $this->model->query_cek_pin($jumlah_pin);
+
+
+          foreach ($query_pin as $querys) {
+            $update = array('id_member_punya' => $id_member_penerima);
+
+            $this->model->get_update("trans_pin",$update,array('id_member_punya' => $querys->id_member));
+          }
+
+
+
+
+        // insert history penerima
+        $history_penerima = array('id_member' => $id_member_penerima,
+                                  'tgl_transfer' => date('Y-m-d h:i:s'),
+                                  'status' => 'menerima',
+                                  'keterangan' => "telah menerima PIN sebanyak <b>$jumlah_pin</b> dari <b>$username| ".profile('nama')."| ".profile('telepon')."</b>"
+                                  );
+        $this->model->get_insert("history_transfer_pin",$history_penerima);
+        // insert history pengirim
+        $history_pengirim = array('id_member' => sess('id_member'),
+                                  'tgl_transfer' => date('Y-m-d h:i:s'),
+                                  'status' => 'menerima',
+                                  'keterangan' => "telah mengirim PIN sebanyak <b>$jumlah_pin</b> Ke <b>$username| ".profile_member($id_member_penerima,'nama')."| ".profile_member($id_member_penerima,'telepon')."</b>"
+                                  );
+        $this->model->get_insert("history_transfer_pin",$history_pengirim);
+
+        $json['alert'] = "Transfer PIN Berhasil.";
+        $json['success'] =  true;
+      }else {
+        foreach ($_POST as $key => $value)
+          {
+            $json['alert'][$key] = form_error($key);
+          }
+      }
+
+      echo json_encode($json);
+  }
+}
+
+
+
+function _cek_username_transfer($str)
+{
+
+  $query = $this->db->query("SELECT
+                                tb_auth.username,
+                                tb_auth.level,
+                                tb_member.id_member,
+                                tb_member.nik,
+                                tb_member.nama,
+                                tb_member.telepon,
+                                tb_member.is_active
+                              FROM
+                                tb_auth
+                              INNER JOIN
+                                tb_member ON tb_member.id_member = tb_auth.id_personal
+                              WHERE
+                                tb_auth.level = 'member'
+                              AND
+                                tb_member.is_active = '1'
+                              AND
+                                tb_auth.username = '$str'")->row();
+
+  if ($query) {
+    if (profile('status_stockis')=="member") {
+      $cek_anak = $this->btree->get_all_id_children(sess('id_member'));
+      if (in_array($query->id_member,$cek_anak)) {
+        return true;
+      }else {
+        $this->form_validation->set_message('_cek_username_transfer', '<i class="fa fa-close"></i> Anda tidak dapat mentransfer PIN ke username <b>'.$str.'</b>. Silahkan upgrade status stockis terlebih dahulu.');
+        return false;
+      }
+    }else {
+      return true;
+    }
+  }else {
+    $this->form_validation->set_message('_cek_username_transfer', '<i class="fa fa-close"></i> Username tidak Valid.');
+    return false;
+  }
+}
+
+
+function _cek_pin($str)
+{
+
+
+  if ($this->balance->stok_pin(sess('id_member')) >= $str) {
+    return true;
+  }else {
+    $this->form_validation->set_message('_cek_pin', 'Stok PIN tidak mencukupi. STOK PIN anda <b class="text-primary">'.$this->balance->stok_pin(sess('id_member')).'</b>');
+    return false;
+  }
+}
 
 function contoh()
 {
