@@ -7,11 +7,14 @@ function cek_parent($id,$posisi){
                               trans_member.id_parent,
                               trans_member.id_member,
                               tb_member.nama,
-                              tb_member.posisi
+                              tb_member.posisi,
+                              config_paket.paket
                             FROM
                               trans_member
                             INNER JOIN
                               tb_member ON trans_member.id_member = tb_member.id_member
+                            INNER JOIN
+                              config_paket ON config_paket.id_paket = tb_member.paket
                             WHERE
                               trans_member.id_parent = $id
                             AND
@@ -20,6 +23,7 @@ function cek_parent($id,$posisi){
                             ");
     if ($query->num_rows() > 0) {
         $str = '<h4>'.$query->row()->nama.'</h4>';
+        $str.='<p class="text-white">'.$query->row()->paket.'</p>';
         $str .= '<p class="text-white">Left '.$ci->btree->leftcount($query->row()->id_member).' | '.$ci->btree->rightcount($query->row()->id_member).' Right</p><p class="text-white">'.$ci->btree->allcount($query->row()->id_member).'</p>';
     }else {
         $str = '<a href="'.site_url("backend/pohon_jaringan/tambah/$id/$posisi").'" id="tambah" class="btn btn-info btn-sm"><i class="fa fa-plus text-white"></i></a>';
@@ -62,11 +66,14 @@ function cek_id_cucu($id,$posisi){
                               trans_member.id_parent,
                               trans_member.id_member,
                               tb_member.nama,
-                              tb_member.posisi
+                              tb_member.posisi,
+                              config_paket.paket
                             FROM
                               trans_member
                             INNER JOIN
                               tb_member ON trans_member.id_member = tb_member.id_member
+                            INNER JOIN
+                              config_paket ON config_paket.id_paket = tb_member.paket
                             WHERE
                               trans_member.id_parent = $id
                             AND
@@ -76,7 +83,8 @@ function cek_id_cucu($id,$posisi){
     if ($query->num_rows() > 0) {
         $str = array( 'status'=>true,
                       'id' => $query->row()->id_member,
-                      'nama' => '<h4>'.$query->row()->nama.'</h4>'
+                      'nama' => '<h4>'.$query->row()->nama.'</h4>',
+                      'paket' => '<p class="text-white">'.$query->row()->paket.'</p>',
                     );
     }else {
         $str = array("status" => false,

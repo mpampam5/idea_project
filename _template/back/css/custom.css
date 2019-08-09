@@ -1345,11 +1345,11 @@
 
 
 #root #show-parent{
-  margin-top: 30px;
+  margin-top: 10px;
 }
 
 #root #show-child{
-  margin-top: 30px;
+  margin-top: 10px;
 }
 
 
@@ -1357,6 +1357,10 @@
 
 @media (max-width: 535px) {
 
+  .content-root{
+    margin-top: 0;
+    margin-bottom: 300px!important;
+  }
 
   #root{
     height: 100px;
@@ -1365,6 +1369,12 @@
   #root h4{
     font-size: 7px;
     padding-top: 10px;
+  }
+
+  #root p{
+    font-size: 7px;
+    line-height: 1px;
+    color: #fff;
   }
 
   #root a{

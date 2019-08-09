@@ -12,22 +12,22 @@
 
 <div class="row">
 
-  <?php if ($root->id_member!=$this->session->userdata('id_member')): ?>
-  <div class="col-md-12 mb-4">
+  <?php if ($root->id_member!=sess('id_member')): ?>
+  <div class="col-md-12 mb-4 text-center">
     <a href="<?=site_url("backend/pohon_jaringan")?>" class="btn btn-info btn-sm text-white">Back To Top Parent</a>
   </div>
   <?php endif; ?>
 
 
 
-          <div class="col-sm-12 content-root mt-5">
+          <div class="col-sm-12 content-root mt-5 mb-5">
             <table id="table-content-pohon">
               <!-- level1 -->
               <tr>
                 <td colspan="4">
                   <div id="root" class="root1">
                     <h4><?=$root->nama?></h4>
-
+                    <p class="text-white"><?=paket($root->paket,'paket')?></p>
                     <?php if ($root->id_member!=$this->session->userdata('id_member')): ?>
                       <?=ambil_data_parent($root->id_member)?>
                       <?php else: ?>
@@ -71,6 +71,7 @@
                       <?php $cucu=cek_id_cucu($id_kiri,"kiri");
                       if ($cucu['status'] == true) {
                         echo $cucu['nama'];
+                        echo $cucu['paket'];
                         if (cek_anak_cucu($cucu['id'])==true) {
                           echo '<p class="text-white">Left '.$this->btree->leftcount($cucu['id']).' | '.$this->btree->rightcount($cucu['id']).' Right</p><p class="text-white">'.$this->btree->allcount($cucu['id']).'</p>';
                         echo '<a href="'.base_url("backend/pohon_jaringan/show").'/'.$cucu['id'].'" id="show-child" class="btn btn-sm btn-success"> <i class="fa fa-arrow-circle-o-down"></i> Show Child</a>';
@@ -93,6 +94,7 @@
                       <?php $cucu=cek_id_cucu($id_kiri,"kanan");
                         if ($cucu['status'] == true) {
                           echo $cucu['nama'];
+                          echo $cucu['paket'];
                           if (cek_anak_cucu($cucu['id'])==true) {
                             echo '<p class="text-white">Left '.$this->btree->leftcount($cucu['id']).' | '.$this->btree->rightcount($cucu['id']).' Right</p><p class="text-white">'.$this->btree->allcount($cucu['id']).'</p>';
                           echo '<a href="'.base_url("backend/pohon_jaringan/show").'/'.$cucu['id'].'" id="show-child" class="btn btn-sm btn-success"> <i class="fa fa-arrow-circle-o-down"></i> Show Child</a>';
@@ -118,6 +120,7 @@
                           $cucu = cek_id_cucu($id_kanan,"kiri");
                           if ($cucu['status'] == true) {
                             echo $cucu['nama'];
+                            echo $cucu['paket'];
                             if (cek_anak_cucu($cucu['id'])==true) {
                               echo '<p class="text-white">Left '.$this->btree->leftcount($cucu['id']).' | '.$this->btree->rightcount($cucu['id']).' Right</p><p class="text-white">'.$this->btree->allcount($cucu['id']).'</p>';
                               echo '<a href="'.base_url("backend/pohon_jaringan/show").'/'.$cucu['id'].'" id="show-child" class="btn btn-sm btn-success"> <i class="fa fa-arrow-circle-o-down"></i> Show Child</a>';
@@ -142,6 +145,7 @@
                           $cucu = cek_id_cucu($id_kanan,"kanan");
                           if ($cucu['status'] == true) {
                             echo $cucu['nama'];
+                            echo $cucu['paket'];
                             if (cek_anak_cucu($cucu['id'])==true) {
                               echo '<p class="text-white">Left '.$this->btree->leftcount($cucu['id']).' | '.$this->btree->rightcount($cucu['id']).' Right</p><p class="text-white">'.$this->btree->allcount($cucu['id']).'</p>';
                               echo '<a href="'.base_url("backend/pohon_jaringan/show").'/'.$cucu['id'].'" id="show-child" class="btn btn-sm btn-success"> <i class="fa fa-arrow-circle-o-down"></i> Show Child</a>';
