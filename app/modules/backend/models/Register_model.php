@@ -18,4 +18,10 @@ class Register_model extends CI_Model{
     return $this->db->insert($table,$data);
   }
 
+  function get_where($table,$where)
+  {
+    return $this->db->get_where($table,$where)
+                    ->row();
+  }
+
 }

@@ -20,11 +20,16 @@ class Register extends CI_Controller{
 
   function referral($referal)
   {
-    $data["action"]  = site_url("member-register/action");
-    $data["provinsi"] = $this->model->get_provinsi()->result();
-    $data["bank"]   = $this->model->get_bank()->result();
-    $data["kd_ref"] = $referal;
-    $this->load->view("register/index",$data);
+    if ($this->model->get_where('tb_member',['kode_referral'=>$referal,'is_active'=>'1','is_verifikasi'=>'1'])) {
+      $data["action"]  = site_url("member-register/action");
+      $data["provinsi"] = $this->model->get_provinsi()->result();
+      $data["bank"]   = $this->model->get_bank()->result();
+      $data["kd_ref"] = $referal;
+      $this->load->view("register/index",$data);
+    }else {
+      redirect(site_url("member-register"),"refresh");
+    }
+
   }
 
   function _rules()
