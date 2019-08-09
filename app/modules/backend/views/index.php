@@ -1,14 +1,8 @@
-<style media="screen">
-  input[readonly]{
-
-  }
-</style>
-
 <div class="row">
   <div class="col-md-12 grid-margin">
     <div class="row">
       <div class="col-12 col-xl-5 mb-4 mb-xl-0">
-        <h4 class="font-weight-bold">Hi, Welcomeback!</h4>
+        <h4 class="font-weight-bold">Hi, Welcome!</h4>
         <h4 class="font-weight-normal mb-0"><?=profile("nama")?></h4>
       </div>
       <div class="col-12 col-xl-7">
@@ -45,7 +39,7 @@
   </div>
 </div>
 
-<div class="row mb-4">
+<div class="row">
   <div class="col-sm-12">
     <div class="form-group">
       <div class="input-group">
@@ -89,9 +83,10 @@
   <div class="col-md-4 grid-margin stretch-card">
     <div class="card bg-primary text-white">
       <div class="card-body">
-        <p class="card-title text-md-center text-xl-left text-white">Referral lansung</p>
+        <p class="card-title text-md-center text-xl-left text-white">Referral</p>
         <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-          <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0">0 Orang</h3>
+          <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0">0</h3>
+          <i class="fa fa-users icon-md mb-0 mb-md-3 mb-xl-0 text-white"></i>
         </div>
       </div>
     </div>
@@ -102,7 +97,8 @@
       <div class="card-body">
         <p class="card-title text-md-center text-xl-left text-white">Group Left</p>
         <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-          <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0"><?=$left_group?> Orang</h3>
+          <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0"><?=$left_group?></h3>
+          <i class="fa fa-user icon-md mb-0 mb-md-3 mb-xl-0 text-white"></i>
         </div>
       </div>
     </div>
@@ -113,7 +109,8 @@
       <div class="card-body">
         <p class="card-title text-md-center text-xl-left text-white">Group Right</p>
         <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-          <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0"><?=$right_group?> Orang</h3>
+          <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0"><?=$right_group?></h3>
+          <i class="fa fa-user icon-md mb-0 mb-md-3 mb-xl-0 text-white"></i>
         </div>
       </div>
     </div>
