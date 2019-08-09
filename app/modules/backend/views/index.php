@@ -13,7 +13,7 @@
       </div>
       <div class="col-12 col-xl-7">
         <div class="d-flex align-items-center justify-content-between flex-wrap">
-          <div class="border-right pr-4 mb-3 mb-xl-0">
+          <div class="border-right pr-4 mb-3 mb-xl-0 dash">
             <p class="text-muted">Balance</p>
             <h4 class="mb-0 font-weight-bold">Rp. <?=format_rupiah($balance)?></h4>
           </div>
@@ -21,15 +21,15 @@
             <p class="text-muted">Comission</p>
             <h4 class="mb-0 font-weight-bold">Rp. <?=format_rupiah($comission)?></h4>
           </div> -->
-          <div class="border-right pr-4 mb-3 mb-xl-0">
+          <div class="border-right pr-4 mb-3 mb-xl-0 dash">
             <p class="text-muted">Username</p>
             <h4 class="mb-0 font-weight-bold"><?=profile('username')?></h4>
           </div>
-          <div class="border-right pr-4 mb-3 mb-xl-0">
+          <div class="border-right pr-4 mb-3 mb-xl-0 dash">
             <p class="text-muted">Paket</p>
             <h4 class="mb-0 font-weight-bold"><?=paket(profile('paket'),'paket')?></h4>
           </div>
-          <div class="pr-3 mb-3 mb-xl-0">
+          <div class="pr-3 mb-3 mb-xl-0 dash">
             <p class="text-muted">Status Stockis</p>
             <h4 class="mb-0 font-weight-bold">
               <?php if (profile("status_stockis")=="member"): ?>
@@ -51,7 +51,7 @@
       <div class="input-group">
         <input type="text" class="form-control" id="copy-referral" placeholder="Link Referral" aria-label="Link Referral" value="<?=site_url("referral/".profile("kode_referral"))?>" readonly style="background: #fff;border:1px solid #f5ce00">
         <div class="input-group-append">
-          <button class="btn btn-sm btn-warning btn-clipboard text-white" type="button" data-clipboard-action="copy" data-clipboard-target="#copy-referral">Copy Link Referral</button>
+          <button class="btn btn-sm btn-warning btn-clipboard text-white" type="button" data-clipboard-action="copy" data-clipboard-target="#copy-referral"><i class="fa fa-copy"></i></button>
         </div>
       </div>
     </div>
@@ -87,7 +87,7 @@
 
 
   <div class="col-md-4 grid-margin stretch-card">
-    <div class="card bg-danger text-white">
+    <div class="card bg-primary text-white">
       <div class="card-body">
         <p class="card-title text-md-center text-xl-left text-white">Referral lansung</p>
         <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
@@ -98,7 +98,7 @@
   </div>
 
   <div class="col-md-4 grid-margin stretch-card">
-    <div class="card bg-danger text-white">
+    <div class="card bg-primary text-white">
       <div class="card-body">
         <p class="card-title text-md-center text-xl-left text-white">Group Left</p>
         <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
@@ -109,7 +109,7 @@
   </div>
 
   <div class="col-md-4 grid-margin stretch-card">
-    <div class="card bg-danger text-white">
+    <div class="card bg-primary text-white">
       <div class="card-body">
         <p class="card-title text-md-center text-xl-left text-white">Group Right</p>
         <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
@@ -121,7 +121,7 @@
 
 
   <div class="col-md-4 grid-margin stretch-card">
-    <div class="card bg-info text-white">
+    <div class="card bg-warning text-white">
       <div class="card-body">
         <p class="card-title text-md-center text-xl-left text-white">Stock PIN</p>
         <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
@@ -132,7 +132,7 @@
   </div>
 
   <div class="col-md-4 grid-margin stretch-card">
-    <div class="card bg-info text-white">
+    <div class="card bg-warning text-white">
       <div class="card-body">
         <p class="card-title text-md-center text-xl-left text-white">PIN Terpakai</p>
         <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
@@ -143,7 +143,7 @@
   </div>
 
   <div class="col-md-4 grid-margin stretch-card">
-    <div class="card bg-info text-white">
+    <div class="card bg-warning text-white">
       <div class="card-body">
         <p class="card-title text-md-center text-xl-left text-white">PIN Order</p>
         <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">

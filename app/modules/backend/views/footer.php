@@ -78,6 +78,13 @@
     var clipboard = new ClipboardJS('.btn-clipboard');
     clipboard.on('success', function(e) {
      console.log(e);
+     $.toast({
+       text: 'copy link referral success',
+       showHideTransition: 'slide',
+       icon: 'info',
+       loaderBg: '#f96868',
+       position: 'top-center',
+     });
     });
    clipboard.on('error', function(e) {
      console.log(e);

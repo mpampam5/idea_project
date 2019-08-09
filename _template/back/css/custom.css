@@ -1454,3 +1454,13 @@
 table.dataTable>tbody>tr.child ul.dtr-details{
   width: 100%;
 }
+
+
+
+/* //style dashboard */
+@media (max-width: 535px) {
+  .dash{
+    border-right: none!important;
+    width: 100%!important;
+  }
+}
