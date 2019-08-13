@@ -9,7 +9,9 @@
 
 private $ci;
 
-public $data = array();
+private $data = array();
+
+public $is_parent = array();
 
 
       public function __construct()
@@ -106,6 +108,18 @@ public $data = array();
 
 
 
+
+    function cek_is_parent($id)
+    {
+      $array = $this->ci->db->get_where("trans_member",['id_member'=>$id])->row();
+
+      if($array->id_parent!=0) {
+          array_push($this->is_parent, $array->id_parent);
+          $is_parent[]= $this->cek_is_parent($array->id_parent);
+      }
+
+      return array_filter($this->is_parent);
+    }
 
 
 

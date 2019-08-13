@@ -346,24 +346,6 @@ function _cek_pin($str)
   }
 }
 
-function contoh()
-{
-  $data = [];
-  $btree = $this->btree->get_right_id_children(sess('id_member'));
-  foreach ($btree as $value) {
-    $cek_pin = $this->db->get_where('tb_member',['id_member'=>$value])->row();
-    $data[] =  paket($cek_pin->paket,'pin')*150000;
-  }
-
-  echo array_sum($data);
-  // print_r($btree);
-  // echo json_encode($btree);
-  // $data = array_merge_recursive($btree);
-  // var_dump($btree);
-}
-
-
-
 /// HISTORY Transfer
 function history_transfer_pin()
 {
@@ -377,6 +359,61 @@ function json_history_transfer_pin()
   header('Content-Type: application/json');
   echo $this->model->json_history_transfer_pin();
 }
+
+
+
+
+
+function contoh()
+{
+  $data = [];
+  $id_child_left = $this->btree->get_left_id_children(sess('id_member'));
+  $id_child_right = $this->btree->get_right_id_children(sess('id_member'));
+  if (array_sum($id_child_left) <= array_sum($id_child_right)) {
+    $btree= $id_child_left;
+  }else{
+    $btree= $id_child_right;
+  }
+
+  foreach ($btree as $value) {
+    $cek_pin = $this->db->get_where('tb_member',['id_member'=>$value])->row();
+    $data[] =  paket($cek_pin->paket,'pin')*config_all('harga_pin');
+  }
+
+  $data_sum = array_sum($data);
+  $total = (config_all('komisi_pairing')/100) * $data_sum;
+  echo $total;
+  // print_r($btree);
+  // echo json_encode($btree);
+  // $data = array_merge_recursive($btree);
+  // var_dump($btree);
+}
+
+function contoh2()
+{
+  $left = [];
+  $right = [];
+  $is_parent = $this->btree->cek_is_parent(36);
+  // foreach ($is_parent as $value) {
+  //     $right[]= $this->btree->get_right_id_children($value);
+  // }
+  //
+  // foreach ($is_parent as $value) {
+  //     $left[]= $this->btree->get_left_id_children($value);
+  // }
+
+  for ($i=0; $i <count($is_parent) ; $i++) {
+    // $left[]= $this->btree->get_left_id_children($is_parent[$i]);
+    $right[]= $this->btree->get_right_id_children($is_parent[$i]);
+  }
+
+  //
+  echo json_encode($right);
+}
+
+
+
+
 
 
 } //end class

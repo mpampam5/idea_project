@@ -184,5 +184,22 @@ function get_bonus_sponsor($jenis_paket){
   return $total_bonus_persen;
 }
 
+// HITUNG BONUS PAIRING
+// $btree smua id berdasarkan anak kiri dan kanan
+function get_bonus_pairing($btree)
+{
+  $ci =& get_instance();
+  $data = [];
+
+  foreach ($btree as $value) {
+    $cek_pin = $ci->get_where('tb_member',['id_member'=>$value])->row();
+    $data[] =  paket($cek_pin->paket,'pin')*config_all('harga_pin');
+  }
+
+  $data_sum = array_sum($data);
+  $total = (config_all('komisi_pairing')/100)*$data_sum;
+  return $total;
+}
+
 
 } //END DEPOSIT
