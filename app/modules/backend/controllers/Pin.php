@@ -346,14 +346,21 @@ function _cek_pin($str)
   }
 }
 
-// function contoh()
-// {
-//   $btree = $this->btree->get_all_id_children(sess('id_member'));
-//   // print_r($btree);
-//   echo json_encode($btree);
-//   // $data = array_merge_recursive($btree);
-//   // var_dump($btree);
-// }
+function contoh()
+{
+  $data = [];
+  $btree = $this->btree->get_right_id_children(sess('id_member'));
+  foreach ($btree as $value) {
+    $cek_pin = $this->db->get_where('tb_member',['id_member'=>$value])->row();
+    $data[] =  paket($cek_pin->paket,'pin')*150000;
+  }
+
+  echo array_sum($data);
+  // print_r($btree);
+  // echo json_encode($btree);
+  // $data = array_merge_recursive($btree);
+  // var_dump($btree);
+}
 
 
 
