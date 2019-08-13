@@ -34,7 +34,7 @@ function json_order_pin()
                               trans_order_pin.sumber_dana,
                               trans_order_pin.id_config_bank,
                               trans_order_pin.`status`,
-                              DATE_FORMAT(trans_order_pin.tgl_order,'%d/%m/%Y %h:%i') AS tgl_order,
+                              DATE_FORMAT(trans_order_pin.tgl_order,'%d/%m/%Y %H:%i') AS tgl_order,
                               config_bank.nama_rekening,
                               config_bank.no_rekening,
                               ref_bank.bank");
@@ -53,23 +53,25 @@ function json_pin()
   $this->datatables->select("trans_order_pin.id_order_pin,
                             trans_order_pin.id_member,
                             trans_order_pin.kode_transaksi,
-                            DATE_FORMAT(trans_order_pin.tgl_order,'%d/%m/%Y %h:%i') AS tgl_order,
+                            DATE_FORMAT(trans_order_pin.tgl_order,'%d/%m/%Y %H:%i') AS tgl_order,
                             trans_pin.id_pin_trans,
                             trans_pin.id_member_punya,
                             trans_pin.kode_pin_trans,
                             trans_pin.key_order_pin,
                             trans_pin_pakai.id_trans_pin_terpakai,
                             trans_pin_pakai.serial_pin,
-                            DATE_FORMAT(trans_pin_pakai.tgl_aktivasi,'%d/%m/%Y %h:%i') AS tgl_aktivasi,
+                            DATE_FORMAT(trans_pin_pakai.tgl_aktivasi,'%d/%m/%Y %H:%i') AS tgl_aktivasi,
                             trans_pin_pakai.id_member_pakai,
                             trans_pin_pakai.status,
                             tb_member.nama,
                             tb_member.paket AS pakets,
-                            config_paket.paket");
+                            config_paket.paket,
+                            tb_auth.username");
   $this->datatables->from("trans_order_pin");
   $this->datatables->join("trans_pin","trans_pin.id_order_pin = trans_order_pin.id_order_pin");
   $this->datatables->join("trans_pin_pakai","trans_pin_pakai.id_pin_trans = trans_pin.id_pin_trans","left");
   $this->datatables->join("tb_member","tb_member.id_member = trans_pin_pakai.id_member_pakai","left");
+  $this->datatables->join("tb_auth","tb_member.id_member = tb_auth.id_personal","left");
   $this->datatables->join("config_paket","config_paket.id_paket = tb_member.paket","left");
   $this->datatables->where("trans_pin.id_member_punya",sess('id_member'));
   $this->datatables->group_by(array('trans_pin.key_order_pin','trans_pin_pakai.serial_pin'));
@@ -87,7 +89,7 @@ function detail_order_pin($id)
                               trans_order_pin.sumber_dana,
                               trans_order_pin.id_config_bank,
                               trans_order_pin.`status`,
-                              DATE_FORMAT(trans_order_pin.tgl_order,'%d/%m/%Y %h:%i') AS tgl_order,
+                              DATE_FORMAT(trans_order_pin.tgl_order,'%d/%m/%Y %H:%i') AS tgl_order,
                               config_bank.nama_rekening,
                               config_bank.no_rekening,
                               ref_bank.bank")
@@ -103,7 +105,7 @@ function detail_order_pin($id)
 function json_history_transfer_pin(){
   $this->datatables->select("history_transfer_pin.id_transfer_pin,
                              history_transfer_pin.id_member,
-                             DATE_FORMAT(history_transfer_pin.tgl_transfer,'%d/%m/%Y %h:%i') AS tgl_transfer,
+                             DATE_FORMAT(history_transfer_pin.tgl_transfer,'%d/%m/%Y %H:%i') AS tgl_transfer,
                              history_transfer_pin.`status`,
                              history_transfer_pin.keterangan");
   $this->datatables->from("history_transfer_pin");

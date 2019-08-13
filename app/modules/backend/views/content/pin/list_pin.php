@@ -84,7 +84,7 @@ $(document).ready(function() {
                  if (data==null) {
                      var str = '<p class="text-center"> - </p>';
                  }else {
-                     var str = '<b>'+data+'</b>&nbsp;|&nbsp;<b class="text-danger">'+row.paket.toUpperCase()+'</b>';
+                     var str = '<b>'+data+'</b>&nbsp;|&nbsp;<b class="text-info">'+row.username+'</b>&nbsp;|&nbsp;<b class="text-danger">'+row.paket.toUpperCase()+'</b>';
                  }
 
                  return str;
@@ -116,6 +116,10 @@ $(document).ready(function() {
               },
               {
                 "data": "paket",
+                "visible":false
+              },
+              {
+                "data": "username",
                 "visible":false
               },
 
