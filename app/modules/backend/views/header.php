@@ -228,7 +228,7 @@
             <div class="collapse" id="financial">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="<?=site_url("backend/b_sponsor")?>">B. Sponsor</a></li>
-                <li class="nav-item"> <a class="nav-link" href="<?=site_url("#")?>">B.Pairing</a></li>
+                <li class="nav-item"> <a class="nav-link" href="<?=site_url("backend/b_pairing")?>">B.Pairing</a></li>
               </ul>
             </div>
           </li>
