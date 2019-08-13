@@ -67,6 +67,7 @@ class Member extends MY_Controller{
         $alamat             = $this->input->post("alamat",true);
         $is_active          = $this->input->post("is_active",true);
         $paket              = $this->input->post("paket",true);
+        $status_stockis = $this->input->post("status_stockis",true);
         $bank               = $this->input->post("bank",true);
         $no_rek             = $this->input->post("no_rek",true);
         $nama_rekening      = $this->input->post("nama_rekening",true);
@@ -91,6 +92,7 @@ class Member extends MY_Controller{
         $this->form_validation->set_rules("alamat","Alamat Lengkap","trim|xss_clean|required");
         $this->form_validation->set_rules("is_active","Status","trim|xss_clean|required");
         $this->form_validation->set_rules("paket","Jenis Paket","trim|xss_clean|required");
+        $this->form_validation->set_rules("status_stockis","Master Stockis","trim|xss_clean|required");
         $this->form_validation->set_rules("bank","Jenis Bank","trim|xss_clean|required");
         $this->form_validation->set_rules("no_rek","NO.rekening","trim|xss_clean|required|numeric");
         $this->form_validation->set_rules("nama_rekening","Nama Rekening","trim|xss_clean|required");
@@ -114,6 +116,7 @@ class Member extends MY_Controller{
                     "alamat"        => $alamat,
                     "is_active"     => $is_active,
                     "paket"         => $paket,
+                    "status_stockis"=> $status_stockis,
                     "created"       => date("Y-m-d h:i:s")
                     ];
           $this->model->get_update("tb_member",$data,["id_member"=>$id_member]);

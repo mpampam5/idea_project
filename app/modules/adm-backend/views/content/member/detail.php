@@ -285,9 +285,20 @@
             <label class="col-sm-3 col-form-label">Paket</label>
             <div class="col-sm-9">
               <select class="form-control" name="paket" id="paket" style="color:#495057">
-                <option <?=($row->paket=="silver")?"selected":""?> value="silver">SILVER</option>
-                <option <?=($row->paket=="gold")?"selected":""?> value="gold">GOLD</option>
-                <option <?=($row->paket=="platinum")?"selected":""?> value="platinum">PLATINUM</option>
+                <?php $qry_paket =$this->db->get('config_paket'); ?>
+                <?php foreach ($qry_paket->result() as $qry_paket): ?>
+                  <option <?=($row->paket==$qry_paket->id_paket)?"selected":""?> value="<?=$qry_paket->id_paket?>"><?=$qry_paket->paket?></option>
+                <?php endforeach; ?>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Status Stockis</label>
+            <div class="col-sm-9">
+              <select class="form-control" name="status_stockis" id="status_stockis" style="color:#495057">
+                <option <?=($row->status_stockis=="member")?"selected":""?> value="member">Member</option>
+                <option <?=($row->status_stockis=="master_stockis")?"selected":""?> value="master_stockis">Master Stockis</option>
               </select>
             </div>
           </div>

@@ -40,6 +40,7 @@ class Member_model extends MY_Model{
                               tb_member.posisi,
                               tb_member.referral_from,
                               tb_member.paket,
+                              tb_member.status_stockis,
                               tb_member.is_verifikasi,
                               tb_member.created,
                               tb_member.is_active,
