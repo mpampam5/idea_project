@@ -21,12 +21,20 @@ class Pohon_jaringan extends MY_Controller{
   }
 
 
-  function show($id)
+  function show($id="")
   {
-    $this->load->helper(['cek_pohon']);
-    $this->template->set_title("Binary");
-    $data["root"] = $this->model->get_where("tb_member",["id_member"=>$id]);
-    $this->template->view("content/pohon_jaringan/index",$data);
+    if ($id!="") {
+      if ($row = $this->model->get_where("tb_member",["id_member"=>$id])) {
+        $this->load->helper(['cek_pohon']);
+        $this->template->set_title("Binary");
+        $data["root"] = $row;
+        $this->template->view("content/pohon_jaringan/index",$data);
+      }
+
+    }else {
+      redirect(site_url("backend/pohon_jaringan"),"refresh");
+    }
+
   }
 
 
@@ -35,13 +43,15 @@ class Pohon_jaringan extends MY_Controller{
       if ($id_parent=="" OR $posisi=="") {
         $this->_error404();
         }else {
-        $this->template->set_title("Binary");
-        $data["provinsi"] = $this->db->get("wil_provinsi")->result();
-        $data["bank"]   = $this->db->get("ref_bank")->result();
-        $data['id_parent'] = $id_parent;
-        $data['posisi'] = $posisi;
-        $data['serial_pin'] = "SN".date('dmyhis');
-        $this->template->view("content/pohon_jaringan/form",$data);
+        if ($posisi=="kiri"  OR $posisi=="kanan") {
+          $this->template->set_title("Binary");
+          $data["provinsi"] = $this->db->get("wil_provinsi")->result();
+          $data["bank"]   = $this->db->get("ref_bank")->result();
+          $data['id_parent'] = $id_parent;
+          $data['posisi'] = $posisi;
+          $data['serial_pin'] = "SN".date('dmyhis');
+          $this->template->view("content/pohon_jaringan/form",$data);
+        }
       }
   }
 
