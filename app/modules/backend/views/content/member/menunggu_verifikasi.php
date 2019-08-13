@@ -21,7 +21,7 @@
         <hr>
 
           <div class="col-sm-12 table-responsive">
-            <table id="table" class="table">
+            <table id="table" class="table table-bordered">
               <thead>
                 <tr class="bg-warning text-white">
                     <th width="10px">No</th>

@@ -13,7 +13,7 @@ class Member_model extends MY_Model{
 
   function json_menunggu_verif()
   {
-    $this->datatables->select("id_member,nama,referral_from,is_active,is_verifikasi,DATE_FORMAT(created,'%d/%m/%Y jam %h:%i') AS created");
+    $this->datatables->select("id_member,nama,referral_from,is_active,is_verifikasi,DATE_FORMAT(created,'%d/%m/%Y %H:%i') AS created");
     $this->datatables->from('tb_member');
     $this->datatables->where("referral_from",$this->session->userdata('kode_referral'));
     $this->datatables->where("is_verifikasi","0");
