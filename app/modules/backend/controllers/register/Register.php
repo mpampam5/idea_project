@@ -87,7 +87,7 @@ class Register extends CI_Controller{
         $no_rek             = $this->input->post("no_rek",true);
         $nama_rekening      = $this->input->post("nama_rekening",true);
         $kota_pembukaan_rek = $this->input->post("kota_pembukaan_rek",true);
-        $username           = $this->input->post("username",true);
+        $username           = strtolower($this->input->post("username",true));
         $password           = $this->input->post("password",true);
 
 
