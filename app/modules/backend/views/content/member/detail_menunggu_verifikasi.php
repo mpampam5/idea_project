@@ -18,16 +18,16 @@
   <div class="col-12 stretch-card">
 
     <div class="card">
-      <div class="card-body">
+      <div class="card-body" id="card-body-detail">
 
           <h4 class="card-title"><?=$button?> <?=$title?></h4>
 
         <hr>
 
-          <div class="col-sm-12 table-responsive">
-            <table id="table" class="table table-bordered">
+          <div class="table-responsive">
+            <table id="table-detail-member" class="table table-bordered">
               <tr>
-                <td colspan="2" class="bg-warning text-white"><h5>Data Personal</h5></td>
+                <td colspan="2" class="bg-warning text-white thead"><h5>Data Personal</h5></td>
               </tr>
 
               <tr>
@@ -67,22 +67,22 @@
 
               <tr>
                 <td>Provinsi</td>
-                <td><b><?=wilayah_indonesia("wil_provinsi", ["id"=>$row->provinsi]);?></b></td>
+                <td><?=wilayah_indonesia("wil_provinsi", ["id"=>$row->provinsi]);?></td>
               </tr>
 
               <tr>
                 <td>Kabupaten/Kota</td>
-                <td><b><?=wilayah_indonesia("wil_kabupaten",["id"=>$row->kabupaten]);?></b></td>
+                <td><?=wilayah_indonesia("wil_kabupaten",["id"=>$row->kabupaten]);?></td>
               </tr>
 
               <tr>
                 <td>Kecamatan</td>
-                <td><b><?=wilayah_indonesia("wil_kecamatan",["id"=>$row->kecamatan]);?></b></td>
+                <td><?=wilayah_indonesia("wil_kecamatan",["id"=>$row->kecamatan]);?></td>
               </tr>
 
               <tr>
                 <td>Kelurahan/Desa</td>
-                <td><b><?=wilayah_indonesia("wil_kelurahan",["id"=>$row->kelurahan]);?></b></td>
+                <td><?=wilayah_indonesia("wil_kelurahan",["id"=>$row->kelurahan]);?></td>
               </tr>
 
 
@@ -112,7 +112,7 @@
               </tr>
 
               <tr>
-                <td>Kota Pembukaan Rekening</td>
+                <td>Kota Pembukaan Rek</td>
                 <td><?=$row->kota_pembukaan_rekening?></td>
               </tr>
 
@@ -127,18 +127,20 @@
 
               <tr>
                 <td>Kode Referral</td>
-                <td class="text-info"><?=$row->kode_referral?></td>
+                <td class="text-primary"><?=$row->kode_referral?></td>
               </tr>
 
               <tr>
                 <td>Link Referral</td>
-                <td>
-                  <a href="<?=site_url("referral/$row->kode_referral")?>" target="_blank"><?=site_url("referral/$row->kode_referral")?></a>
+                <td class="value-referral">
+                  <p class="link-referral">
+                    <a href="<?=site_url("referral/$row->kode_referral")?>" target="_blank"><?=site_url("referral/$row->kode_referral")?></a>
+                  </p>
                 </td>
               </tr>
 
               <tr>
-                <td colspan="2">
+                <td colspan="2" class="button-action">
                   <a href="<?=site_url("backend/member/menunggu_verifikasi")?>" class="btn btn-secondary text-white btn-sm"> Kembali</a>
                   <a href="<?=site_url("backend/pohon_jaringan/cek_verifikasi/$row->id_member/$row->pakets")?>" id="verifikasi" class="btn btn-success btn-sm"> Verifikasi</a>
                   <a href="<?=site_url("backend/member/delete/$row->id_member")?>" id="delete" class="btn btn-danger btn-sm"> Hapus</a>

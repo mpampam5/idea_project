@@ -20,7 +20,7 @@
 
         <hr>
 
-          <div class="col-sm-12 table-responsive">
+          <div class="table-responsive">
             <table id="table" class="table table-bordered">
               <thead>
                 <tr class="bg-warning text-white">

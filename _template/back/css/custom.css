@@ -1463,4 +1463,72 @@ table.dataTable>tbody>tr.child ul.dtr-details{
     border-right: none!important;
     width: 100%!important;
   }
+
+}
+/*
+@media (max-width: 535px) {
+  #table tbody tr td{
+    padding: 5px 5px 5px 5px
+  }
+} */
+
+
+@media (max-width: 767px){
+.content-wrapper{
+    padding: 0.5rem 0.5rem;
+  }
+}
+
+/* modul detail waiting */
+@media (max-width: 535px) {
+
+
+  .card-title{
+    padding-left: 10px;
+  }
+
+  .card .card-body{
+    flex: 1 1 auto;
+    padding-top: 1.25rem;
+    padding-right: 0.25rem;
+    padding-bottom: 1.25rem;
+    padding-left: 0.25rem;
+  }
+
+  #card-body-detail{
+    /* flex: 1 1 auto;
+    padding-top: 1.25rem;
+    padding-right: 0.25rem;
+    padding-bottom: 1.25rem;
+    padding-left: 0.25rem; */
+  }
+
+
+  #table-detail-member .thead{
+      padding:8px 0 1px 5px;
+      font-size:9px!important;
+  }
+
+  #table-detail-member tr td{
+      padding:8px 2px 5px 5px;
+      font-size: 10px;
+  }
+
+
+  #table-detail-member tr .value-referral{
+    max-width: 50px!important;
+    white-space: normal !important;
+  word-wrap: break-word;
+  }
+
+  #table-detail-member tr td .link-referral{
+      font-size: 2.5vw;
+  }
+
+  #table-detail-member tr .button-action{
+      text-align: center;
+  }
+
+
+
 }
