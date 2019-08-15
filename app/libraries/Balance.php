@@ -13,9 +13,10 @@ function total_balance($id_member)
     $withdraw      = $this->withdraw($id_member);
     $transaksi_pin = $this->total_transaksi_pin($id_member);
     $bonus_sponsor = $this->sponsor($id_member);
+    $bonus_pairing = $this->pairing($id_member);
 
     //hitung
-    $balance = $deposit + $bonus_sponsor - $withdraw - $transaksi_pin;
+    $balance = $deposit + $bonus_sponsor + $bonus_pairing - $withdraw - $transaksi_pin;
     return $balance;
   }
 
@@ -29,6 +30,19 @@ function sponsor($id_member)
                                       SUM(bonus_sponsor.total_bonus) AS total_bonus")
                   ->from('bonus_sponsor')
                   ->where('bonus_sponsor.id_parent',sess('id_member'))
+                  ->get();
+  return $query->row()->total_bonus;
+}
+
+//Total jumlah pairing
+function pairing($id_member)
+{
+  $ci =& get_instance();
+  $query =  $ci->db->select("bonus_pairing.id_bonus_pairing,
+                              bonus_pairing.id_member,
+                              SUM(bonus_pairing.total_bonus) AS total_bonus")
+                  ->from('bonus_pairing')
+                  ->where('bonus_pairing.id_member',sess('id_member'))
                   ->get();
   return $query->row()->total_bonus;
 }
@@ -184,22 +198,6 @@ function get_bonus_sponsor($jenis_paket){
   return $total_bonus_persen;
 }
 
-// HITUNG BONUS PAIRING
-// $btree smua id berdasarkan anak kiri dan kanan
-function get_bonus_pairing($btree)
-{
-  $ci =& get_instance();
-  $data = [];
-
-  foreach ($btree as $value) {
-    $cek_pin = $ci->get_where('tb_member',['id_member'=>$value])->row();
-    $data[] =  paket($cek_pin->paket,'pin')*config_all('harga_pin');
-  }
-
-  $data_sum = array_sum($data);
-  $total = (config_all('komisi_pairing')/100)*$data_sum;
-  return $total;
-}
 
 
 } //END DEPOSIT
