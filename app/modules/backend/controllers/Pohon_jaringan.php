@@ -218,6 +218,13 @@ class Pohon_jaringan extends MY_Controller{
 
           $this->model->get_insert("bonus_sponsor",$inser_b_sponsor);
 
+          //INSERT BONUS PAIRING
+            $is_parent = $this->btree->cek_is_parent($id_parent);
+
+            foreach ($is_parent as $value) {
+               $this->_pairing($value);
+            }
+
           $json['alert'] = "Berhasil menambahkan member";
           $json['success'] = true;
           $json['url'] = site_url("backend/pohon_jaringan");
@@ -414,6 +421,72 @@ function kabupaten(){
       echo json_encode($json);
     }
   }
+
+
+
+
+
+
+
+
+
+
+
+//BONUS PAIRING
+  function _pairing($id)
+  {
+
+      $pin_left = [];
+      $pin_right = [];
+
+
+      $left = iterator_to_array(new RecursiveIteratorIterator(new RecursiveArrayIterator($this->btree->get_left_id_children($id))), 0);
+
+      foreach ($left as $id_left) {
+        $pin_left[ ]= paket(profile_member($id_left,'paket'),'pin');
+      }
+
+      $right = iterator_to_array(new RecursiveIteratorIterator(new RecursiveArrayIterator($this->btree->get_right_id_children($id))), 0);
+      foreach ($right as $id_right) {
+        $pin_right[]= paket(profile_member($id_right,'paket'),'pin');
+      }
+
+      $total_l = array_sum($pin_left) * config_all('harga_pin');
+      $total_r = array_sum($pin_right) * config_all('harga_pin');
+
+      if ($total_l<=$total_r) {
+        $total = (config_all('komisi_pairing')/100) * $total_l;
+      }else {
+        $total = (config_all('komisi_pairing')/100) * $total_r;
+      }
+
+      if ($total!=0) {
+        $cek_bonus = $this->db->select('*')
+                              ->from('bonus_pairing')
+                              ->where('id_member',$id)
+                              ->order_by('created','DESC')
+                              ->limit(1)
+                              ->get();
+        if ($cek_bonus->num_rows()>0) {
+            if ($cek_bonus->row()->total_bonus!=$total) {
+              $insert = array('id_member'=>$id,"total_bonus"=>$total,"created"=>date("Y-m-d h:i:s"));
+              $this->db->insert('bonus_pairing',$insert);
+            }
+        }else {
+          $insert = array('id_member'=>$id,"total_bonus"=>$total,"created"=>date("Y-m-d h:i:s"));
+          $this->db->insert('bonus_pairing',$insert);
+        }
+
+      }
+
+      // $pin = array($total);
+
+      // echo json_encode($pin);
+    return;
+  }
+
+
+
 
 
 

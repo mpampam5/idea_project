@@ -67,6 +67,59 @@ public $is_parent = array();
 
         //MENAMPILKAN ID ANAK
 
+        function get_right_id_children($id){ //Function get id right children
+
+          $array = $this->ci->db->get_where("trans_member",['id_member'=>$id])->row();
+          $right_child=[];
+
+          if(!empty($array->r_mem)) {
+              array_push($right_child, $array->r_mem);
+              $right_child[]= $this->all_id_child($array->r_mem);
+          }
+
+          return $right_child;
+        }
+
+
+
+
+        function get_left_id_children($id){ //Function get id left children
+
+          $array = $this->ci->db->get_where("trans_member",['id_member'=>$id])->row();
+          $left_child=[];
+
+          if(!empty($array->l_mem)) {
+              array_push($left_child, $array->l_mem);
+              $left_child[]= $this->all_id_child($array->l_mem);
+          }
+
+          return $left_child;
+        }
+
+
+
+        function all_id_child($id) { //Function get id all children
+
+            $array = $this->ci->db->get_where("trans_member",['id_member'=>$id])->row();
+            $all_id_child = [];
+            if(!empty($array->r_mem)) {
+                array_push($all_id_child, $array->r_mem);
+                $all_id_child[]= $this->all_id_child($array->r_mem);
+            }
+
+            if(!empty($array->l_mem)) {
+                array_push($all_id_child, $array->l_mem);
+                $all_id_child[]= $this->all_id_child($array->l_mem);
+            }
+
+            return array_values($all_id_child);
+        }
+
+
+
+
+
+
 
           function get_all_id_children($id) { //Function get id all children
 
