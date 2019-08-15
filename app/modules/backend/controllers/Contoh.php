@@ -21,25 +21,26 @@ class Contoh extends MY_Controller{
 
   function get($id)
   {
+    $data = [];
     $is_parent = $this->btree->cek_is_parent($id);
 
       foreach ($is_parent as $value) {
-        $data[$value]= $this->add_pairing($value);
+        $data[$value]= $this->pairing($value);
       }
 
     echo json_encode($data);
   }
 
 
-  function add_pairing($id)
-  {
-    $left = $this->btree->get_left_id_children($id);
-    $right = $this->btree->get_right_id_children($id);
-
-    $data = array($left ,$right );
-
-    return $data;
-  }
+  // function add_pairing($id)
+  // {
+  //   $left ['kiri']= $this->btree->get_left_id_children($id);
+  //   $right ['kanan']= $this->btree->get_right_id_children($id);
+  //
+  //   $data = array($left,$right );
+  //
+  //   return $data;
+  // }
 
 
 
@@ -47,18 +48,40 @@ class Contoh extends MY_Controller{
 
 function pairing($id)
 {
-  $btree =[];
-  $id =  $this->cek_is_parent($id);
-  //
-  //
-  foreach ($id as $ids) {
-    $btree[$ids][] = iterator_to_array(new RecursiveIteratorIterator(new RecursiveArrayIterator($this->get_left_id_children($ids))), 0);
 
-    $btree[$ids][] = iterator_to_array(new RecursiveIteratorIterator(new RecursiveArrayIterator($this->get_right_id_children($ids))), 0);
-  }
+    $pin_left = [];
+    $pin_right = [];
 
 
-  echo json_encode($btree);
+    $left = iterator_to_array(new RecursiveIteratorIterator(new RecursiveArrayIterator($this->get_left_id_children($id))), 0);
+
+    foreach ($left as $id_left) {
+      $pin_left[ ]= paket(profile_member($id_left,'paket'),'pin');
+    }
+
+    $right = iterator_to_array(new RecursiveIteratorIterator(new RecursiveArrayIterator($this->get_right_id_children($id))), 0);
+    foreach ($right as $id_right) {
+      $pin_right[]= paket(profile_member($id_right,'paket'),'pin');
+    }
+
+    $total_l = array_sum($pin_left) * config_all('harga_pin');
+    $total_r = array_sum($pin_right) * config_all('harga_pin');
+
+    if ($total_l<=$total_r) {
+      $total = (config_all('komisi_pairing')/100) * $total_l;
+    }else {
+      $total = (config_all('komisi_pairing')/100) * $total_r;
+    }
+
+    if ($total!=0) {
+      $insert = array('id_member'=>$id,"total_bonus"=>$total,"created"=>date("Y-m-d h:i:s"));
+      $this->db->insert('bonus_pairing',$insert);
+    }
+
+    // $pin = array($total);
+
+    // echo json_encode($pin);
+  return $total;
 }
 
 
