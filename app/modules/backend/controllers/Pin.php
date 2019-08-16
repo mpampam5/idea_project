@@ -389,26 +389,30 @@ function contoh()
   // var_dump($btree);
 }
 
-function contoh2()
+
+
+function contoh2($id)
 {
-  $left = [];
-  $right = [];
-  $is_parent = $this->btree->cek_is_parent(36);
-  // foreach ($is_parent as $value) {
-  //     $right[]= $this->btree->get_right_id_children($value);
-  // }
-  //
-  // foreach ($is_parent as $value) {
-  //     $left[]= $this->btree->get_left_id_children($value);
-  // }
+  $is_parent = $this->btree->cek_is_parent($id);
 
-  for ($i=0; $i <count($is_parent) ; $i++) {
-    // $left[]= $this->btree->get_left_id_children($is_parent[$i]);
-    $right[]= $this->btree->get_right_id_children($is_parent[$i]);
-  }
+    foreach ($is_parent as $value) {
+      $data[$value]= $this->add_pairing($value);
+    }
 
-  //
-  echo json_encode($right);
+  echo json_encode($data);
+}
+
+
+
+
+function add_pairing($id)
+{
+  $left = $this->btree->get_left_id_children($id);
+  $right = $this->btree->get_right_id_children($id);
+
+  $data = array($left ,$right );
+
+  return $data;
 }
 
 
