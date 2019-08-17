@@ -73,15 +73,15 @@ function pairing($id)
       $total = (config_all('komisi_pairing')/100) * $total_r;
     }
 
-    if ($total!=0) {
-      $insert = array('id_member'=>$id,"total_bonus"=>$total,"created"=>date("Y-m-d h:i:s"));
-      $this->db->insert('bonus_pairing',$insert);
-    }
+    // if ($total!=0) {
+    //   $insert = array('id_member'=>$id,"total_bonus"=>$total,"created"=>date("Y-m-d h:i:s"));
+    //   $this->db->insert('bonus_pairing',$insert);
+    // }
 
-    // $pin = array($total);
+    $pin = array($left,$right);
 
     // echo json_encode($pin);
-  return $total;
+  return $pin;
 }
 
 
