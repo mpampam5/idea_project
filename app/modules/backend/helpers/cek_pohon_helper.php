@@ -23,6 +23,7 @@ function cek_parent($id,$posisi){
                             ");
     if ($query->num_rows() > 0) {
         $str = '<h4>'.$query->row()->nama.'</h4>';
+        $str .= '<p class="text-white">'.profile_member_where(['tb_member.id_member'=>$query->row()->id_member],'username').'</p>';
         $str.='<p class="text-white">'.$query->row()->paket.'</p>';
         $str .= '<p class="text-white">Left '.$ci->btree->leftcount($query->row()->id_member).' | '.$ci->btree->rightcount($query->row()->id_member).' Right</p><p class="text-white">'.$ci->btree->allcount($query->row()->id_member).'</p>';
     }else {
@@ -84,6 +85,7 @@ function cek_id_cucu($id,$posisi){
         $str = array( 'status'=>true,
                       'id' => $query->row()->id_member,
                       'nama' => '<h4>'.$query->row()->nama.'</h4>',
+                      'username'=> '<p class="text-white">'.profile_member_where(['tb_member.id_member'=>$query->row()->id_member],'username').'</p>',
                       'paket' => '<p class="text-white">'.$query->row()->paket.'</p>',
                     );
     }else {

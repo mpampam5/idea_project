@@ -20,13 +20,14 @@
 
 
 
-          <div class="col-sm-12 content-root mt-5 mb-5">
+          <div class="col-sm-12 content-root mt-2 mb-5">
             <table id="table-content-pohon">
               <!-- level1 -->
               <tr>
                 <td colspan="4">
                   <div id="root" class="root1">
                     <h4><?=$root->nama?></h4>
+                    <p class="text-white"><?=profile_member_where(['tb_member.id_member'=>$root->id_member],'username')?></p>
                     <p class="text-white"><?=paket($root->paket,'paket')?></p>
                     <?php if ($root->id_member!=$this->session->userdata('id_member')): ?>
                       <?=ambil_data_parent($root->id_member)?>
@@ -71,6 +72,7 @@
                       <?php $cucu=cek_id_cucu($id_kiri,"kiri");
                       if ($cucu['status'] == true) {
                         echo $cucu['nama'];
+                        echo $cucu['username'];
                         echo $cucu['paket'];
                         if (cek_anak_cucu($cucu['id'])==true) {
                           echo '<p class="text-white">Left '.$this->btree->leftcount($cucu['id']).' | '.$this->btree->rightcount($cucu['id']).' Right</p><p class="text-white">'.$this->btree->allcount($cucu['id']).'</p>';
@@ -94,6 +96,7 @@
                       <?php $cucu=cek_id_cucu($id_kiri,"kanan");
                         if ($cucu['status'] == true) {
                           echo $cucu['nama'];
+                          echo $cucu['username'];
                           echo $cucu['paket'];
                           if (cek_anak_cucu($cucu['id'])==true) {
                             echo '<p class="text-white">Left '.$this->btree->leftcount($cucu['id']).' | '.$this->btree->rightcount($cucu['id']).' Right</p><p class="text-white">'.$this->btree->allcount($cucu['id']).'</p>';
@@ -120,6 +123,7 @@
                           $cucu = cek_id_cucu($id_kanan,"kiri");
                           if ($cucu['status'] == true) {
                             echo $cucu['nama'];
+                            echo $cucu['username'];
                             echo $cucu['paket'];
                             if (cek_anak_cucu($cucu['id'])==true) {
                               echo '<p class="text-white">Left '.$this->btree->leftcount($cucu['id']).' | '.$this->btree->rightcount($cucu['id']).' Right</p><p class="text-white">'.$this->btree->allcount($cucu['id']).'</p>';
@@ -145,6 +149,7 @@
                           $cucu = cek_id_cucu($id_kanan,"kanan");
                           if ($cucu['status'] == true) {
                             echo $cucu['nama'];
+                            echo $cucu['username'];
                             echo $cucu['paket'];
                             if (cek_anak_cucu($cucu['id'])==true) {
                               echo '<p class="text-white">Left '.$this->btree->leftcount($cucu['id']).' | '.$this->btree->rightcount($cucu['id']).' Right</p><p class="text-white">'.$this->btree->allcount($cucu['id']).'</p>';
