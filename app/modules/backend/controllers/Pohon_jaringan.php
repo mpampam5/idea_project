@@ -219,6 +219,13 @@ class Pohon_jaringan extends MY_Controller{
           $this->model->get_insert("bonus_sponsor",$inser_b_sponsor);
 
 
+          $is_parent = $this->btree->cek_is_parent($last_id_member);
+
+          foreach ($is_parent as $value) {
+             $this->_pairing($value,$last_id_member);
+          }
+
+
           $json['alert'] = "Berhasil menambahkan member";
           $json['success'] = true;
           $json['url'] = site_url("backend/pohon_jaringan");
@@ -260,23 +267,25 @@ class Pohon_jaringan extends MY_Controller{
 
 function _cek_nik($str,$tgl_lahir)
 {
-  if ($tgl_lahir!="") {
-    $tgl_array = explode("/",$tgl_lahir);
-    $tgl = $tgl_array[0];
-    $bulan = $tgl_array[1];
-    $tahun = substr($tgl_array[2],-2);
+  // if ($tgl_lahir!="") {
+  //   $tgl_array = explode("/",$tgl_lahir);
+  //   $tgl = $tgl_array[0];
+  //   $bulan = $tgl_array[1];
+  //   $tahun = substr($tgl_array[2],-2);
+  //
+  //   $gabung = $tgl."".$bulan."".$tahun;
+  //   $nik = substr($str,-10,-4);
+  //   if ($gabung==$nik) {
+  //       return true;
+  //   }else {
+  //       $this->form_validation->set_message('_cek_nik', 'Nik/No.KTP tidak valid.');
+  //       return false;
+  //   }
+  // }else {
+  //   return true;
+  // }
 
-    $gabung = $tgl."".$bulan."".$tahun;
-    $nik = substr($str,-10,-4);
-    if ($gabung==$nik) {
-        return true;
-    }else {
-        $this->form_validation->set_message('_cek_nik', 'Nik/No.KTP tidak valid.');
-        return false;
-    }
-  }else {
-    return true;
-  }
+  return true;
 
 }
 
@@ -434,10 +443,8 @@ function add_pairing($id_parent)
 
 
 
-
-
 //BONUS PAIRING
-  function _pairing($id)
+  function _pairing($id,$last_id_member)
   {
 
       $pin_left = [];
@@ -455,24 +462,57 @@ function add_pairing($id_parent)
       }
 
 
+      //HITUNG JUMLAH BONUS
+
       $total_l = array_sum($pin_left) * config_all('harga_pin');
       $total_r = array_sum($pin_right) * config_all('harga_pin');
 
-      if (count($left) < count($right)) {
-        if (count($left)!=0) {
-          $insert = array('id_member'=>$id,"pairing"=>count($left),"created"=>date("Y-m-d h:i:s"));
-          $this->model->get_insert('bonus_pairing', $insert);
-        }
-      }elseif (count($left) > count($right)) {
-        if (count($right)!=0) {
-          $insert = array('id_member'=>$id,"pairing"=>count($right),"created"=>date("Y-m-d h:i:s"));
-          $this->model->get_insert('bonus_pairing', $insert);
-        }
+      $total_pin_baru = paket(profile_member($last_id_member,'paket'),'pin') * config_all('harga_pin');
+
+      if ($total_l < $total_r) {
+          $jml_b = $total_r - $total_l;
+      }elseif($total_l > $total_r) {
+          $jml_b = $total_l - $total_r;
       }else {
-          $insert = array('id_member'=>$id,"pairing"=>count($right),"created"=>date("Y-m-d h:i:s"));
-          $this->model->get_insert('bonus_pairing', $insert);
+        $jml_b = $total_pin_baru;
       }
 
+      if ($total_pin_baru <= $jml_b) {
+          $hitung_j = $total_pin_baru;
+      }else {
+          $hitung_j = $total_pin_baru - $jml_b;
+      }
+
+      $total_bonus = (config_all('komisi_pairing')/100) * $hitung_j;
+
+      if (count($left) <= count($right)) {
+        $pairing = count($left);
+      }else {
+        $pairing = count($right);
+      }
+
+      //END HITUNG JUMLAH BONUS
+
+      if ($pairing!=0) {
+        $cek_pairing = $this->db->select("id_bonus_pairing,id_member,total_bonus,created,pairing")
+                                ->from('bonus_pairing')
+                                ->where('id_member',$id)
+                                ->order_by('created','desc')
+                                ->limit(1)
+                                ->get();
+
+            if ($cek_pairing->num_rows()==1) {
+              $pairing_trakhir = $cek_pairing->row()->pairing;
+            }else {
+              $pairing_trakhir = 0;
+            }
+
+        if ($pairing > $pairing_trakhir) {
+          $insert = array('id_member'=>$id,"pairing"=>$pairing,"total_bonus"=>$total_bonus,"created"=>date("Y-m-d h:i:s"));
+          $this->model->get_insert('bonus_pairing', $insert);
+        }
+
+      }
 
 
       //

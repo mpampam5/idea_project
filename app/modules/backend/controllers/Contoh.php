@@ -154,4 +154,18 @@ function pairing($id)
 
 
 
+
+  function prints()
+  {
+    $this->load->view("content/contoh/print");
+  }
+
+  function cetak($id)
+  {
+    $data['cetak'] =  $this->db->get_where("config_bank",["id_rekening"=>$id])->row();
+    $this->load->view("content/contoh/cetak",$data);
+  }
+
+
+
 } //end class contoh

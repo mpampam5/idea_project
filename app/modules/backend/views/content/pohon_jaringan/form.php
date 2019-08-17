@@ -270,16 +270,7 @@ $("#form").submit(function(e){
               loaderBg: '#f96868',
               position: 'bottom-right',
               afterHidden: function () {
-                $.ajax({
-                    type:'POST',
-                    url:"<?php echo base_url(); ?>backend/pohon_jaringan/add_pairing",
-                    data:"id=" + $("#id_parent").val(),
-                    success: function()
-                    {
-                       // window.location.href = json.url;
-                       alert('berhasil');
-                    }
-                })
+                window.location.href = json.url;
               }
             });
 
