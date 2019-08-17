@@ -12,6 +12,12 @@
   </ol>
 </nav>
 
+        <div class="row mb-2">
+          <div class="col-sm-12">
+            <a href="<?=site_url("backend/withdraw/add_new_withdraw")?>" id="withdraw_baru" class="btn btn-success btn-sm btn-icon-text"><i class="fa fa-plus btn-icon-prepend"></i> Add New withdraw</a>
+          </div>
+        </div>
+
 
 <div class="row">
   <div class="col-12 stretch-card">
@@ -21,7 +27,6 @@
           <h4 class="card-title">List <?=$title?></h4>
           <div class="btn-group-header">
             <a href="#" class="btn btn-primary btn-sm btn-icon-text" id="table-reload"> <i class="fa fa-refresh btn-icon-prepend"></i></a>
-            <a href="<?=site_url("backend/withdraw/add_new_withdraw")?>" id="withdraw_baru" class="btn btn-success btn-sm btn-icon-text"><i class="fa fa-plus btn-icon-prepend"></i> Add New withdraw</a>
           </div>
 
         <hr>
@@ -38,6 +43,7 @@
               </thead>
 
             </table>
+            <p class="text-info mt-3"><i class="fa fa-info-circle"></i> Withdraw akan mengurangi jumlah Balance walaupun dalam status pending.</p>
 
       </div>
     </div>

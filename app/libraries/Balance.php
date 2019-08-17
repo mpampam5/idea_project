@@ -80,7 +80,7 @@ function withdraw($id_member){
                               ")
                               ->from('trans_member_withdraw')
                               ->join("tb_member","trans_member_withdraw.id_member = tb_member.id_member")
-                              ->where("trans_member_withdraw.status","verifikasi")
+                              // ->where("trans_member_withdraw.status","verifikasi")
                               ->where("trans_member_withdraw.id_member",$id_member)
                               ->get()
                               ->row();
