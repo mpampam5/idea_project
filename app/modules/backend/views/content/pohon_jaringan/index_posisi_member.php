@@ -36,8 +36,12 @@
                 <td colspan="4">
                   <div id="root" class="root1">
                     <h4><?=$root->nama?></h4>
+                    <p class="text-white"><?=profile_member_where(['tb_member.id_member'=>$root->id_member],'username')?></p>
+                    <p class="text-white"><?=paket($root->paket,'paket')?></p>
                     <?php if ($root->id_member!=$this->session->userdata('id_member')): ?>
-                      <?=ambil_data_parent($root->id_member)?>
+                      <?=ambil_data_parent($root->id_member,$id_member_verif)?>
+                    <?php else: ?>
+                    <?= '<p class="text-white">Left '.$this->btree->leftcount($root->id_member).' | '.$this->btree->rightcount($root->id_member).' Right</p><p class="text-white">'.$this->btree->allcount($root->id_member).'</p>';?>
                     <?php endif; ?>
                   </div>
                 </td>
@@ -76,10 +80,14 @@
                       <?php $cucu=cek_id_cucu($id_kiri,"kiri",$id_member_verif);
                       if ($cucu['status'] == true) {
                         echo $cucu['nama'];
+                        echo $cucu['username'];
+                        echo $cucu['paket'];
                         if (cek_anak_cucu($cucu['id'])==true) {
-                        echo '<a href="'.base_url("backend/pohon_jaringan/show").'/'.$cucu['id'].'" id="show-child" class="btn btn-sm btn-success"> <i class="fa fa-arrow-circle-o-down"></i> Show Child</a>';
+                          echo '<p class="text-white">Left '.$this->btree->leftcount($cucu['id']).' | '.$this->btree->rightcount($cucu['id']).' Right</p><p class="text-white">'.$this->btree->allcount($cucu['id']).'</p>';
+                        echo '<a href="'.base_url("backend/pohon_jaringan/verifikasi_member_show").'/'.$cucu['id'].'/'.$id_member_verif.'" id="show-child" class="btn btn-sm btn-success"> <i class="fa fa-arrow-circle-o-down"></i> Show Child</a>';
                       }else {
-                        echo '<a href="'.base_url("backend/pohon_jaringan/show").'/'.$cucu['id'].'" id="show-child" class="btn btn-sm btn-success"> <i class="fa fa-arrow-circle-o-down"></i> Add Child</a>';
+                        echo '<p class="text-white">Left '.$this->btree->leftcount($cucu['id']).' | '.$this->btree->rightcount($cucu['id']).' Right</p><p class="text-white">'.$this->btree->allcount($cucu['id']).'</p>';
+                        echo '<a href="'.base_url("backend/pohon_jaringan/verifikasi_member_show").'/'.$cucu['id'].'/'.$id_member_verif.'" id="show-child" class="btn btn-sm btn-success"> <i class="fa fa-arrow-circle-o-down"></i> Add Child</a>';
                       }
                       }else {
                         echo $cucu["button"];
@@ -96,10 +104,14 @@
                       <?php $cucu=cek_id_cucu($id_kiri,"kanan",$id_member_verif);
                         if ($cucu['status'] == true) {
                           echo $cucu['nama'];
+                          echo $cucu['username'];
+                          echo $cucu['paket'];
                           if (cek_anak_cucu($cucu['id'])==true) {
-                          echo '<a href="'.base_url("backend/pohon_jaringan/show").'/'.$cucu['id'].'" id="show-child" class="btn btn-sm btn-success"> <i class="fa fa-arrow-circle-o-down"></i> Show Child</a>';
+                            echo '<p class="text-white">Left '.$this->btree->leftcount($cucu['id']).' | '.$this->btree->rightcount($cucu['id']).' Right</p><p class="text-white">'.$this->btree->allcount($cucu['id']).'</p>';
+                          echo '<a href="'.base_url("backend/pohon_jaringan/verifikasi_member_show").'/'.$cucu['id'].'/'.$id_member_verif.'" id="show-child" class="btn btn-sm btn-success"> <i class="fa fa-arrow-circle-o-down"></i> Show Child</a>';
                         }else {
-                          echo '<a href="'.base_url("backend/pohon_jaringan/show").'/'.$cucu['id'].'" id="show-child" class="btn btn-sm btn-success"> <i class="fa fa-arrow-circle-o-down"></i> Add Child</a>';
+                          echo '<p class="text-white">Left '.$this->btree->leftcount($cucu['id']).' | '.$this->btree->rightcount($cucu['id']).' Right</p><p class="text-white">'.$this->btree->allcount($cucu['id']).'</p>';
+                          echo '<a href="'.base_url("backend/pohon_jaringan/verifikasi_member_show").'/'.$cucu['id'].'/'.$id_member_verif.'" id="show-child" class="btn btn-sm btn-success"> <i class="fa fa-arrow-circle-o-down"></i> Add Child</a>';
                         }
                         }else {
                           echo $cucu["button"];
@@ -119,10 +131,14 @@
                           $cucu = cek_id_cucu($id_kanan,"kiri",$id_member_verif);
                           if ($cucu['status'] == true) {
                             echo $cucu['nama'];
+                            echo $cucu['username'];
+                            echo $cucu['paket'];
                             if (cek_anak_cucu($cucu['id'])==true) {
-                              echo '<a href="'.base_url("backend/pohon_jaringan/show").'/'.$cucu['id'].'" id="show-child" class="btn btn-sm btn-success"> <i class="fa fa-arrow-circle-o-down"></i> Show Child</a>';
+                              echo '<p class="text-white">Left '.$this->btree->leftcount($cucu['id']).' | '.$this->btree->rightcount($cucu['id']).' Right</p><p class="text-white">'.$this->btree->allcount($cucu['id']).'</p>';
+                              echo '<a href="'.base_url("backend/pohon_jaringan/verifikasi_member_show").'/'.$cucu['id'].'/'.$id_member_verif.'" id="show-child" class="btn btn-sm btn-success"> <i class="fa fa-arrow-circle-o-down"></i> Show Child</a>';
                             }else {
-                              echo '<a href="'.base_url("backend/pohon_jaringan/show").'/'.$cucu['id'].'" id="show-child" class="btn btn-sm btn-success"> <i class="fa fa-arrow-circle-o-down"></i> Add Child</a>';
+                              echo '<p class="text-white">Left '.$this->btree->leftcount($cucu['id']).' | '.$this->btree->rightcount($cucu['id']).' Right</p><p class="text-white">'.$this->btree->allcount($cucu['id']).'</p>';
+                              echo '<a href="'.base_url("backend/pohon_jaringan/verifikasi_member_show").'/'.$cucu['id'].'/'.$id_member_verif.'" id="show-child" class="btn btn-sm btn-success"> <i class="fa fa-arrow-circle-o-down"></i> Add Child</a>';
                             }
                           }else {
                             echo $cucu["button"];
@@ -141,10 +157,14 @@
                           $cucu = cek_id_cucu($id_kanan,"kanan",$id_member_verif);
                           if ($cucu['status'] == true) {
                             echo $cucu['nama'];
+                            echo $cucu['username'];
+                            echo $cucu['paket'];
                             if (cek_anak_cucu($cucu['id'])==true) {
-                              echo '<a href="'.base_url("backend/pohon_jaringan/show").'/'.$cucu['id'].'" id="show-child" class="btn btn-sm btn-success"> <i class="fa fa-arrow-circle-o-down"></i> Show Child</a>';
+                              echo '<p class="text-white">Left '.$this->btree->leftcount($cucu['id']).' | '.$this->btree->rightcount($cucu['id']).' Right</p><p class="text-white">'.$this->btree->allcount($cucu['id']).'</p>';
+                              echo '<a href="'.base_url("backend/pohon_jaringan/verifikasi_member_show").'/'.$cucu['id'].'/'.$id_member_verif.'" id="show-child" class="btn btn-sm btn-success"> <i class="fa fa-arrow-circle-o-down"></i> Show Child</a>';
                             }else {
-                              echo '<a href="'.base_url("backend/pohon_jaringan/show").'/'.$cucu['id'].'" id="show-child" class="btn btn-sm btn-success"> <i class="fa fa-arrow-circle-o-down"></i> Add Child</a>';
+                              echo '<p class="text-white">Left '.$this->btree->leftcount($cucu['id']).' | '.$this->btree->rightcount($cucu['id']).' Right</p><p class="text-white">'.$this->btree->allcount($cucu['id']).'</p>';
+                              echo '<a href="'.base_url("backend/pohon_jaringan/verifikasi_member_show").'/'.$cucu['id'].'/'.$id_member_verif.'" id="show-child" class="btn btn-sm btn-success"> <i class="fa fa-arrow-circle-o-down"></i> Add Child</a>';
                             }
                           }else {
                             echo $cucu["button"];

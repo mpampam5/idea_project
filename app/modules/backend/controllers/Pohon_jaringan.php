@@ -368,6 +368,25 @@ function kabupaten(){
     }
   }
 
+  function verifikasi_member_show($id_root,$id_member=""){
+    if ($id_member!="") {
+      // cek apakah id member sudah terverifikasi
+      //jika sudah tidak bisa mengakses modul member verifikasi
+      $qry = $this->db->get_where("tb_member",["id_member"=>$id_member,"is_verifikasi"=>"1"]);
+      if ($qry->num_rows() > 0) {
+          redirect(site_url("backend/pohon_jaringan/show/$id_member"),"refresh");
+      }else {
+        $this->load->helper(['cek_pohon_verif']);
+        $this->template->set_title("Verifikasi Member");
+        $data["id_member_verif"] = $id_member;
+        $data["root"] = $this->model->get_where("tb_member",["id_member"=>$id_root]);
+        $this->template->view("content/pohon_jaringan/index_posisi_member",$data);
+      }
+    }else {
+      $this->_error404();
+    }
+  }
+
   function verifikasi_member_action($id_parent,$posisi,$id_member_verif){
     if ($this->input->is_ajax_request()) {
       $paket = profile_member($id_member_verif,"paket");
@@ -411,6 +430,23 @@ function kabupaten(){
                                     'status'  => 'terpakai'
                                     );
           $this->db->update("trans_pin",$update_trans_pin,["id_pin_trans" => $pin->id_pin_trans]);
+        }
+
+        //insert bonus SPONSOR
+        $inser_b_sponsor = array('id_parent' => sess('id_member') ,
+                                  'id_member' => $id_member_verif,
+                                  'created'   => date('Y-m-d h:i:s'),
+                                  'total_bonus'=> $this->balance->get_bonus_sponsor($paket)
+                                );
+
+        $this->model->get_insert("bonus_sponsor",$inser_b_sponsor);
+
+
+          //BONUS PAIRING
+        $is_parent = $this->btree->cek_is_parent($id_member_verif);
+
+        foreach ($is_parent as $value) {
+           $this->_pairing($value,$last_id_member);
         }
 
 

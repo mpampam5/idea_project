@@ -7,11 +7,14 @@ function cek_parent($id,$posisi,$id_member_verif){
                               trans_member.id_parent,
                               trans_member.id_member,
                               tb_member.nama,
-                              tb_member.posisi
+                              tb_member.posisi,
+                              config_paket.paket
                             FROM
                               trans_member
                             INNER JOIN
                               tb_member ON trans_member.id_member = tb_member.id_member
+                              INNER JOIN
+                                config_paket ON config_paket.id_paket = tb_member.paket
                             WHERE
                               trans_member.id_parent = $id
                             AND
@@ -20,6 +23,9 @@ function cek_parent($id,$posisi,$id_member_verif){
                             ");
     if ($query->num_rows() > 0) {
         $str = '<h4>'.$query->row()->nama.'</h4>';
+        $str .= '<p class="text-white">'.profile_member_where(['tb_member.id_member'=>$query->row()->id_member],'username').'</p>';
+        $str.='<p class="text-white">'.$query->row()->paket.'</p>';
+        $str .= '<p class="text-white">Left '.$ci->btree->leftcount($query->row()->id_member).' | '.$ci->btree->rightcount($query->row()->id_member).' Right</p><p class="text-white">'.$ci->btree->allcount($query->row()->id_member).'</p>';
     }else {
         $str = '<a href="'.site_url("backend/pohon_jaringan/verifikasi_member_action/$id/$posisi/$id_member_verif").'" id="tambah" class="btn btn-info btn-sm"><i class="fa fa-plus text-white"></i></a>';
     }
@@ -61,11 +67,14 @@ function cek_id_cucu($id,$posisi,$id_member_verif){
                               trans_member.id_parent,
                               trans_member.id_member,
                               tb_member.nama,
-                              tb_member.posisi
+                              tb_member.posisi,
+                              config_paket.paket
                             FROM
                               trans_member
                             INNER JOIN
                               tb_member ON trans_member.id_member = tb_member.id_member
+                              INNER JOIN
+                                config_paket ON config_paket.id_paket = tb_member.paket
                             WHERE
                               trans_member.id_parent = $id
                             AND
@@ -75,7 +84,9 @@ function cek_id_cucu($id,$posisi,$id_member_verif){
     if ($query->num_rows() > 0) {
         $str = array( 'status'=>true,
                       'id' => $query->row()->id_member,
-                      'nama' => '<h4>'.$query->row()->nama.'</h4>'
+                      'nama' => '<h4>'.$query->row()->nama.'</h4>',
+                      'username'=> '<p class="text-white">'.profile_member_where(['tb_member.id_member'=>$query->row()->id_member],'username').'</p>',
+                      'paket' => '<p class="text-white">'.$query->row()->paket.'</p>'
                     );
     }else {
         $str = array("status" => false,
@@ -99,11 +110,13 @@ function cek_anak_cucu($id)
 }
 
 
-function ambil_data_parent($id)
+function ambil_data_parent($id,$id_member_verif)
 {
   $ci = get_instance();
   $query = $ci->db->get_where("trans_member",["id_member"=>$id]);
   if ($query->num_rows() > 0) {
-    return '<a href="'.site_url("backend/pohon_jaringan/verifikasi_member_action/".$query->row()->id_parent).'" id="show-parent" class="btn btn-sm btn-success"><i class="fa fa-arrow-up"></i> Show Parent</a>';
+    $str = '<p class="text-white">Left '.$ci->btree->leftcount($id).' | '.$ci->btree->rightcount($id).' Right</p><p class="text-white">'.$ci->btree->allcount($id).'</p>';
+    $str .='<a href="'.site_url("backend/pohon_jaringan/verifikasi_member_show/".$query->row()->id_parent.'/'.$id_member_verif).'" id="show-parent" class="btn btn-sm btn-success"><i class="fa fa-arrow-up"></i> Show Parent</a>';
+    return $str;
   }
 }
