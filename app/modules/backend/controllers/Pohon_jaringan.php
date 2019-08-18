@@ -44,13 +44,29 @@ class Pohon_jaringan extends MY_Controller{
         $this->_error404();
         }else {
         if ($posisi=="kiri"  OR $posisi=="kanan") {
-          $this->template->set_title("Binary");
-          $data["provinsi"] = $this->db->get("wil_provinsi")->result();
-          $data["bank"]   = $this->db->get("ref_bank")->result();
-          $data['id_parent'] = $id_parent;
-          $data['posisi'] = $posisi;
-          $data['serial_pin'] = "SN".date('dmyhis');
-          $this->template->view("content/pohon_jaringan/form",$data);
+            if ($posisi=="kiri") {
+              $field = 'l_mem';
+            }else {
+              $field = 'r_mem';
+            }
+          if ($row = $this->model->get_where('trans_member',['id_member'=>$id_parent])) {
+              if ($row->$field=="") {
+                $this->template->set_title("Binary");
+                $data["provinsi"] = $this->db->get("wil_provinsi")->result();
+                $data["bank"]   = $this->db->get("ref_bank")->result();
+                $data['id_parent'] = $id_parent;
+                $data['posisi'] = $posisi;
+                $data['serial_pin'] = "SN".date('dmyhis');
+                $this->template->view("content/pohon_jaringan/form",$data);
+              }else {
+                redirect(site_url("backend/pohon_jaringan"),"refresh");
+              }
+          }else {
+            $this->_error404();
+          }
+
+        }else {
+            $this->_error404();
         }
       }
   }
