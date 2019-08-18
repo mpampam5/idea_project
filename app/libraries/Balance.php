@@ -186,6 +186,26 @@ function cek_total_pin($id_member)
   return $query ;
 }
 
+//TOTAL PI ORDER
+function total_order_pin($id_member)
+{
+  $ci =& get_instance();
+  $query = $ci->db->select("trans_order_pin.id_order_pin,
+                            trans_order_pin.id_member,
+                            trans_order_pin.kode_transaksi,
+                            SUM(trans_order_pin.jumlah_pin) AS total,
+                            trans_order_pin.sumber_dana,
+                            trans_order_pin.id_config_bank,
+                            trans_order_pin.tgl_order,
+                            trans_order_pin.status")
+                   ->from('trans_order_pin')
+                   ->where("trans_order_pin.id_member",$id_member)
+                   // ->where("trans_order_pin.sumber_dana","approved")
+                   ->get()
+                   ->row();
+  return $query->total;
+}
+
 
 //HITUNG BONUS SPONSOR
 function get_bonus_sponsor($jenis_paket){
@@ -196,6 +216,25 @@ function get_bonus_sponsor($jenis_paket){
   $total_bonus_persen = (config_all('komisi_sponsor')/100)*$total_harga_pin;
 
   return $total_bonus_persen;
+}
+
+// Total Referral Member
+function referral($id_member)
+{
+  $ci =& get_instance();
+  $kode_referral = profile('kode_referral');
+  $query = $ci->db->select('tb_member.id_member,
+                            tb_member.referral_from,
+                            tb_member.is_verifikasi')
+                  ->from('tb_member')
+                  ->where('referral_from',"$kode_referral")
+                  ->where('is_verifikasi','1')
+                  ->get();
+  if ($query->num_rows()>0) {
+      return $query->num_rows();
+  }else {
+    return '0';
+  }
 }
 
 

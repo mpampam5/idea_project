@@ -27,7 +27,7 @@
             <p class="text-muted">Status Stockis</p>
             <h4 class="mb-0 font-weight-bold">
               <?php if (profile("status_stockis")=="member"): ?>
-                Member
+                  Member
                 <?php else: ?>
                   Master Stockis
               <?php endif; ?>
@@ -85,7 +85,7 @@
       <div class="card-body">
         <p class="card-title text-md-center text-xl-left text-white">Referral</p>
         <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-          <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0">0</h3>
+          <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0"><?=$referral?></h3>
           <i class="fa fa-users icon-md mb-0 mb-md-3 mb-xl-0 text-white"></i>
         </div>
       </div>
@@ -122,7 +122,8 @@
       <div class="card-body">
         <p class="card-title text-md-center text-xl-left text-white">Stock PIN</p>
         <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-          <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0"><?=$this->balance->stok_pin(sess('id_member'))?></h3>
+          <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0"><?=$stok_pin?></h3>
+          <i class="fa fa-product-hunt icon-md mb-0 mb-md-3 mb-xl-0 text-white"></i>
         </div>
       </div>
     </div>
@@ -133,7 +134,8 @@
       <div class="card-body">
         <p class="card-title text-md-center text-xl-left text-white">PIN Terpakai</p>
         <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-          <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0"><?=$this->balance->cek_pin_terpakai(sess('id_member'))?></h3>
+          <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0"><?=$pin_terpakai?></h3>
+          <i class="fa fa-product-hunt icon-md mb-0 mb-md-3 mb-xl-0 text-white"></i>
         </div>
       </div>
     </div>
@@ -144,7 +146,8 @@
       <div class="card-body">
         <p class="card-title text-md-center text-xl-left text-white">PIN Order</p>
         <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-          <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0">0</h3>
+          <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0"><?=$total_order_pin?></h3>
+          <i class="fa fa-product-hunt icon-md mb-0 mb-md-3 mb-xl-0 text-white"></i>
         </div>
       </div>
     </div>
