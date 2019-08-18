@@ -344,10 +344,9 @@
           success:function(json){
             if (json.success==true) {
               $("#form")[0].reset();
-              $("#submit").prop('disabled',true);
               $("#form").find('.text-danger').remove();
               $("html, body").animate({ scrollTop: 0 }, "slow");
-              $("#submit").prop('disabled',false)
+              $("#submit").prop('disabled',true)
                           .html('Registrasi');
               $('#alert').hide().fadeIn(1000).html(`<div class="row alert-show text-center">
                                                       <div class="col-sm-12">
