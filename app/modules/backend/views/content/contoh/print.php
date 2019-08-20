@@ -3,30 +3,15 @@
   <head>
     <meta charset="utf-8">
     <title></title>
-    <style media="screen">
-      table{
-        border:1px solid black;
-      }
-
-      table thead th{
-        padding :10px;
-        text-align: center;
-        border: 1px solid black;
-      }
-
-      table tbody tr td{
-        padding :10px;
-        text-align: center;
-        border: 1px solid black;
-      }
-
-    </style>
+    <link rel="stylesheet" href="<?=base_url()?>_template/back/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+    <script src="<?=base_url()?>_template/back/vendors/datatables.net/jquery.dataTables.js"></script>
+    <script src="<?=base_url()?>_template/back/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
   </head>
 
   <a href="#"  onclick="window.print()" >Cetak</a>
   <body>
     <?php $data = $this->db->get('config_bank'); ?>
-    <table>
+    <table class="table" id="table">
       <thead>
         <th>id_rekening</th>
         <th>id_bank</th>
@@ -49,6 +34,10 @@
       </tbody>
     </table>
 
+
+<script type="text/javascript">
+  $("#table").dataTable();
+</script>
 
   </body>
 </html>

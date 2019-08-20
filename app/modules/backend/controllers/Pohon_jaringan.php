@@ -462,7 +462,7 @@ function kabupaten(){
         $is_parent = $this->btree->cek_is_parent($id_member_verif);
 
         foreach ($is_parent as $value) {
-           $this->_pairing($value,$last_id_member);
+           $this->_pairing($value,$id_member_verif);
         }
 
 
@@ -514,6 +514,19 @@ function add_pairing($id_parent)
       }
 
 
+      $cek_pairing = $this->db->select("id_bonus_pairing,id_member,total_bonus,created,pairing,sisa")
+                              ->from('bonus_pairing')
+                              ->where('id_member',$id)
+                              ->order_by('created','desc')
+                              ->limit(1)
+                              ->get();
+
+      if ($cek_pairing->num_rows()==1) {
+        $cek_sisa = $cek_pairing->row()->sisa;
+      }else {
+        $cek_sisa = 0;
+      }
+
       //HITUNG JUMLAH BONUS
 
       $total_l = array_sum($pin_left) * config_all('harga_pin');
@@ -522,70 +535,52 @@ function add_pairing($id_parent)
       $total_pin_baru = paket(profile_member($last_id_member,'paket'),'pin') * config_all('harga_pin');
 
       if ($total_l < $total_r) {
-          $jml_b = $total_r - $total_l;
-      }elseif($total_l > $total_r) {
-          $jml_b = $total_l - $total_r;
-      }else {
-        $jml_b = $total_pin_baru;
-      }
+            $cek = $total_l;
 
-      if ($total_pin_baru <= $jml_b) {
-          $hitung_j = $total_pin_baru;
-      }else {
-          $hitung_j = $total_pin_baru - $jml_b;
-      }
+          if ($cek_sisa < $total_pin_baru) {
+              $jml_b = $total_pin_baru - $cek_sisa;
+              $hitung_j = 0;
+          }elseif($cek_sisa > $total_pin_baru) {
+              $jml_b = $cek_sisa - $total_pin_baru ;
+              $hitung_j = $cek_sisa;
+          }else {
+            $jml_b = $total_pin_baru - $cek_sisa;
+            $hitung_j = abs($jml-$total_pin_baru);
+          }
 
-      $total_bonus = (config_all('komisi_pairing')/100) * $hitung_j;
 
-      if (count($left) <= count($right)) {
-        $pairing = count($left);
-      }else {
-        $pairing = count($right);
-      }
-
-      //END HITUNG JUMLAH BONUS
-
-      if ($pairing!=0) {
-        $cek_pairing = $this->db->select("id_bonus_pairing,id_member,total_bonus,created,pairing")
-                                ->from('bonus_pairing')
-                                ->where('id_member',$id)
-                                ->order_by('created','desc')
-                                ->limit(1)
-                                ->get();
-
-            if ($cek_pairing->num_rows()==1) {
-              $pairing_trakhir = $cek_pairing->row()->pairing;
-            }else {
-              $pairing_trakhir = 0;
-            }
-
-        if ($pairing > $pairing_trakhir) {
-          $insert = array('id_member'=>$id,"pairing"=>$pairing,"total_bonus"=>$total_bonus,"created"=>date("Y-m-d h:i:s"));
+          $total_bonus = (config_all('komisi_pairing')/100) * $hitung_j;
+          $insert = array('id_member'=>$id,"total_bonus"=>$total_bonus,"sisa"=>$jml_b,"created"=>date("Y-m-d h:i:s"));
           $this->model->get_insert('bonus_pairing', $insert);
-        }
+
+      }elseif($total_l > $total_r) {
+          $cek = $total_r;
+          if ($cek_sisa < $total_pin_baru) {
+              $jml_b = $total_pin_baru - $cek_sisa;
+              $hitung_j = 0;
+          }elseif($cek_sisa > $total_pin_baru) {
+              $jml_b = $cek_sisa - $total_pin_baru ;
+              $hitung_j = $cek_sisa;
+          }else {
+              $jml_b = $total_pin_baru - $cek_sisa;
+              $hitung_j = $cek_sisa;
+          }
+
+          $total_bonus = (config_all('komisi_pairing')/100) * $hitung_j;
+          $insert = array('id_member'=>$id,"total_bonus"=>$total_bonus,"sisa"=>$jml_b,"created"=>date("Y-m-d h:i:s"));
+          $this->model->get_insert('bonus_pairing', $insert);
+
+      }else {
+        $cek = $total_l;
+        $jml_b = $total_pin_baru;
+        $hitung_j = $cek - $jml_b;
+        $total_bonus = (config_all('komisi_pairing')/100) * $hitung_j;
+        $insert = array('id_member'=>$id,"total_bonus"=>$total_bonus,"sisa"=>$hitung_j,"created"=>date("Y-m-d h:i:s"));
+        $this->model->get_insert('bonus_pairing', $insert);
 
       }
 
 
-      //
-      // if ($total_l<=$total_r) {
-      //   // $carry_forward = $total_r-$total_l;
-      //   $total = (config_all('komisi_pairing')/100) * $total_l;
-      // }
-      //
-      // if($total_r < $total_l) {
-      //   // $carry_forward = $total_l-$total_l;
-      //   $total = (config_all('komisi_pairing')/100) * $total_r;
-      // }
-      //
-      // if ($total > 0) {
-      //     $insert = array('id_member'=>$id,"total_bonus"=>$total,"created"=>date("Y-m-d h:i:s"));
-      //     $this->db->insert('bonus_pairing',$insert);
-      // }
-
-      // $pin = array($total);
-
-      // echo json_encode($pin);
     return;
   }
 
