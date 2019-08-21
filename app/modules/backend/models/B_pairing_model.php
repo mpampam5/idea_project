@@ -13,6 +13,7 @@ class B_pairing_model extends MY_Model{
                                 DATE_FORMAT(bonus_pairing.created,'%d/%m/%Y %H:%i') AS created,");
     $this->datatables->from('bonus_pairing');
     $this->datatables->where('bonus_pairing.id_member',sess('id_member'));
+    $this->datatables->where('bonus_pairing.total_bonus!=',0);
     return $this->datatables->generate();
   }
 
